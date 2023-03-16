@@ -1,0 +1,46 @@
+lexer → parser → expander → executor
+
+lexer: En attente de la fonction de Ethan.
+
+Parser: Que faire exactement ? Changer les fd si nécessaire et puis ? (Ranger les commandes dans des char ** ? ex: ls -l)
+
+
+
+
+
+
+
+
+
+
+
+Bien sûr, je serai heureux de vous aider à comprendre chaque étape du processus de création d'un mini-shell.
+
+Lexer: La première étape est le processus de lexing ou d'analyse lexicale. Cela consiste à diviser la ligne de commande entrée en "tokens" (mots clés, opérateurs, arguments, etc.) pour permettre une analyse syntaxique plus facile. Le lexer peut également supprimer les espaces inutiles, les commentaires et les caractères de fin de ligne.
+
+Parser: La deuxième étape est l'analyse syntaxique ou le parsing. Cela consiste à utiliser la grammaire de la ligne de commande pour analyser les tokens et créer une structure d'arbre de syntaxe abstraite (AST) qui représente la commande. L'AST est une représentation hiérarchique de la commande entrée qui permettra à l'expander de manipuler la commande de manière efficace.
+
+Expander: La troisième étape est l'expansion, qui est l'étape facultative mais importante pour les commandes qui contiennent des variables d'environnement, des variables de shell, des expressions régulières, etc. L'expander remplace les variables et les expressions régulières par leurs valeurs correspondantes.
+
+Executor: La quatrième et dernière étape est l'exécution de la commande. Cette étape exécute la commande en fonction des informations contenues dans l'AST. Le processus d'exécution peut être complexe selon le type de commande. Il peut s'agir d'une commande interne telle que cd ou d'une commande externe telle qu'un programme exécutable.
+
+En résumé, le processus de création d'un mini-shell consiste à diviser la commande en "tokens" via le lexing, créer une structure hiérarchique d'arbre de syntaxe abstraite via l'analyse syntaxique, étendre la commande via l'expansion si nécessaire, puis exécuter la commande via l'exécution. Chacune de ces étapes est importante pour créer un mini-shell fonctionnel.
+
+----------
+
+Lorsque vous entrez "arg="-l" ls $ARG" dans votre mini-shell, le processus se déroulerait comme suit :
+
+Lexer : Le lexer analysera la commande "arg="-l" ls $ARG" et produira les tokens suivants : "arg", "=", "-l", "ls", "$ARG".
+
+Parser : Le parser prendra les tokens générés par le lexer et créera une structure d'arbre de syntaxe abstraite (AST) qui représente la commande "arg="-l" ls $ARG". Cette AST peut ressembler à quelque chose comme :
+
+└─── CommandNode
+├─── AssignmentNode (arg=-l)
+├─── ArgumentNode (ls)
+└─── ArgumentNode ($ARG)
+
+Expander : L'expander remplacera "$ARG" par la valeur de la variable d'environnement "ARG", mais comme il n'y a pas de variable d'environnement "ARG" définie, "$ARG" restera tel quel.
+
+Executor : L'exécuteur prendra l'AST produit par le parser et exécutera la commande "ls" avec l'option "-l" en appelant la fonction système appropriée (par exemple, la fonction execvp en C) avec les arguments "ls" et "-l". Cependant, la variable "arg" définie dans la commande ne sera pas transmise à la commande "ls" car elle n'a pas été incluse dans l'AST.
+
+En fin de compte, la commande "ls" sera exécutée avec l'option "-l" car elle a été incluse en tant qu'argument direct et non via la variable "arg". La variable "arg" ne sera pas transmise à la commande "ls" car elle n'a pas été incluse dans l'AST.
