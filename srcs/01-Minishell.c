@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/16 12:01:29 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:05:42 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ void	ft_readline(char **envp)
 	t_init	var;
 
 	token = NULL;
+	var.envp = envp;
 	while (1)
 	{
 		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
 		if (ft_strlen(input) > 0)
 		{
-			var = ft_init(envp, input);
+			var = ft_init(input); //envp a definir dans ft_readline      A FAIRE
 			token = ft_parser(&var, token);
 			ft_free_list(token);
 			free(input);
