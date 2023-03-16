@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   01-Minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/16 11:55:43 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:01:29 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// Rappeler readline à chaque fin de commande exécuter, ne pas mettre tout dans la boucle ?
+// Rappeler readline à chaque fin de commande exécuter,ne pas mettre tout dans la boucle ?
 void	ft_readline(char **envp)
 {
 	char	*input;
@@ -27,17 +27,18 @@ void	ft_readline(char **envp)
 		{
 			var = ft_init(envp, input);
 			token = ft_parser(&var, token);
+			ft_free_list(token);
+			free(input);
 		}
 		// t_token *tmp;
 		// tmp = token;
 		// while (tmp)
 		// {
-		// 	printf("%s\n", tmp->str); // pour print les valeurs dans linked list et faire des tests.
+		// 	printf("%s\n", tmp->str);
+		// pour print les valeurs dans linked list et faire des tests.
 		// 	printf("%d\n", tmp->type);
 		// 	tmp = tmp->next;
 		// }
-		ft_free_list(token);
-		free(input);
 	}
 }
 
@@ -48,9 +49,9 @@ int	main(int ac, char **av, char **envp)
 	ft_readline(envp);
 }
 
-			// if (ft_strncmp(input, "exit", 4) == 0)
-			// {
-			// 	printf("exit\n");
-			// 	free(input);
-			// 	exit(EXIT_FAILURE);
-			// }
+// if (ft_strncmp(input, "exit", 4) == 0)
+// {
+// 	printf("exit\n");
+// 	free(input);
+// 	exit(EXIT_FAILURE);
+// }
