@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   01-Minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/16 12:05:42 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/16 12:07:10 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_readline(char **envp)
 		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
 		if (ft_strlen(input) > 0)
 		{
-			var = ft_init(input); //envp a definir dans ft_readline      A FAIRE
+			var = ft_init(input);
 			token = ft_parser(&var, token);
 			ft_free_list(token);
 			free(input);

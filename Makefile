@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 09:31:15 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/16 11:50:24 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/16 12:38:52 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,11 @@ SRCS_DIR = srcs
 OBJS_DIR = objs
 
 SRCS = 01-Minishell.c \
-	02-Token.c \
-	init.c \
-	end.c \
-	lexer.c \
-	# 03-Parser.c \#
+	02-Lexer.c \
+	03-Parser.c \
+	12-end.c \
+	13-init.c \
+	# 04-Executor.c \
 
 OBJS = $(addprefix ${OBJS_DIR}/, ${SRCS:%.c=%.o})
 
