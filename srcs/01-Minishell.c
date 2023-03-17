@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/16 12:07:10 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/17 11:49:27 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,23 @@ void	ft_readline(char **envp)
 	var.envp = envp;
 	while (1)
 	{
+		rl_replace_line("", 0);
 		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
-		if (ft_strlen(input) > 0)
+		if (ft_strlen(input) > 0) // Peut causer des problèmes ? Cas particulier? Trouver une autre condition ?
 		{
 			var = ft_init(input);
 			token = ft_parser(&var, token);
-			ft_free_list(token);
-			free(input);
+			// ft_free_list(token);
+			// free(input);
 		}
-		// t_token *tmp;
-		// tmp = token;
-		// while (tmp)
-		// {
-		// 	printf("%s\n", tmp->str);
-		// pour print les valeurs dans linked list et faire des tests.
-		// 	printf("%d\n", tmp->type);
-		// 	tmp = tmp->next;
-		// }
+		t_token *tmp;
+		tmp = token;
+		while (tmp)
+		{
+			printf("%s\n", tmp->str);
+			printf("%d\n", tmp->type); //pour print les valeurs dans linked list et faire des tests.
+			tmp = tmp->next;
+		}
 	}
 }
 

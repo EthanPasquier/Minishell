@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   02-Token.c                                         :+:      :+:    :+:   */
+/*   03-Parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/16 11:48:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:27:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,11 @@ t_token	*ft_fill_list(char **token)
 	return (tokentype);
 }
 
-t_token	*ft_parser(t_init *var, t_token *tokentype)
+void	ft_assign_type(t_token *token)
 {
-	char	**token;
 	t_token *temp;
 
-	token = lexer(var->input); // ft_token(var) AKA fonction de Ethan
-	tokentype = ft_fill_list(token);
-	ft_free_double(token);
-	temp = tokentype;
+	temp = token;
 	while (temp != NULL)
 	{
 		if (ft_strncmp(temp->str, "<<", 2) == 0)
@@ -57,9 +53,29 @@ t_token	*ft_parser(t_init *var, t_token *tokentype)
 			temp->type = GREAT;
 		else if (ft_strncmp(temp->str, "-", 1) == 0)
 			temp->type = ARG;
+		else if (ft_strncmp(temp->str, "|", 1) == 0)
+			temp->type = PIPE;
 		else
 			temp->type = CMD;
 		temp = temp->next;
 	}
+}
+
+t_token	*ft_parser(t_init *var, t_token *tokentype)
+{
+	char	**token;
+	// char	**path;
+	
+	token = ft_split(var->input, ' ');	// lexer(var->input); AKA fonction de Ethan
+	tokentype = ft_fill_list(token);
+	ft_free_double(token);
+	ft_assign_type(tokentype);
+	// printf("%s\n", var->envp[0]);
+	// path = find_path(var); // Find path ne marche pas, init envp ne fontionne plus.
+
+	// Trouver comment faire un AST
+
+
 	return (tokentype);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/16 12:05:37 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/17 10:32:12 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define GREAT_GREAT 4
 # define LESS 5
 # define LESS_LESS 6
+# define PIPE 7
 
 typedef struct s_init
 {
@@ -44,6 +45,8 @@ t_token				*new_node(char *str);
 t_token				*ft_parser(t_init *var, t_token *tokentype);
 
 char				**lexer(char const *s);
+
+char 				**find_path(t_init *init);
 
 // Free & End function.
 void				*ft_free_double(char **str);
