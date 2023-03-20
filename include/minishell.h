@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 10:58:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:26:27 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include <readline/readline.h>
 # include <stdio.h>
+# include "readline/history.h"
+# include "readline/readline.h"
+# include <signal.h>
 # include <stdlib.h>
 # include <string.h>
 
@@ -40,26 +42,31 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
-typedef struct s_cmd {
-	char	**pipe_split;
-	char	**cmd;
-	char	**all_path;
-	char	*cmd_path;
-}	t_cmd;
+typedef struct s_cmd
+{
+	char			**pipe_split;
+	char			**cmd;
+	char			**all_path;
+	char			*cmd_path;
+}					t_cmd;
 
 t_init				ft_init(char *input, char **envp);
 t_token				*new_node(char *str);
 void				ft_parser(t_init *var);
 
-char 				**find_path(char **envp);
+char				**find_path(char **envp);
 char				*find_cmd_path(char **cmd, char **path);
 
-void	ft_executor(t_cmd *command, t_init *var);
+void				ft_executor(t_cmd *command, t_init *var);
 
 // Free & End function.
 void				*ft_free_double(char **str);
 void				free_container(t_cmd *container);
 void				ft_free_list(t_token *token);
 void				ft_error(int flag);
+
+//fonction des signaux
+void				ft_ctrlc(int sig);
+void				ft_ctrld(int sig);
 
 #endif
