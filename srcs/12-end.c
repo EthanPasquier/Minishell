@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end.c                                              :+:      :+:    :+:   */
+/*   12-end.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/16 08:53:43 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/20 11:00:34 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,12 @@ void	ft_error(int flag)
 		printf("wtf");
 	printf("ERROR help");
 	exit(EXIT_SUCCESS);
+}
+
+void	free_container(t_cmd *container)
+{
+	ft_free_double(container->all_path);
+	ft_free_double(container->pipe_split);
+	// ft_free_double(container->cmd); // Both already free in while loop in ft_parser
+	// free(container->cmd_path);
 }

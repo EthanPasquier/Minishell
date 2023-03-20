@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 10:33:19 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/20 11:10:02 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,35 +61,32 @@ void	ft_assign_type(t_token *token)
 	}
 }
 
-void	ft_parser(t_init *var, t_token *tokentype)
+void	ft_parser(t_init *var)
 {
-	char	**pipe;
-	char	**cmd;
-	char	**all_path;
-	char	*cmd_path;
 	int i;
+	t_cmd container;
 
-	all_path = find_path(var->envp);
 	i = 0;
-	pipe = ft_split(var->input, '|');
-	while (pipe[i])
+	container.all_path = find_path(var->envp);
+	container.pipe_split = ft_split(var->input, '|');
+	while (container.pipe_split[i])
 	{
-		cmd = ft_split(pipe[i], ' ');
-		cmd_path = find_cmd_path(cmd, all_path);
-		execve(cmd_path, cmd, var->envp);
-		// ft_free_double(cmd);
-		// free(cmd_path);
+		container.cmd = ft_split(container.pipe_split[i], ' ');
+		container.cmd_path = find_cmd_path(container.cmd, container.all_path);
+		// if (!container.cmd_path)
+		// 	ft_error(1); // Very bad exit, temp;
+		ft_executor(&container, var);
+		ft_free_double(container.cmd);
+		free(container.cmd_path);
 		i++;
 	}
-	
-	// for (int i = 0; cmd[i]; i++)
-	// 	printf("%s\n", cmd[i]);
-	tokentype = NULL;
+	free_container(&container);
+}
+
+
 	// token = ft_split(var->input, ' ');
 	// tokentype = ft_fill_list(token);
 	// ft_free_double(token);
 	// ft_assign_type(tokentype);
 
 	// return (tokentype);
-}
-

@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 09:31:15 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/20 10:19:49 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/20 11:06:17 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ OBJS_DIR = objs
 
 SRCS = 01-Minishell.c \
 	02-Parser.c \
+	03-Executor.c \
 	11-Utils.c \
 	12-end.c \
 	13-init.c \

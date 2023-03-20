@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 10:21:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/20 11:06:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_readline(char **envp)
 		if (ft_strlen(input) > 0) // Peut causer des problèmes ? Cas particulier? Trouver une autre condition ?
 		{
 			var = ft_init(input, envp);
-			ft_parser(&var, NULL);
+			ft_parser(&var);
 			// token = ft_parser(&var, token);
 			// ft_free_list(token);
 			free(input);
