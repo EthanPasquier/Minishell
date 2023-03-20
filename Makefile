@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/20 16:01:21 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/20 16:11:22 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,18 +54,20 @@ readline	:
 	tar -xf $(LIBRLINE).tar.gz
 	rm -rf $(LIBRLINE).tar.gz
 	cd $(LIBRLINE) && bash configure && make
-	cd ./include && mkdir readline
+	cd include/ && mkdir readline
 	mv ./$(LIBRLINE)/libreadline.a ./include/readline
 	mv ./$(LIBRLINE)/libhistory.a ./include/readline
 	mv ./$(LIBRLINE)/*.h ./include/readline
 	rm -rf $(LIBRLINE)
+
+cleanlib:	
+	cd include/ && rm -rf readline
 clean:
 		rm -f $(OBJ_M) $(LIBFT)
 		make -C libft/ clean
 
 fclean:		clean
 		rm -f $(NAME) $(NAME_BONUS)
-		cd ./include && rm -rf readline
 
 
 re:		fclean all
