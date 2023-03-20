@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   02-Parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 11:10:02 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:24:50 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ void	ft_parser(t_init *var)
 	{
 		container.cmd = ft_split(container.pipe_split[i], ' ');
 		container.cmd_path = find_cmd_path(container.cmd, container.all_path);
-		// if (!container.cmd_path)
-		// 	ft_error(1); // Very bad exit, temp;
+		if (!container.cmd_path)
+		{
+			printf("minishell: %s: command not found.\n", container.cmd[0]); // Exit en même temps
+			break;
+		}
 		ft_executor(&container, var);
 		ft_free_double(container.cmd);
 		free(container.cmd_path);
