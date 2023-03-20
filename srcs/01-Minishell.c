@@ -6,39 +6,30 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/17 11:49:27 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:21:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// Rappeler readline à chaque fin de commande exécuter,ne pas mettre tout dans la boucle ?
+// main boucle ? Ne jamais en sortir pour toujours redonner le terminal ?
 void	ft_readline(char **envp)
 {
 	char	*input;
-	t_token	*token;
+	// t_token	*token;
 	t_init	var;
 
-	token = NULL;
-	var.envp = envp;
+	// token = NULL;
 	while (1)
 	{
-		rl_replace_line("", 0);
 		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
 		if (ft_strlen(input) > 0) // Peut causer des problèmes ? Cas particulier? Trouver une autre condition ?
 		{
-			var = ft_init(input);
-			token = ft_parser(&var, token);
+			var = ft_init(input, envp);
+			ft_parser(&var, NULL);
+			// token = ft_parser(&var, token);
 			// ft_free_list(token);
-			// free(input);
-		}
-		t_token *tmp;
-		tmp = token;
-		while (tmp)
-		{
-			printf("%s\n", tmp->str);
-			printf("%d\n", tmp->type); //pour print les valeurs dans linked list et faire des tests.
-			tmp = tmp->next;
+			free(input);
 		}
 	}
 }
@@ -49,6 +40,15 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	ft_readline(envp);
 }
+
+		// t_token *tmp;
+		// tmp = token;
+		// while (tmp)
+		// {
+		// 	printf("%s\n", tmp->str);
+		// 	printf("%d\n", tmp->type); //pour print les valeurs dans linked list et faire des tests.
+		// 	tmp = tmp->next;
+		// }
 
 // if (ft_strncmp(input, "exit", 4) == 0)
 // {

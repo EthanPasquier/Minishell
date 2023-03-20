@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 09:31:15 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/17 11:48:08 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/20 10:19:49 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,25 +21,17 @@ SRCS_DIR = srcs
 OBJS_DIR = objs
 
 SRCS = 01-Minishell.c \
-	02-Lexer.c \
-	03-Parser.c \
+	02-Parser.c \
 	11-Utils.c \
-	12-End.c \
-	13-Init.c \
+	12-end.c \
+	13-init.c \
 	# 04-Executor.c \
 
 OBJS = $(addprefix ${OBJS_DIR}/, ${SRCS:%.c=%.o})
 
 LIBFT_PATH = libft
 LIBFT_LIB = ${LIBFT_PATH}/libft.a
-LIBFT_INC = ${LIBFT_PATH}/libft.h
-
-LIBRD_DIR		=	include/librd
-LIBRD_FILES		=	libreadline.a libhistory.a
-LIBRD_MAKEFILE		=	$(LIBRD_DIR)/Makefile
-LIBRD			=	$(addprefix $(LIBRD_DIR)/, $(LIBRD_FILES))
-
-LIBS	= $(LIBFT_LIB) $(LIBRD)
+LIBFT_INC = ${LIBFT_PATH}/includes
 
 GREEN	= \033[32;1m
 CYAN	= \033[36;1m
@@ -48,13 +40,7 @@ BOLD	= \033[1m
 RESET	= \033[0m
 MAGENTA	=\033[0;95m
 
-all: ${LIBS} ${NAME}
-
-$(LIBRD): 	$(LIBRD_MAKEFILE)
-		@$(MAKE) -s -C $(LIBRD_DIR)
-	
-$(LIBRD_MAKEFILE):
-		@cd $(LIBRD_DIR) && ./configure --silent
+all: ${LIBFT_LIB} ${NAME}
 
 ${LIBFT_LIB}:
 	@make -C ${LIBFT_PATH}

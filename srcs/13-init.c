@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   13-Init.c                                          :+:      :+:    :+:   */
+/*   13-init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:42:34 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/17 10:31:53 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/20 10:22:18 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_init	ft_init(char *input)
+t_init	ft_init(char *input, char **envp)
 {
 	t_init var;
 
 	var.input = input;
+	var.envp = envp;
 	return (var);
 }
 

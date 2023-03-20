@@ -1,33 +1,6 @@
-lexer → parser → expander → executor
-
-lexer: En attente de la fonction de Ethan.
-
-The Parser
-The Parser is the software component that reads the command line such as “ls ­al” and puts it 
-into a data structure called Command Table that will store the commands that will be 
-executed.   
-
-ls -l -a > Fonctionne. Comment patch ? // parser
+To do list:
+Gérer les redirections < > << >>, À quel moment check les redirections ?
+Gérer les reidrections pipe
 
 
-
-Lorsque vous entrez "arg="-l" ls $ARG" dans votre mini-shell, le processus se déroulerait comme suit :
-
-Lexer : Le lexer analysera la commande "arg="-l" ls $ARG" et produira les tokens suivants : "arg", "=", "-l", "ls", "$ARG".
-
-Parser : Le parser prendra les tokens générés par le lexer et créera une structure d'arbre de syntaxe abstraite (AST) qui représente la commande "arg="-l" ls $ARG". Cette AST peut ressembler à quelque chose comme :
-
-└─── CommandNode
-├─── AssignmentNode (arg=-l)
-├─── ArgumentNode (ls)
-└─── ArgumentNode ($ARG)
-
-Expander : L'expander remplacera "$ARG" par la valeur de la variable d'environnement "ARG", mais comme il n'y a pas de variable d'environnement "ARG" définie, "$ARG" restera tel quel.
-
-Executor : L'exécuteur prendra l'AST produit par le parser et exécutera la commande "ls" avec l'option "-l" en appelant la fonction système appropriée (par exemple, la fonction execvp en C) avec les arguments "ls" et "-l". Cependant, la variable "arg" définie dans la commande ne sera pas transmise à la commande "ls" car elle n'a pas été incluse dans l'AST.
-
-En fin de compte, la commande "ls" sera exécutée avec l'option "-l" car elle a été incluse en tant qu'argument direct et non via la variable "arg". La variable "arg" ne sera pas transmise à la commande "ls" car elle n'a pas été incluse dans l'AST.
-
-EHTAAAN
-- Le lexer segfault quand des paramètres qui ne sont pas dans la fonction ft_caractère sont passé en paramètres
-ex: /, ., etc.
+Besoin de Token ? Comment bien les utiliser ?
