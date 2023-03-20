@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   02-Parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 13:24:50 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:30:22 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,24 @@ void	ft_assign_type(t_token *token)
 
 void	ft_parser(t_init *var)
 {
-	int i;
 	t_cmd container;
 
-	i = 0;
+	container.i = 0;
 	container.all_path = find_path(var->envp);
 	container.pipe_split = ft_split(var->input, '|');
-	while (container.pipe_split[i])
+	while (container.pipe_split[container.i])
 	{
-		container.cmd = ft_split(container.pipe_split[i], ' ');
+		container.cmd = ft_split(container.pipe_split[container.i], ' ');
 		container.cmd_path = find_cmd_path(container.cmd, container.all_path);
 		if (!container.cmd_path)
 		{
 			printf("minishell: %s: command not found.\n", container.cmd[0]); // Exit en même temps
-			break;
+			exit(EXIT_SUCCESS);
 		}
 		ft_executor(&container, var);
 		ft_free_double(container.cmd);
 		free(container.cmd_path);
-		i++;
+		container.i++;
 	}
 	free_container(&container);
 }

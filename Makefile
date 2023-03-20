@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/20 16:11:22 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/20 18:02:46 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRC_DIR		= srcs/
 _SRC		= 01-Minishell.c \
 	02-Parser.c \
 	03-Executor.c \
+	10-Signal.c \
 	11-Utils.c \
 	12-end.c \
 	13-init.c \
@@ -28,28 +29,27 @@ INCLUDE		= include/
 LIBFT		= libft/libft.a
 
 LIBRLINE = readline-8.2
-LIBRD_FILES		=	include/readline/libreadline.a include/readline/libhistory.a
+LIBRD	=	include/readline/libreadline.a include/readline/libhistory.a
 
 CC		= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 
-LIBS	= $(LIBFT) -lcurses $(LIBRD_FILES)
+LIBS	= $(LIBFT) -lcurses $(LIBRD)
 
 NAME	= minishell
 
 %.o:		%.c
 		-$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
 
-
-$(NAME):	$(LIBFT) $(OBJ_M)
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJ_M) $(LIBS)
+$(NAME): $(LIBFT) $(LIBRD) $(OBJ_M)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_M) $(LIBS)
 
 $(LIBFT):
 		make -C libft/
 
 all:	$(NAME)
 	
-readline	:
+$(LIBRD):
 	curl -O ftp://ftp.cwru.edu/pub/bash/$(LIBRLINE).tar.gz
 	tar -xf $(LIBRLINE).tar.gz
 	rm -rf $(LIBRLINE).tar.gz

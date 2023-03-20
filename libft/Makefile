@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/18 13:47:04 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/15 12:30:37 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/20 17:53:42 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rcs  $(NAME) $(OBJS)
-	@echo "$(GREEN)$(BOLD)Compilation de la libft terminé"
+	@echo "$(GREEN)$(BOLD)Compilation de la libft terminé$(RESET)"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c -o $@ $< && printf "$(CYAN)\rCompiling: $(notdir $<)$(GREEN)\r\e[35C[OK]\n"

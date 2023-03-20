@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   01-Minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 16:33:04 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:03:46 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,19 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	ft_readline(envp);
 }
+
+		// t_token *tmp;
+		// tmp = token;
+		// while (tmp)
+		// {
+		// 	printf("%s\n", tmp->str);
+		// 	printf("%d\n", tmp->type); //pour print les valeurs dans linked list et faire des tests.
+		// 	tmp = tmp->next;
+		// }
+
+// if (ft_strncmp(input, "exit", 4) == 0)
+// {
+// 	printf("exit\n");
+// 	free(input);
+// 	exit(EXIT_FAILURE);
+// }

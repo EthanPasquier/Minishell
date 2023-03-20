@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 16:26:27 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:04:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "../libft/libft.h"
 # include <stdio.h>
-# include "readline/history.h"
 # include "readline/readline.h"
-# include <signal.h>
+# include "readline/history.h"
 # include <stdlib.h>
 # include <string.h>
+# include <signal.h>
 
 # define CMD 1
 # define ARG 2
@@ -28,6 +28,10 @@
 # define LESS 5
 # define LESS_LESS 6
 # define PIPE 7
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 typedef struct s_init
 {
@@ -48,6 +52,8 @@ typedef struct s_cmd
 	char			**cmd;
 	char			**all_path;
 	char			*cmd_path;
+	int				i;
+	int				pipefd[2];
 }					t_cmd;
 
 t_init				ft_init(char *input, char **envp);
@@ -57,6 +63,9 @@ void				ft_parser(t_init *var);
 char				**find_path(char **envp);
 char				*find_cmd_path(char **cmd, char **path);
 
+void	ft_ctrlc(int sig);
+void	ft_ctrld(int sig);
+
 void				ft_executor(t_cmd *command, t_init *var);
 
 // Free & End function.
@@ -64,9 +73,5 @@ void				*ft_free_double(char **str);
 void				free_container(t_cmd *container);
 void				ft_free_list(t_token *token);
 void				ft_error(int flag);
-
-//fonction des signaux
-void				ft_ctrlc(int sig);
-void				ft_ctrld(int sig);
 
 #endif
