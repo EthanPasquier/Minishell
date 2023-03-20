@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
+#    Updated: 2023/03/20 16:01:21 by jalevesq         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRC_DIR		= srcs/
 
 _SRC		= 01-Minishell.c \
@@ -11,45 +23,49 @@ SRC_M		= $(addprefix $(SRC_DIR), $(_SRC))
 
 OBJ_M		= $(SRC_M:.c=.o)
 
-INCL		= include/
+INCLUDE		= include/
 
 LIBFT		= libft/libft.a
 
-LIBRD_DIR		=	$(INCL)/readline
-LIBRD_FILES		=	libreadline.a libhistory.a
-LIBRD_MAKEFILE		=	$(LIBRD_DIR)/Makefile
-LIBRD			=	$(addprefix $(LIBRD_DIR)/, $(LIBRD_FILES))
+LIBRLINE = readline-8.2
+LIBRD_FILES		=	include/readline/libreadline.a include/readline/libhistory.a
 
 CC		= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
-LIBS	= $(LIBFT) -lcurses $(LIBRD)
+LIBS	= $(LIBFT) -lcurses $(LIBRD_FILES)
 
 NAME	= minishell
 
 %.o:		%.c
-		-$(CC) $(CFLAGS) -I$(INCL) -c $< -o $@
+		-$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
 
 
-$(NAME):	$(LIBFT) $(LIBRD_MAKEFILE) $(LIBRD) $(OBJ_M)
+$(NAME):	$(LIBFT) $(OBJ_M)
 		$(CC) $(CFLAGS) -o $(NAME) $(OBJ_M) $(LIBS)
 
-$(LIBRD): 	$(LIBRD_MAKEFILE)
-		@$(MAKE) -s -C $(LIBRD_DIR)
-
-$(LIBRD_MAKEFILE):
-		@cd $(LIBRD_DIR) && ./configure --silent
 $(LIBFT):
 		make -C libft/
 
-all:	$(NAME) $(NAME_BONUS) 
-
+all:	$(NAME)
+	
+readline	:
+	curl -O ftp://ftp.cwru.edu/pub/bash/$(LIBRLINE).tar.gz
+	tar -xf $(LIBRLINE).tar.gz
+	rm -rf $(LIBRLINE).tar.gz
+	cd $(LIBRLINE) && bash configure && make
+	cd ./include && mkdir readline
+	mv ./$(LIBRLINE)/libreadline.a ./include/readline
+	mv ./$(LIBRLINE)/libhistory.a ./include/readline
+	mv ./$(LIBRLINE)/*.h ./include/readline
+	rm -rf $(LIBRLINE)
 clean:
-		rm -f $(OBJ_M) $(OBJ_B) $(LIBFT)
+		rm -f $(OBJ_M) $(LIBFT)
 		make -C libft/ clean
-#		@$(MAKE) -s clean -C $(LIBRD_DIR)
 
 fclean:		clean
 		rm -f $(NAME) $(NAME_BONUS)
+		cd ./include && rm -rf readline
+
 
 re:		fclean all
