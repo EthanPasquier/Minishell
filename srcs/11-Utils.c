@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 10:29:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:21:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ char	*find_cmd_path(char **cmd, char **path)
 	char	*tmp;
 	
 	i = 0;
+	if (ft_strncmp(cmd[0], "/", 1) == 0)
+	{
+		if (access(*cmd, X_OK) == 0)
+			return (*cmd);
+	}
 	while (path[i])
 	{
 		tmp = ft_strjoin(path[i], cmd[0]);
@@ -57,4 +62,26 @@ char	*find_cmd_path(char **cmd, char **path)
 		i++;
 	}
 	return (NULL);
+}
+
+int ft_is_next_pipe(t_token *tmp_cmd)
+{
+	while (tmp_cmd)
+	{
+		if (tmp_cmd->type == PIPE)
+			return (1);
+		tmp_cmd = tmp_cmd->next;
+	}
+	return (0);
+}
+
+int ft_is_prev_pipe(t_token *tmp_cmd)
+{
+	while (tmp_cmd->prev) // tmp_cmd or tmp_cmd->prev ?
+	{
+		if (tmp_cmd->type == PIPE)
+			return (1);
+		tmp_cmd = tmp_cmd->prev;
+	}
+	return (0);
 }

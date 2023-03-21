@@ -6,12 +6,14 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 16:30:22 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 09:54:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+
+// Error func good ?
 t_token	*ft_fill_list(char **token)
 {
 	t_token *tokentype;
@@ -21,17 +23,15 @@ t_token	*ft_fill_list(char **token)
 	i = 0;
 	tokentype = NULL;
 	tokentype = new_node(token[i++]);
+	tokentype->prev = NULL;
 	tmp = tokentype;
 	while (token[i])
 	{
-		tmp->next = new_node(token[i]);
+		tmp->next = new_node(token[i++]);
 		if (!tmp->next)
-		{
-			ft_free_list(tokentype);
-			ft_error(1);
-		}
+			ft_end_list(tokentype);
+		tmp->next->prev = tmp;
 		tmp = tmp->next;
-		i++;
 	}
 	return (tokentype);
 }
@@ -61,30 +61,52 @@ void	ft_assign_type(t_token *token)
 	}
 }
 
+t_token *ft_exec_fill(t_token *token, t_init *var)
+{
+	char **split_token = ft_split(var->input, ' ');
+	token = ft_fill_list(split_token);
+	if (!token)
+	{
+		printf("Error in fill list token");
+		exit(EXIT_FAILURE);
+	}
+	ft_free_double(split_token);
+	ft_assign_type(token);
+
+	return (token);
+}
+
 void	ft_parser(t_init *var)
 {
 	t_cmd container;
+	t_token *token;
 
+	if (pipe(container.pipefd) == -1)
+		ft_error(1); // temp, bad exit.
+
+	token = NULL;
 	container.i = 0;
-	container.all_path = find_path(var->envp);
-	container.pipe_split = ft_split(var->input, '|');
-	while (container.pipe_split[container.i])
+	container.all_path = find_path(var->envp); // Split PATH= Variable in ENVP
+	container.pipe_split = ft_split(var->input, '|'); // Split input at each pipe
+	while (container.pipe_split[container.i]) // While there is command.
 	{
-		container.cmd = ft_split(container.pipe_split[container.i], ' ');
-		container.cmd_path = find_cmd_path(container.cmd, container.all_path);
+		container.cmd = ft_split(container.pipe_split[container.i], ' '); // Split the command at each space so cat -e is: cat, -e.
+		container.cmd_path = find_cmd_path(container.cmd, container.all_path); // Try to find the path to the command in the ENV variable.
 		if (!container.cmd_path)
 		{
-			printf("minishell: %s: command not found.\n", container.cmd[0]); // Exit en même temps
-			exit(EXIT_SUCCESS);
+			error_cmd_path(&container);
+			return ;
 		}
-		ft_executor(&container, var);
-		ft_free_double(container.cmd);
-		free(container.cmd_path);
+		token = ft_exec_fill(token, var); // Fill a linked with the input split at each space and type assign to it.
+		ft_executor(&container, var, token); // try to execute the command find in cmd_path.
+		free_cmd(&container);
 		container.i++;
 	}
+	close(container.pipefd[0]);
+	close(container.pipefd[1]);
+	ft_free_list(token);
 	free_container(&container);
 }
-
 
 	// token = ft_split(var->input, ' ');
 	// tokentype = ft_fill_list(token);
