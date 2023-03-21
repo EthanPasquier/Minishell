@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 09:54:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:27:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	ft_assign_type(t_token *token)
 			temp->type = LESS;
 		else if (ft_strncmp(temp->str, ">", 1) == 0)
 			temp->type = GREAT;
-		else if (ft_strncmp(temp->str, "-", 1) == 0)
-			temp->type = ARG;
 		else if (ft_strncmp(temp->str, "|", 1) == 0)
 			temp->type = PIPE;
 		else
@@ -79,12 +77,10 @@ t_token *ft_exec_fill(t_token *token, t_init *var)
 void	ft_parser(t_init *var)
 {
 	t_cmd container;
-	t_token *token;
-
+	// t_token *token;
 	if (pipe(container.pipefd) == -1)
 		ft_error(1); // temp, bad exit.
-
-	token = NULL;
+	// token = NULL;
 	container.i = 0;
 	container.all_path = find_path(var->envp); // Split PATH= Variable in ENVP
 	container.pipe_split = ft_split(var->input, '|'); // Split input at each pipe
@@ -97,14 +93,14 @@ void	ft_parser(t_init *var)
 			error_cmd_path(&container);
 			return ;
 		}
-		token = ft_exec_fill(token, var); // Fill a linked with the input split at each space and type assign to it.
-		ft_executor(&container, var, token); // try to execute the command find in cmd_path.
+		// token = ft_exec_fill(token, var); // Fill a linked with the input split at each space and type assign to it.
+		ft_executor(&container, var); // try to execute the command find in cmd_path.
+		// ft_free_list(token);
 		free_cmd(&container);
 		container.i++;
 	}
 	close(container.pipefd[0]);
 	close(container.pipefd[1]);
-	ft_free_list(token);
 	free_container(&container);
 }
 

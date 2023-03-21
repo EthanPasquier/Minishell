@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 10:21:08 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:59:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ char	*find_cmd_path(char **cmd, char **path)
 	char	*tmp;
 	
 	i = 0;
-	if (ft_strncmp(cmd[0], "/", 1) == 0)
-	{
-		if (access(*cmd, X_OK) == 0)
-			return (*cmd);
-	}
 	while (path[i])
 	{
 		tmp = ft_strjoin(path[i], cmd[0]);

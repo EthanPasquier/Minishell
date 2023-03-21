@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 10:25:30 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:17:29 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ typedef struct s_cmd
 	char			**all_path;
 	char			*cmd_path;
 	int				i;
+	int				cmd_nbr;
 	int				pipefd[2];
-}					t_cmd;
+	pid_t			pid;
+}	t_cmd;
 
 t_init				ft_init(char *input, char **envp);
 t_token				*new_node(char *str);
@@ -69,7 +71,8 @@ void				ft_ctrld(int sig);
 int					ft_is_next_pipe(t_token *tmp_cmd);
 int					ft_is_prev_pipe(t_token *tmp_cmd);
 
-void				ft_executor(t_cmd *container, t_init *var, t_token *token);
+// void				ft_executor(t_cmd *container, t_init *var, t_token *token);
+void				ft_executor(t_cmd *container, t_init *var);
 
 // Free & End function.
 void				*ft_free_double(char **str);

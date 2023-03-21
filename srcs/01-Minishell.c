@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 10:38:21 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:44:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ void	ft_readline(char **envp)
 	while (1)
 	{
 		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
-		add_history(input);
-		if (ft_strlen(input) > 0)
+		if (input)
 		{
-			var = ft_init(input, envp);
-			ft_parser(&var);
-			free(input);
+			if (ft_strlen(input) > 0) // leak car résultat de strtrim non stocké ?
+			{
+				add_history(input);
+				var = ft_init(input, envp);
+				ft_parser(&var);
+				free(input);
+			}
 		}
+		else
+			exit(EXIT_SUCCESS); // changer, des trucs à free ?
 	}
 }
 
