@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/20 18:04:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:25:30 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_token
 	char			*str;
 	int				type;
 	struct s_token	*next;
+	struct s_token	*prev;
 }					t_token;
 
 typedef struct s_cmd
@@ -63,15 +64,20 @@ void				ft_parser(t_init *var);
 char				**find_path(char **envp);
 char				*find_cmd_path(char **cmd, char **path);
 
-void	ft_ctrlc(int sig);
-void	ft_ctrld(int sig);
+void				ft_ctrlc(int sig);
+void				ft_ctrld(int sig);
+int					ft_is_next_pipe(t_token *tmp_cmd);
+int					ft_is_prev_pipe(t_token *tmp_cmd);
 
-void				ft_executor(t_cmd *command, t_init *var);
+void				ft_executor(t_cmd *container, t_init *var, t_token *token);
 
 // Free & End function.
 void				*ft_free_double(char **str);
 void				free_container(t_cmd *container);
 void				ft_free_list(t_token *token);
 void				ft_error(int flag);
+void				error_cmd_path(t_cmd *container);
+void				free_cmd(t_cmd *container);
+void 				ft_end_list(t_token *token);
 
 #endif
