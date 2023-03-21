@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/20 18:02:46 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/21 18:47:05 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ _SRC		= 01-Minishell.c \
 	03-Executor.c \
 	10-Signal.c \
 	11-Utils.c \
-	12-end.c \
+	12-Error1.c \
 	13-init.c \
 
 SRC_M		= $(addprefix $(SRC_DIR), $(_SRC))
