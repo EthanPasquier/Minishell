@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:14:38 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 18:34:49 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/21 19:17:46 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,15 @@ static void	ft_exec_child(t_cmd *container, t_init *var)
 			ft_error(1); // temp, bad exit
 		fprintf(stderr, "%s\n", "pipefd1 stdout");
 	}
+	// if (container->cmd_nbr == container->i)
+	// {
+	// 	if(dup2(container->pipefd[1], STDOUT) == -1)
+	// 		ft_error(1); // temp, bad exit
+	// 	fprintf(stderr, "%s\n", "pipefd1 stdout");
+	// }
 	close(container->pipefd[0]);
 	close(container->pipefd[1]);
-	// fprintf(stderr, "%s\n", "Test");
+	fprintf(stderr, "%s\n", "EXECVE");
 	execve(container->cmd_path, container->cmd, var->envp);
 	// printf("execve error wtf\n");
 	exit(EXIT_SUCCESS); // Change this end.
@@ -37,41 +43,27 @@ static void	ft_exec_child(t_cmd *container, t_init *var)
 
 void	ft_child(t_cmd *container, t_init *var)
 {
-
+	if (pipe(container->pipefd) == -1)
+		ft_error(1); // temp, bad exit.
 	container->pid = fork();
 	if (container->pid == -1)
 		ft_error(1); // Temp exit, very bad exit
 	else if (container->pid == 0)
 		ft_exec_child(container, var);
-	// printf("Right before waitpid\n");
+	close(container->pipefd[1]); // close write end of the pipe
+	close(container->pipefd[0]); // close read end of the pipe
 	waitpid(container->pid, NULL, 0);
-
+	printf("End of Child Process\n");
 }
-
-// t_token	*ft_next_cmd(t_token *token, t_cmd *container)
-// {
-// 	t_token *tmp_cmd;
-// 	int i;
-
-// 	i = 0;
-// 	tmp_cmd = token;
-// 	if (tmp_cmd->type == CMD)
-// 		i++;
-// 	while (i <= container->i && tmp_cmd)
-// 	{
-// 		tmp_cmd = tmp_cmd->next;
-// 		if (tmp_cmd->type == CMD)
-// 			i++;
-// 	}
-// 	return (tmp_cmd);
-// }
 
 void	ft_executor(t_cmd *container, t_init *var)
 {
 	container->cmd_nbr = 0;
 
+	// (void)var;
 	while (container->pipe_split[container->cmd_nbr])
 		container->cmd_nbr++;
+	// printf("%d\n", container->cmd_nbr);
 	// exit(EXIT_SUCCESS);
 	ft_child(container, var);
 	// printf("%s\n", "coucou");
