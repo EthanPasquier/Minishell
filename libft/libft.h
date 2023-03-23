@@ -74,4 +74,16 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned	int, char));
 
+# include <unistd.h>
+# include <stdlib.h>
+
+char	*get_next_line(int fd);
+size_t	ft_GNLstrlen(char *str);
+int		ft_is_newline(char *str);
+char	*ft_freeGNL(char *str1, char *str2);
+char	*ft_strjoin_gnl(char *stash, char *buffer, size_t size);
+
+
+
+
 #endif

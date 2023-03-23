@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_convert.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 08:10:39 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/19 12:59:14 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/09 09:15:11 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/push_swap.h"
 
 static int	ft_isnbr(char c)
 {
@@ -34,11 +34,11 @@ static int	ft_is_sign(char c)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	i;
-	int	res;
-	int	sign;
+	long int	i;
+	long int	res;
+	long int	sign;
 
 	sign = 1;
 	res = 0;
@@ -47,19 +47,25 @@ int	ft_atoi(const char *str)
 		i++;
 	if (ft_is_sign(str[i]))
 	{
-		if (str[i] == '-')
+		if (str[i++] == '-')
 			sign *= -1;
-		i++;
 	}
-	while (ft_isnbr(str[i]))
-	{
-		res = res * 10 + str[i] - '0';
+	while (ft_is_sign(str[i]))
 		i++;
-	}
+	while (str[i] >= '0' && str[i] <= '9')
+		res = res * 10 + str[i++] - '0';
+	if (str[i])
+		ft_end
 	return (res * sign);
 }
 
 // #include <stdio.h>
+// #include <stdlib.h>
+// 
+// int main(void)
+// {
+// 	printf("%d\n", atoi("-2147483649"));
+// }
 // int main()
 // {
 // 	printf("0 ft %d\n",ft_atoi("0"));
