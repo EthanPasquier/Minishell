@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 08:13:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:09:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	error_cmd_path(t_cmd *container)
 	ft_free_double(container->cmd);
 	ft_free_double(container->all_path);
 	ft_free_double(container->pipe_split);
+	ft_free_double(container->all_cmd_path);
 }
 
 void	free_cmd(t_cmd *container)

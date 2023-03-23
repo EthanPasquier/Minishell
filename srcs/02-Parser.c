@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 10:53:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:12:18 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@
 
 void	ft_container_init(t_cmd *container, t_init *var)
 {
-	container->flag_pipe = 0;
 	container->i = 0;
 	container->all_path = find_path(var->envp); // Split PATH= Variable in ENVP
 	container->pipe_split = ft_split(var->input, '|'); // Split input at each pipe
@@ -87,10 +86,10 @@ void	ft_parser(t_init *var)
 {
 	t_cmd container;
 
-	if(pipe(container.pipefd) == -1)
-			ft_error(1);
-
 	ft_container_init(&container, var);
+	
+	container.all_cmd_path = malloc(sizeof(char**) * container.cmd_nbr);
+	
 	while (container.pipe_split[container.i]) // While there is command.
 	{
 		container.cmd = ft_split(container.pipe_split[container.i], ' '); // Split the command at each space so cat -e is: cat, -e.
@@ -100,18 +99,34 @@ void	ft_parser(t_init *var)
 			error_cmd_path(&container);
 			return ;
 		}
-		ft_executor(&container, var->envp); // try to execute the command find in cmd_path.
+		container.all_cmd_path[container.i] = container.cmd_path;
 		free_cmd(&container);
 		container.i++;
-		if (container.i == 2)
-			close(container.pipefd[0]);
 	}
-	free_container(&container);
+	
+	
+	ft_executor(&container, var->envp);
+	// container.cmd = ft_split(container.pipe_split[container.i], ' ');
+	
 }
 
+	// while (container.pipe_split[container.i]) // While there is command.
+	// {
+	// 	container.cmd = ft_split(container.pipe_split[container.i], ' '); // Split the command at each space so cat -e is: cat, -e.
+	// 	container.cmd_path = find_cmd_path(container.cmd, container.all_path); // Try to find the path to the command in the ENV variable.
+	// 	if (!container.cmd_path)
+	// 	{
+	// 		error_cmd_path(&container);
+	// 		return ;
+	// 	}
+	// 	ft_executor(&container, var->envp); // try to execute the command find in cmd_path.
+	// 	free_cmd(&container);
+	// 	container.i++;
+	// }
+	// free_container(&container);
 	// token = ft_split(var->input, ' ');
 	// tokentype = ft_fill_list(token);
 	// ft_free_double(token);
 	// ft_assign_type(tokentype);
 
-	// return (tokentype);
+	// return (tokentype);/42cursus-fract-ol/jupallar

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 10:25:07 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:04:35 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ typedef struct s_cmd
 	char			**cmd;
 	char			**all_path;
 	char			*cmd_path;
+	char			**all_cmd_path;
 	int				i;
 	int				cmd_nbr;
-	int				pipefd[2];
-	int				flag_pipe;
 	pid_t			pid;
 }	t_cmd;
 
