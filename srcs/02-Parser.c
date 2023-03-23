@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/22 09:34:12 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:53:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,23 @@
 // 	return (token);
 // }
 
+void	ft_container_init(t_cmd *container, t_init *var)
+{
+	container->flag_pipe = 0;
+	container->i = 0;
+	container->all_path = find_path(var->envp); // Split PATH= Variable in ENVP
+	container->pipe_split = ft_split(var->input, '|'); // Split input at each pipe
+	container->cmd_nbr = cmd_counter(container);
+}
+
 void	ft_parser(t_init *var)
 {
 	t_cmd container;
 
-	container.i = 0;
-	container.all_path = find_path(var->envp); // Split PATH= Variable in ENVP
-	container.pipe_split = ft_split(var->input, '|'); // Split input at each pipe
+	if(pipe(container.pipefd) == -1)
+			ft_error(1);
+
+	ft_container_init(&container, var);
 	while (container.pipe_split[container.i]) // While there is command.
 	{
 		container.cmd = ft_split(container.pipe_split[container.i], ' '); // Split the command at each space so cat -e is: cat, -e.
@@ -90,9 +100,11 @@ void	ft_parser(t_init *var)
 			error_cmd_path(&container);
 			return ;
 		}
-		ft_executor(&container, var); // try to execute the command find in cmd_path.
+		ft_executor(&container, var->envp); // try to execute the command find in cmd_path.
 		free_cmd(&container);
 		container.i++;
+		if (container.i == 2)
+			close(container.pipefd[0]);
 	}
 	free_container(&container);
 }

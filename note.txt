@@ -2,5 +2,7 @@ To do list:
 Gérer les redirections < > << >>, À quel moment check les redirections ?
 Gérer les reidrections pipe
 
+* Readline, text wrap quand terminal trop petit. \001 \002, bug quand "ENTER"
+
 * Changer la façon de init le envp.
 Besoin de Token ? Comment bien les utiliser ?

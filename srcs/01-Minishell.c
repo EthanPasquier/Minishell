@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 08:03:42 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/23 09:55:09 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_readline(char **envp)
 	// signal(SIGQUIT, ft_ctrld);
 	while (1)
 	{
-		input = readline("\001\U0001F9E0 \033[1;36mminishell > \033[0m\002");
+		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
 		if (input)
 		{
 			if (ft_strlen(input) > 0) // leak car résultat de strtrim non stocké ?
@@ -33,7 +33,7 @@ void	ft_readline(char **envp)
 			}
 		}
 		else
-			exit(EXIT_SUCCESS); // changer, des trucs à free ?
+			exit(EXIT_SUCCESS); // changer, des trucs à free, clear history ? ?
 	}
 }
 

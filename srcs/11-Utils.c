@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 11:59:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:06:21 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,34 @@ char	*find_cmd_path(char **cmd, char **path)
 	return (NULL);
 }
 
-int ft_is_next_pipe(t_token *tmp_cmd)
-{
-	while (tmp_cmd)
-	{
-		if (tmp_cmd->type == PIPE)
-			return (1);
-		tmp_cmd = tmp_cmd->next;
-	}
-	return (0);
-}
+// int ft_is_next_pipe(t_token *tmp_cmd)
+// {
+// 	while (tmp_cmd)
+// 	{
+// 		if (tmp_cmd->type == PIPE)
+// 			return (1);
+// 		tmp_cmd = tmp_cmd->next;
+// 	}
+// 	return (0);
+// }
 
-int ft_is_prev_pipe(t_token *tmp_cmd)
+// int ft_is_prev_pipe(t_token *tmp_cmd)
+// {
+// 	while (tmp_cmd->prev) // tmp_cmd or tmp_cmd->prev ?
+// 	{
+// 		if (tmp_cmd->type == PIPE)
+// 			return (1);
+// 		tmp_cmd = tmp_cmd->prev;
+// 	}
+// 	return (0);
+// }
+
+int	cmd_counter(t_cmd *container)
 {
-	while (tmp_cmd->prev) // tmp_cmd or tmp_cmd->prev ?
-	{
-		if (tmp_cmd->type == PIPE)
-			return (1);
-		tmp_cmd = tmp_cmd->prev;
-	}
-	return (0);
+	int	cmd_nbr;
+
+	cmd_nbr = 0;
+	while (container->pipe_split[cmd_nbr])
+		cmd_nbr++;
+	return (cmd_nbr);
 }
