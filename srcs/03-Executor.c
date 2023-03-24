@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:14:38 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 10:08:19 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:37:43 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,22 @@ void	ft_test_child(t_cmd *container, int i, char **envp, int *fd_array)
 
 	j = i * 2; // j = pipfd[1] et j+1 = pipfd[0]
 	// fprintf(stderr, "i = %d et j = %d", i, j);
+	fprintf(stderr, "i = %d , fd_array[i] = %d , fd_array[i + 1] = %d\n", i,
+			fd_array[i], fd_array[i + 1]);
 	container->cmd = ft_split(container->pipe_split[i], ' ');
 	if (i == 0)
 	{
 		if (dup2(fd_array[j], STDOUT) == -1)
 			ft_error(1); // temp, bad exit
 		fprintf(stderr, "%s\n", "pipefd1 stdout");
-		close(fd_array[j]);
+		// close(fd_array[1]);
 	}
 	else if (i == container->cmd_nbr - 1)
 	{
 		if (dup2(fd_array[j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
 		fprintf(stderr, "%s\n", "pipefd0 stdin");
-		close(fd_array[j - 1]);
+		// close(fd_array[0]);
 	}
 	else
 	{
@@ -56,12 +58,16 @@ void	ft_test_child(t_cmd *container, int i, char **envp, int *fd_array)
 		if (dup2(fd_array[j], STDOUT) == -1)
 			ft_error(1); // temp, bad exit//
 		fprintf(stderr, "%s\n", "pipefd0 stdin");
-		close(fd_array[j]);
-		close(fd_array[j - 1]);
+		// close(fd_array[j]);
+		// close(fd_array[j - 1]);
 	}
-	close(fd_array[j]);
+	for (int k = 0; k < (container->cmd_nbr - 1) * 2; k++)
+	{
+		close(fd_array[k]);
+	}
+	// close(fd_array[j]);
 	fprintf(stderr, "%s\n", "EXECVE");
-	execve(container->cmd_path, container->cmd, envp);
+	execve(container->all_cmd_path[i], container->cmd, envp);
 	fprintf(stderr, "execve error wtf\n");
 	exit(EXIT_SUCCESS); // Change this end.
 }
@@ -107,12 +113,15 @@ void	multiple_command(t_cmd *container, char **envp)
 		// }
 		i++;
 	}
-	close(fd_array[0]);
-	close(fd_array[1]);
+	for (int k = 0; k < (container->cmd_nbr - 1) * 2; k++)
+	{
+		close(fd_array[k]);
+	}
+	// close(fd_array[0]);
+	// close(fd_array[1]);
 	i = 0;
 	while (i < container->cmd_nbr)
 	{
-		printf("salut");
 		waitpid(pid[i], NULL, 0);
 		i++;
 	}
