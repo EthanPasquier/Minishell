@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 16:12:18 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:13:34 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,18 @@ void	ft_parser(t_init *var)
 		container.cmd_path = find_cmd_path(container.cmd, container.all_path); // Try to find the path to the command in the ENV variable.
 		if (!container.cmd_path)
 		{
-			error_cmd_path(&container);
+			error_cmd_path(&container); // BIG CRASH if command not found
 			return ;
 		}
 		container.all_cmd_path[container.i] = container.cmd_path;
-		free_cmd(&container);
+		// free(container.cmd_path); // ne pas free cmd_path car sinon impossible a lire dans all_cmd_path. SEGFAULT. free comment ?
+		ft_free_double(container.cmd);
+		// printf("%s\n", container.all_cmd_path[container.i]);
 		container.i++;
 	}
 	
-	
+	// exit(EXIT_FAILURE);
 	ft_executor(&container, var->envp);
-	// container.cmd = ft_split(container.pipe_split[container.i], ' ');
 	
 }
 

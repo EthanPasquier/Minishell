@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:14:38 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 16:13:35 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:25:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void	single_command(t_cmd *container, char **envp)
 {
+	container->cmd = ft_split(container->pipe_split[0], ' ');
 	container->pid = fork();
 	if (container->pid <= -1)
 		ft_error(1); // Temp exit, very bad exit	
@@ -49,12 +50,12 @@ void	ft_test_child(t_cmd *container, int i, char **envp, int *fd_array)
 	{
 		if(dup2(fd_array[j-1],STDIN) == -1)
 			ft_error(1); // temp, bad exit
-		if(dup2(fd_array[j],STDOUT) == -1)
+		if(dup2(fd_array[j],STDOUT) == -1) 
 			ft_error(1); // temp, bad exit
 		// fprintf(stderr, "%s\n", "pipefd0 stdin");
 	}
-	close(fd_array[i]);
-	close(fd_array[i + 2]);
+	close(fd_array[j]);
+	close(fd_array[j + 1]);
 	fprintf(stderr, "%s\n", "EXECVE");	
 	execve(container->cmd_path, container->cmd, envp);
 	fprintf(stderr, "execve error wtf\n");
@@ -68,9 +69,12 @@ void	multiple_command(t_cmd *container, char **envp)
 	int		*fd_array;
 	int		i;
 
-	fd_array = malloc(sizeof(int) * (container->cmd_nbr - 1) * 2);
+	// (void)envp;
+	fd_array = malloc(sizeof(int*) * (container->cmd_nbr - 1) * 2); // 2e segfault
+	if (!fd_array)
+		ft_error(1); // à Changer
 	i = 0;
-	while (i < (container->cmd_nbr - 1) * 2)
+	while (i < (container->cmd_nbr - 1))
 	{
 		if (pipe(pipe_fd) == -1)
 			ft_error(1);
@@ -87,23 +91,21 @@ void	multiple_command(t_cmd *container, char **envp)
 	while (i < container->cmd_nbr)
 	{
 		pid[i] = fork();
-	
 		if (pid[i] < 0)
 			ft_error(1);
 		else if (pid[i] == 0)
 		{
-			ft_test_child(container, i, envp, fd_array);
+			ft_test_child(container, i, envp, fd_array); // first segfault
 			exit(EXIT_FAILURE);
 		}
 		else
 		{
-			if (i > 1)
-				close(fd_array[i - 2]);
+			// if (i > 1)
+				// close(fd_array[i - 1]);
 			i++;
 		}
 	}
-	close(fd_array[i-1]);
-	close(fd_array[i]);
+	// close(fd_array[i]);
 	i = 0;
 	while (i < container->cmd_nbr)
 	{
@@ -116,10 +118,10 @@ void	multiple_command(t_cmd *container, char **envp)
 void	ft_executor(t_cmd *container, char **envp)
 {
 	// Check < > here, if true, change fd to outfile/infile in CHILD process. How?
-	// if (container->cmd_nbr <= 1)
-	// 	single_command(container, envp);
-	// else
-	multiple_command(container, envp);
+	if (container->cmd_nbr <= 1)
+		single_command(container, envp);
+	else
+		multiple_command(container, envp);
 }
 
 // ls
