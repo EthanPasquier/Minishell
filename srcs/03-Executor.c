@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   03-Executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:14:38 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 13:29:37 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:09:11 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	single_command(t_cmd *container, char **envp)
 	else if (container->pid == 0)
 	{
 		execve(container->cmd_path, container->cmd, envp);
-		// printf("Error, single command execve failed"); // change this end
+		printf("Error, single command execve failed"); // change this end
 	}
 	waitpid(container->pid, NULL, 0);
 }
 
-void	ft_test_child(t_cmd *container, int i, char **envp, int *fd_array)
+void	ft_exec_child(t_cmd *container, int i, char **envp, int *fd_array)
 {
 	int	j;
 
@@ -37,87 +37,44 @@ void	ft_test_child(t_cmd *container, int i, char **envp, int *fd_array)
 	if (i == 0)
 	{
 		if (dup2(fd_array[j], STDOUT) == -1)
-			ft_error(1);
+			ft_error(1); // temp, bad exit
 	}
 	else if (i == container->cmd_nbr - 1)
 	{
 		if (dup2(fd_array[j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
-							// fprintf(stderr, "%s\n", "pipefd0 stdin");
-							// close(fd_array[0]);
 	}
 	else
 	{
-		// fprintf(stderr, "%s\n", "hello");
 		if (dup2(fd_array[j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
 		if (dup2(fd_array[j], STDOUT) == -1)
 			ft_error(1); // temp, bad exit//
-							// fprintf(stderr, "%s\n", "pipefd0 stdin");
-							// close(fd_array[j]);
-							// close(fd_array[j - 1]);
 	}
-	for (int k = 0; k < (container->cmd_nbr - 1) * 2; k++)
-	{
-		close(fd_array[k]);
-	}
-	// close(fd_array[j]);
-	fprintf(stderr, "%s\n", "EXECVE");
+	ft_close_child(fd_array, container->cmd_nbr);
 	execve(container->all_cmd_path[i], container->cmd, envp);
-	fprintf(stderr, "execve error wtf\n");
-	exit(EXIT_SUCCESS); // Change this end.
+	ft_error(1);
 }
 
-void	multiple_command(t_cmd *container, char **envp)
+void ft_child(t_cmd *container, char **envp, int *fd_array)
 {
-	int		pipe_fd[2];
-	int		*fd_array;
-	int		i;
 	pid_t	*pid;
-	int		l;
+	int		i;
 
-	// (void)envp;
-	fd_array = malloc(sizeof(int *) * (container->cmd_nbr - 1) * 2);
-	// 2e segfault
-	if (!fd_array)
-		ft_error(1); // à Changer
-	i = 0;
-	l = 0;
-	while (l < (container->cmd_nbr))
-	{
-		if (pipe(pipe_fd) == -1)
-			ft_error(1);
-		fd_array[i] = pipe_fd[1];
-		fd_array[i + 1] = pipe_fd[0];
-		l++;
-		i += 2;
-	}
 	i = 0;
 	pid = malloc(sizeof(pid_t) * container->cmd_nbr);
+	if (!pid)
+		ft_error(1);
 	while (i < container->cmd_nbr)
 	{
 		pid[i] = fork();
 		if (pid[i] < 0)
 			ft_error(1);
 		else if (pid[i] == 0)
-		{
-			ft_test_child(container, i, envp, fd_array); // first segfault
-			exit(EXIT_FAILURE);
-		}
-		// else
-		// {
-		// 	// if (i > 1)
-		// 	// 	close(fd_array[i - 1]);
-		// 	// i++;
-		// }
+			ft_exec_child(container, i, envp, fd_array); // first segfault
 		i++;
 	}
-	for (int k = 0; k < (container->cmd_nbr - 1) * 2; k++)
-	{
-		close(fd_array[k]);
-	}
-	// close(fd_array[0]);
-	// close(fd_array[1]);
+	ft_close_child(fd_array, container->cmd_nbr);
 	i = 0;
 	while (i < container->cmd_nbr)
 	{
@@ -125,6 +82,15 @@ void	multiple_command(t_cmd *container, char **envp)
 		i++;
 	}
 	free(pid);
+}
+
+void	multiple_command(t_cmd *container, char **envp)
+{
+	int		*fd_array;
+
+	fd_array = ft_set_pipe(container);
+	ft_child(container, envp, fd_array);
+	free(fd_array);
 }
 
 void	ft_executor(t_cmd *container, char **envp)

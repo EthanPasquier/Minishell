@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   12-Error1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 12:35:15 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:41:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	ft_free_list(t_token *token)
 void	ft_error(int flag)
 {
 	if (flag == 1)
-		printf("wtf");
-	printf("ERROR help");
+		printf("wtf\n");
+	printf("ERROR help\n");
 	exit(EXIT_SUCCESS);
 }
 

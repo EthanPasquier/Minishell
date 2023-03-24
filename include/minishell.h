@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 15:04:35 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:22:49 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ typedef struct s_cmd
 t_init				ft_init(char *input, char **envp);
 t_token				*new_node(char *str);
 void				ft_parser(t_init *var);
+
+int					*ft_set_pipe(t_cmd *container);
+void				ft_close_child(int *fd_array, int cmd_nbr);
 
 char				**find_path(char **envp);
 char				*find_cmd_path(char **cmd, char **path);

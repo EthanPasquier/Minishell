@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/21 18:47:05 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/24 13:16:18 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRC_DIR		= srcs/
 _SRC		= 01-Minishell.c \
 	02-Parser.c \
 	03-Executor.c \
+	09-Utils_Exec.c \
 	10-Signal.c \
 	11-Utils.c \
 	12-Error1.c \
