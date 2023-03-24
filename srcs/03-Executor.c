@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:14:38 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 12:37:43 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/24 13:29:37 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	single_command(t_cmd *container, char **envp)
 	else if (container->pid == 0)
 	{
 		execve(container->cmd_path, container->cmd, envp);
-		printf("Error, single command execve failed"); // change this end
+		// printf("Error, single command execve failed"); // change this end
 	}
 	waitpid(container->pid, NULL, 0);
 }
@@ -33,33 +33,29 @@ void	ft_test_child(t_cmd *container, int i, char **envp, int *fd_array)
 	int	j;
 
 	j = i * 2; // j = pipfd[1] et j+1 = pipfd[0]
-	// fprintf(stderr, "i = %d et j = %d", i, j);
-	fprintf(stderr, "i = %d , fd_array[i] = %d , fd_array[i + 1] = %d\n", i,
-			fd_array[i], fd_array[i + 1]);
 	container->cmd = ft_split(container->pipe_split[i], ' ');
 	if (i == 0)
 	{
 		if (dup2(fd_array[j], STDOUT) == -1)
-			ft_error(1); // temp, bad exit
-		fprintf(stderr, "%s\n", "pipefd1 stdout");
-		// close(fd_array[1]);
+			ft_error(1);
 	}
 	else if (i == container->cmd_nbr - 1)
 	{
 		if (dup2(fd_array[j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
-		fprintf(stderr, "%s\n", "pipefd0 stdin");
-		// close(fd_array[0]);
+							// fprintf(stderr, "%s\n", "pipefd0 stdin");
+							// close(fd_array[0]);
 	}
 	else
 	{
+		// fprintf(stderr, "%s\n", "hello");
 		if (dup2(fd_array[j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
 		if (dup2(fd_array[j], STDOUT) == -1)
 			ft_error(1); // temp, bad exit//
-		fprintf(stderr, "%s\n", "pipefd0 stdin");
-		// close(fd_array[j]);
-		// close(fd_array[j - 1]);
+							// fprintf(stderr, "%s\n", "pipefd0 stdin");
+							// close(fd_array[j]);
+							// close(fd_array[j - 1]);
 	}
 	for (int k = 0; k < (container->cmd_nbr - 1) * 2; k++)
 	{
@@ -78,6 +74,7 @@ void	multiple_command(t_cmd *container, char **envp)
 	int		*fd_array;
 	int		i;
 	pid_t	*pid;
+	int		l;
 
 	// (void)envp;
 	fd_array = malloc(sizeof(int *) * (container->cmd_nbr - 1) * 2);
@@ -85,12 +82,14 @@ void	multiple_command(t_cmd *container, char **envp)
 	if (!fd_array)
 		ft_error(1); // à Changer
 	i = 0;
-	while (i < (container->cmd_nbr - 1))
+	l = 0;
+	while (l < (container->cmd_nbr))
 	{
 		if (pipe(pipe_fd) == -1)
 			ft_error(1);
 		fd_array[i] = pipe_fd[1];
 		fd_array[i + 1] = pipe_fd[0];
+		l++;
 		i += 2;
 	}
 	i = 0;
