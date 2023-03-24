@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   01-Minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 11:25:10 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:27:09 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	ft_readline(char **envp)
 		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
 		if (input)
 		{
-			if (ft_strlen(input) > 0) // leak car résultat de strtrim non stocké ?
+			if (ft_strlen(input) > 0)
+			// leak car résultat de strtrim non stocké ?
 			{
 				add_history(input);
 				var = ft_init(input, envp);
@@ -41,17 +42,19 @@ int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
+	ft_title();
 	ft_readline(envp);
 }
 
-		// t_token *tmp;
-		// tmp = token;
-		// while (tmp)
-		// {
-		// 	printf("%s\n", tmp->str);
-		// 	printf("%d\n", tmp->type); //pour print les valeurs dans linked list et faire des tests.
-		// 	tmp = tmp->next;
-		// }
+// t_token *tmp;
+// tmp = token;
+// while (tmp)
+// {
+// 	printf("%s\n", tmp->str);
+// 	printf("%d\n", tmp->type);
+		//pour print les valeurs dans linked list et faire des tests.
+// 	tmp = tmp->next;
+// }
 
 // if (ft_strncmp(input, "exit", 4) == 0)
 // {

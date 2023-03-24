@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   11-Utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/23 10:06:21 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:26:59 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char 	**find_path(char **envp)
+char	**find_path(char **envp)
 {
 	int		i;
 	char	*tmp;
@@ -46,7 +46,7 @@ char	*find_cmd_path(char **cmd, char **path)
 {
 	int		i;
 	char	*tmp;
-	
+
 	i = 0;
 	while (path[i])
 	{
@@ -89,4 +89,19 @@ int	cmd_counter(t_cmd *container)
 	while (container->pipe_split[cmd_nbr])
 		cmd_nbr++;
 	return (cmd_nbr);
+}
+
+void	ft_title(void)
+{
+	printf("\033[0;31m\n ███▄ ▄███▓ ██▓ ███▄    █  ██▓  ██████  ██░ ██ ▓█████  ██▓     ██▓    \n");
+	printf("▓██▒▀█▀ ██▒▓██▒ ██ ▀█   █ ▓██▒▒██    ▒ ▓██░ ██▒▓█   ▀ ▓██▒    ▓██▒    \n");
+	printf("▓██    ▓██░▒██▒▓██  ▀█ ██▒▒██▒░ ▓██▄   ▒██▀▀██░▒███   ▒██░    ▒██░    \n");
+	printf("▒██    ▒██ ░██░▓██▒  ▐▌██▒░██░  ▒   ██▒░▓█ ░██ ▒▓█  ▄ ▒██░    ▒██░    \n");
+	printf("▒██▒   ░██▒░██░▒██░   ▓██░░██░▒██████▒▒░▓█▒░██▓░▒████▒░██████▒░██████▒\n");
+	printf("░ ▒░   ░  ░░▓  ░ ▒░   ▒ ▒ ░▓  ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒░░ ▒░ ░░ ▒░▓  ░░ ▒░▓  ░\n");
+	printf("░  ░      ░ ▒ ░░ ░░   ░ ▒░ ▒ ░░ ░▒  ░ ░ ▒ ░▒░ ░ ░ ░  ░░ ░ ▒  ░░ ░ ▒  ░\n");
+	printf("░      ░    ▒ ░   ░   ░ ░  ▒ ░░  ░  ░   ░  ░░ ░   ░     ░ ░     ░ ░   \n");
+	printf("       ░    ░           ░  ░        ░   ░  ░  ░   ░  ░    ░  ░    ░  ░\n");
+	printf("                                                                       \n");
+	printf("----------------------- \033[0;34mEpasquie & Jalevesq \033[0;31m---------------------------\n\n");
 }
