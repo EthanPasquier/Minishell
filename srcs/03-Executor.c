@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 09:14:38 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 14:09:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:00:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void ft_child(t_cmd *container, char **envp, int *fd_array)
 void	multiple_command(t_cmd *container, char **envp)
 {
 	int		*fd_array;
-
+	
 	fd_array = ft_set_pipe(container);
 	ft_child(container, envp, fd_array);
 	free(fd_array);
@@ -96,6 +96,7 @@ void	multiple_command(t_cmd *container, char **envp)
 void	ft_executor(t_cmd *container, char **envp)
 {
 	// Check < > hereif true change fd to outfile/ infile in CHILD process.How ?
+	
 	if (container->cmd_nbr <= 1)
 		single_command(container, envp);
 	else

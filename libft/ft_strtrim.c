@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 08:23:50 by jalevesq          #+#    #+#             */
-/*   Updated: 2022/11/02 15:52:07 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/24 14:57:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 // #include <stdio.h>
 // int main(void)
 // {
-// 	char a[50] = "fuck les tests fuuuuckkkk";
-// 	char b[50] = "fuck";
+// 	char a[50] = "ls < outfile";
+// 	char b[50] = "<";
 
 // 	printf("%s\n", ft_strtrim(a, b));
 // }
