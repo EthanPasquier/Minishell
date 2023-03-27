@@ -6,16 +6,16 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/27 15:11:28 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:56:10 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void ft_exec_single(t_child *child, char **envp, char *str)
+void	ft_exec_single(t_child *child, char **envp, char *str)
 {
-	pid_t pid;
-	
+	pid_t	pid;
+
 	pid = fork();
 	child->cmd = ft_split(str, ' ');
 	child->cmd_path = find_cmd_path(child->cmd, child->all_path);
@@ -33,10 +33,10 @@ void ft_exec_single(t_child *child, char **envp, char *str)
 	ft_free_exec(child->cmd, child->cmd_path);
 }
 
-void ft_exec_child(t_child *child, t_token *token, int *fd)
+void	ft_exec_child(t_child *child, t_token *token, int *fd)
 {
 	int	j;
-	
+
 	(void)token;
 	j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
 	if (child->i == 0)
@@ -61,52 +61,58 @@ void ft_exec_child(t_child *child, t_token *token, int *fd)
 	ft_error(1);
 }
 
-void ft_multiple_command(t_token *token, t_child *child)
+void	ft_exec_multiple(t_token *t, t_child *c, int *fd, int *pid)
 {
-	t_token *tmp;
-	int		*fd_array;
-	pid_t	*pid;
+	t_token	*tmp;
 
-	tmp = token;
-	child->i = 0;
-	fd_array = ft_set_pipe(child);
-	pid = malloc(sizeof(pid_t) * child->cmd_nbr);
-	if (!pid)
+	tmp = t;
+	while (c->i < c->cmd_nbr)
 	{
-		printf("PID ERROR\n");
-		return ;
-	}
-	while (child->i < child->cmd_nbr)
-	{
-		child->cmd = ft_split(tmp->str, ' ');
-		child->cmd_path = find_cmd_path(child->cmd, child->all_path);
-		if (child->cmd_path == NULL)
-			printf("minishell: %s: command not found\n", child->cmd[0]);
+		c->cmd = ft_split(tmp->str, ' ');
+		c->cmd_path = find_cmd_path(c->cmd, c->all_path);
+		if (c->cmd_path == NULL)
+			printf("minishell: %s: command not found\n", c->cmd[0]);
 		else
 		{
-			pid[child->i] = fork();
-			if (pid[child->i] < 0)
+			pid[c->i] = fork();
+			if (pid[c->i] < 0)
 				ft_error(1);
-			else if (pid[child->i] == 0)
-				ft_exec_child(child, token, fd_array); // Change FD for | and < >.
+			else if (pid[c->i] == 0)
+				ft_exec_child(c, t, fd); // Change FD for | and < >.
 		}
-		child->i++;
-		ft_free_exec(child->cmd, child->cmd_path);
-		while (tmp->next && tmp->next->type != CMD && child->i < child->cmd_nbr)
+		c->i++;
+		ft_free_exec(c->cmd, c->cmd_path);
+		while (tmp->next && tmp->next->type != CMD && c->i < c->cmd_nbr)
 			tmp = tmp->next;
 		if (tmp && tmp->next)
 			tmp = tmp->next;
 	}
+}
+
+void	ft_multiple_command(t_token *token, t_child *child)
+{
+	int		*fd_array;
+	pid_t	*pid;
+
+	child->i = 0;
+	pid = malloc(sizeof(pid_t) * child->cmd_nbr);
+	if (!pid)
+	{
+		printf("PID ERROR wtf\n");
+		exit(EXIT_FAILURE);
+	}
+	fd_array = ft_set_pipe(child);
+	ft_exec_multiple(token, child, fd_array, pid);
 	ft_close_child(fd_array, child->cmd_nbr);
 	ft_wait(pid, child->cmd_nbr);
 	free(pid);
 	free(fd_array);
 }
 
-void ft_executor(t_token *token, char **envp)
+void	ft_executor(t_token *token, char **envp)
 {
-	t_child child;
-	
+	t_child	child;
+
 	child.cmd_nbr = cmd_counter(token);
 	child.all_path = find_path(envp);
 	child.envp = envp;

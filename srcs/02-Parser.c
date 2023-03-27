@@ -6,22 +6,20 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/27 13:37:54 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:45:36 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
 // Error func good ?
 t_token	*ft_fill_list(char **split_input)
 {
-	t_token *token;
-	t_token *tmp;
+	t_token	*token;
+	t_token	*tmp;
 	int		i;
 
 	i = 0;
-	token = NULL; // Retirer ?
 	token = new_node(split_input[i++]);
 	token->prev = NULL;
 	tmp = token;
@@ -38,7 +36,7 @@ t_token	*ft_fill_list(char **split_input)
 
 void	ft_assign_type(t_token *token)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	temp = token;
 	while (temp != NULL)
@@ -61,14 +59,14 @@ void	ft_assign_type(t_token *token)
 
 void	ft_parser(t_init *var)
 {
-	t_token *token;
-	char **split;
-	
-	split = split_input(var->input, ' '); // Fonction Ethan
+	t_token	*token;
+	char	**split;
+
+	split = split_input(var->input, ' ');
+
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	ft_assign_type(token);
-
 	ft_executor(token, var->envp);
 	ft_free_list(token);
 }

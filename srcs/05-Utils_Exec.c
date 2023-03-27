@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/27 15:11:32 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:57:43 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	*ft_set_pipe(t_child *child)
 	int	*fd_array;
 	int	pipe_fd[2];
 	int	fd_index;
-	int index_cmd;
-	
+	int	index_cmd;
+
 	index_cmd = 0;
 	fd_index = 0;
 	fd_array = malloc(sizeof(int *) * (child->cmd_nbr - 1) * 2);
@@ -36,9 +36,9 @@ int	*ft_set_pipe(t_child *child)
 	return (fd_array);
 }
 
-void ft_close_child(int *fd_array, int cmd_nbr)
+void	ft_close_child(int *fd_array, int cmd_nbr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (cmd_nbr - 1) * 2)
@@ -47,7 +47,7 @@ void ft_close_child(int *fd_array, int cmd_nbr)
 
 int	is_one_command(t_token *token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = token;
 	while (tmp)
@@ -61,12 +61,11 @@ int	is_one_command(t_token *token)
 
 int	cmd_counter(t_token *token)
 {
-	t_token *tmp;
-	int	cmd_nbr;
+	t_token	*tmp;
+	int		cmd_nbr;
 
 	tmp = token;
 	cmd_nbr = 0;
-	
 	while (tmp)
 	{
 		if (tmp->type == CMD)
@@ -76,8 +75,9 @@ int	cmd_counter(t_token *token)
 	return (cmd_nbr);
 }
 
-void ft_wait(pid_t *pid, int cmd_nbr) {
-	int i;
+void	ft_wait(pid_t *pid, int cmd_nbr)
+{
+	int	i;
 
 	i = 0;
 	while (i < cmd_nbr)
