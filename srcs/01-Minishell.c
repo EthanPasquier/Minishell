@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   01-Minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 14:27:09 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:12:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_readline(char **envp)
 	t_init	var;
 
 	signal(SIGINT, ft_ctrlc);
-	// signal(SIGQUIT, ft_ctrld);
 	while (1)
 	{
 		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
@@ -46,15 +45,7 @@ int	main(int ac, char **av, char **envp)
 	ft_readline(envp);
 }
 
-// t_token *tmp;
-// tmp = token;
-// while (tmp)
-// {
-// 	printf("%s\n", tmp->str);
-// 	printf("%d\n", tmp->type);
-		//pour print les valeurs dans linked list et faire des tests.
-// 	tmp = tmp->next;
-// }
+
 
 // if (ft_strncmp(input, "exit", 4) == 0)
 // {

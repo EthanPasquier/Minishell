@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 12:41:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/27 13:21:29 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,47 @@ void	ft_free_list(t_token *token)
 	}
 }
 
+void	ft_free_exec(char **cmd, char *cmd_path)
+{
+	if (cmd != NULL)
+		ft_free_double(cmd);
+	if (cmd_path != NULL)
+		free(cmd_path);
+	cmd = NULL;
+	cmd_path = NULL;
+}
+
 void	ft_error(int flag)
 {
 	if (flag == 1)
 		printf("wtf\n");
-	printf("ERROR help\n");
+	printf("ERROR\n");
 	exit(EXIT_SUCCESS);
 }
 
-void	free_container(t_cmd *container)
-{
-	ft_free_double(container->all_path);
-	ft_free_double(container->pipe_split);
-	// ft_free_double(container->cmd);
-	// Both already free in while loop in ft_parser
-	// free(container->cmd_path);
-}
+// void	free_container(t_cmd *container)
+// {
+// 	ft_free_double(container->all_path);
+// 	ft_free_double(container->pipe_split);
+// 	// ft_free_double(container->cmd);
+// 	// Both already free in while loop in ft_parser
+// 	// free(container->cmd_path);
+// }
 
-void	error_cmd_path(t_cmd *container)
-{
-	printf("minishell: %s: command not found.\n", container->cmd[0]);
-	// ft_free_list(token);
-	ft_free_double(container->cmd);
-	ft_free_double(container->all_path);
-	ft_free_double(container->pipe_split);
-}
+// void	error_cmd_path(t_cmd *container)
+// {
+// 	printf("minishell: %s: command not found.\n", container->cmd[0]);
+// 	// ft_free_list(token);
+// 	// ft_free_double(container->cmd);
+// 	// ft_free_double(container->all_path);
+// 	// ft_free_double(container->pipe_split);
+// }
 
-void	free_cmd(t_cmd *container)
-{
-	ft_free_double(container->cmd);
-	free(container->cmd_path);
-}
+// void	free_cmd(t_cmd *container)
+// {
+// 	ft_free_double(container->cmd);
+// 	free(container->cmd_path);
+// }
 
 void	ft_end_list(t_token *token)
 {

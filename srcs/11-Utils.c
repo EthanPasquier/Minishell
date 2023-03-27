@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   11-Utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 14:26:59 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/27 13:25:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,7 @@ char	*find_cmd_path(char **cmd, char **path)
 // 	return (0);
 // }
 
-int	cmd_counter(t_cmd *container)
-{
-	int	cmd_nbr;
 
-	cmd_nbr = 0;
-	while (container->pipe_split[cmd_nbr])
-		cmd_nbr++;
-	return (cmd_nbr);
-}
 
 void	ft_title(void)
 {

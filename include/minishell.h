@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/24 14:28:19 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:12:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,45 +47,48 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-typedef struct s_cmd
+typedef struct s_child
 {
-	char			**pipe_split;
-	char			**cmd;
-	char			**all_path;
-	char			*cmd_path;
-	char			**all_cmd_path;
-	int				i;
-	int				cmd_nbr;
-	pid_t			pid;
-}					t_cmd;
+	char **envp;
+	char **cmd;
+	char **all_path;
+	char *cmd_path;
+	int i;
+	int cmd_nbr;
+}					t_child;
 
 t_init				ft_init(char *input, char **envp);
 t_token				*new_node(char *str);
-void				ft_parser(t_init *var);
 
-int					*ft_set_pipe(t_cmd *container);
-void				ft_close_child(int *fd_array, int cmd_nbr);
+void				ft_parser(t_init *var);
+char				**split_input(char const *s, char c);
+
 
 char				**find_path(char **envp);
 char				*find_cmd_path(char **cmd, char **path);
 
 void				ft_ctrlc(int sig);
-void				ft_ctrld(int sig);
-int					cmd_counter(t_cmd *container);
 void				ft_title(void);
-// int					ft_is_next_pipe(t_token *tmp_cmd);
-// int					ft_is_prev_pipe(t_token *tmp_cmd);
+// int				ft_is_next_pipe(t_token *tmp_cmd);
+// int				ft_is_prev_pipe(t_token *tmp_cmd);
 
-// void				ft_executor(t_cmd *container, t_init *var, t_token *token);
-void				ft_executor(t_cmd *container, char **envp);
+
+// Every function for Executor
+void				ft_executor(t_token *token, char **envp);
+int					is_one_command(t_token *token);
+int					cmd_counter(t_token *token);
+void				ft_close_child(int *fd_array, int cmd_nbr);
+void				ft_wait(pid_t *pid, int cmd_nbr);
+int					*ft_set_pipe(t_child *child);
 
 // Free & End function.
 void				*ft_free_double(char **str);
-void				free_container(t_cmd *container);
+void				ft_end_list(t_token *token);
 void				ft_free_list(t_token *token);
 void				ft_error(int flag);
-void				error_cmd_path(t_cmd *container);
-void				free_cmd(t_cmd *container);
-void				ft_end_list(t_token *token);
+void				ft_free_exec(char **cmd, char *cmd_path);
+// void				free_container(t_cmd *container);
+// void				error_cmd_path(t_cmd *container);
+// void				free_cmd(t_cmd *container);
 
 #endif

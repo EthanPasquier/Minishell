@@ -6,14 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:42:34 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/21 12:06:47 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:56:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_init	
-ft_init(char *input, char **envp)
+t_init	ft_init(char *input, char **envp)
 {
 	t_init var;
 
