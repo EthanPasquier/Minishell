@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   02-Parser.c                                        :+:      :+:    :+:   */
+/*   Parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/27 16:45:36 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:07:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ void	ft_assign_type(t_token *token)
 			temp->type = PIPE;
 		else
 			temp->type = CMD;
+		if (temp->type == CMD && temp->prev
+			&& temp->prev->type == GREAT)
+			temp->type = FILE;
 		temp = temp->next;
 	}
 }
@@ -67,12 +70,9 @@ void	ft_parser(t_init *var)
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	ft_assign_type(token);
-	ft_executor(token, var->envp);
-	ft_free_list(token);
-}
 
-	// t_token *tmp;
-	// tmp = token;
+	t_token *tmp;
+	tmp = token;
 	// while (tmp)
 	// {
 	// 	printf("%s\n", tmp->str);
@@ -80,3 +80,7 @@ void	ft_parser(t_init *var)
 	// 	// pour print les valeurs dans linked list et faire des tests.
 	// 	tmp = tmp->next;
 	// }
+	// exit(EXIT_FAILURE);
+	ft_executor(token, var->envp);
+	ft_free_list(token);
+}
