@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 11:07:20 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:33:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_parser(t_init *var)
 	t_token	*token;
 	char	**split;
 
-	split = split_input(var->input, ' ');
+	split = ft_split_input(var->input);
 
 	token = ft_fill_list(split);
 	ft_free_double(split);

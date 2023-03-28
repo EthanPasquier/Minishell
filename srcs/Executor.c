@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 11:14:43 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:56:21 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_exec_single(t_child *child, char **envp, char *str)
 	if (child->cmd_path == NULL)
 	{
 		printf("minishell: %s: command not found\n", child->cmd[0]);
+		ft_free_exec(child->cmd, child->cmd_path);
 		return ;
 	}
 	pid = fork();
@@ -46,23 +47,28 @@ void ft_child_pipe(t_child *c, t_token *t, int *fd)
 		fd2 = open(t->next->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
 		if (dup2(fd2, STDOUT) == -1)
 			ft_error(1); // temp, bad exit
+		fprintf(stderr, "fd2, STDOUT\n");
 	}
-	else if (c->i == 0 && t->next && t->next->type == PIPE)
-	{
-		if (dup2(fd[c->j], STDOUT) == -1)
-			ft_error(1); // temp, bad exit
-	}
-	else if (c->i == c->cmd_nbr - 1 && t->prev->type == PIPE)
-	{
-		if (dup2(fd[c->j - 1], STDIN) == -1)
-			ft_error(1); // temp, bad exit
-	}
-	else if (t->prev && t->prev->type == PIPE && t->next && t->next->type == PIPE)
+	if (t->prev && t->prev->type == PIPE && t->next && t->next->type == PIPE)
 	{
 		if (dup2(fd[c->j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
 		if (dup2(fd[c->j], STDOUT) == -1)
 			ft_error(1); // temp, bad exit//
+		fprintf(stderr, "ELSE - fd[%d - 1], STDIN\n", c->j);
+		fprintf(stderr, "ELSE - fd[%d], STDOUT\n", c->j);
+	}
+	else if (c->i == 0 && t->next && t->next->type == PIPE)
+	{
+		if (dup2(fd[c->j], STDOUT) == -1)
+			ft_error(1); // temp, bad exit
+		fprintf(stderr, "fd[%d], STDOUT\n", c->j);
+	}
+	else if (t->prev && t->prev->type == PIPE)
+	{
+		if (dup2(fd[c->j - 1], STDIN) == -1)
+			ft_error(1); // temp, bad exit
+		fprintf(stderr, "fd[%d - 1], STDIN\n", c->j);
 	}
 	if (fd2 > -1)
 		close(fd2);
@@ -124,7 +130,7 @@ void	ft_exec_multiple(t_token *t, t_child *c, int *fd, int *pid)
 		}
 		c->i++;
 		ft_free_exec(c->cmd, c->cmd_path);
-		while (tmp->next && tmp->next->type != CMD && c->i < c->cmd_nbr)
+		while (tmp->next && tmp->next->type != CMD)
 			tmp = tmp->next;
 		if (tmp && tmp->next)
 			tmp = tmp->next;
@@ -137,7 +143,7 @@ void	ft_multiple_command(t_token *token, t_child *child)
 	pid_t	*pid;
 
 	child->i = 0;
-	pid = malloc(sizeof(pid_t) * child->cmd_nbr - 1);
+	pid = malloc(sizeof(pid_t) * child->cmd_nbr);
 	if (!pid)
 	{
 		printf("PID ERROR wtf\n");
@@ -145,8 +151,8 @@ void	ft_multiple_command(t_token *token, t_child *child)
 	}
 	fd_array = ft_set_pipe(child);
 	ft_exec_multiple(token, child, fd_array, pid);
-	ft_close_child(fd_array, child->cmd_nbr - 1);
-	ft_wait(pid, child->cmd_nbr - 1);
+	ft_close_child(fd_array, child->cmd_nbr);
+	ft_wait(pid, child->cmd_nbr);
 	free(pid);
 	free(fd_array);
 }

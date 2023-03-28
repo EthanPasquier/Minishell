@@ -6,13 +6,20 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:55:21 by epasquie          #+#    #+#             */
-/*   Updated: 2023/03/28 11:06:38 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:19:40 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "../include/minishell.h"
 
 #include "../include/minishell.h"
+
+int	ft_wake_word(char c)
+{
+	if (c == '|' || c == '>' || c == '<')
+		return (1);
+	return (0);
+}
 
 static void	*ft_free(char **split, size_t j)
 {
@@ -25,7 +32,7 @@ static void	*ft_free(char **split, size_t j)
 	return (NULL);
 }
 
-static char	**ft_fill_substr(char const *s, char c, char **str)
+static char	**ft_fill_substr(char *s, char c, char **str)
 {
 	size_t	i;
 	size_t	j;
@@ -36,6 +43,8 @@ static char	**ft_fill_substr(char const *s, char c, char **str)
 	index = -1;
 	while (i <= ft_strlen(s))
 	{
+		if (s[i] == '"')
+			s[i] = 32;
 		if ((s[i] != c && s[i] != '<' && s[i] != '>' && s[i] != '|')
 			&& index < 0)
 			index = i;
@@ -47,7 +56,10 @@ static char	**ft_fill_substr(char const *s, char c, char **str)
 				return (ft_free(str, j));
 			if (s[i] == '<' || s[i] == '>' || s[i] == '|')
 			{
-				str[j] = ft_substr(s, i, 1);
+				if (s[i + 1] == s[i])
+					str[j] = ft_substr(s, i, 2);
+				else
+					str[j] = ft_substr(s, i, 1);
 				if (!str[j++])
 					return (ft_free(str, j));
 			}
@@ -58,7 +70,10 @@ static char	**ft_fill_substr(char const *s, char c, char **str)
 	str[j] = NULL;
 	return (str);
 }
-static size_t	count_words(char const *s, char c)
+
+#include <stdio.h>
+
+static size_t	count_words(char *s)
 {
 	size_t	i;
 	size_t	count;
@@ -69,23 +84,20 @@ static size_t	count_words(char const *s, char c)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] != c)
-		{
+		if (ft_wake_word(s[i]) == 1)
 			count++;
-			while (s[i] != c && s[i])
-				i++;
-		}
-		else
-			i++;
+		i++;
 	}
-	return (count);
+	return (count * 2);
 }
 
-char	**split_input(char const *s, char c)
+char	**ft_split_input(char *s)
 {
-	char **str;
+	char	**str;
+	char	c;
 
-	str = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
+	c = 32;
+	str = (char **)malloc((count_words(s) + 1) * sizeof(char *));
 	if (!str)
 		return (NULL);
 	return (ft_fill_substr(s, c, str));

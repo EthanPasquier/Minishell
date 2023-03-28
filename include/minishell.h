@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 11:06:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:30:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_init				ft_init(char *input, char **envp);
 t_token				*new_node(char *str);
 
 void				ft_parser(t_init *var);
-char				**split_input(char const *s, char c);
+char				**ft_split_input(char *s);
 
 
 char				**find_path(char **envp);
