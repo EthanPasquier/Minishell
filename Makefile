@@ -6,22 +6,21 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/27 16:14:39 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/27 20:34:57 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR		= srcs/
 
-_SRC		= 01-Minishell.c \
-	02-Parser.c \
-	03-Split_input.c \
-	04-Executor.c \
-	05-Utils_Exec.c \
-	10-Signal.c \
-	11-Utils.c \
-	12-Error1.c \
-	13-Init.c \
-	# 09-Utils_Exec.c \
+_SRC		= Minishell.c \
+	Parser.c \
+	Split_input.c \
+	Executor.c \
+	Utils_Exec.c \
+	Signal.c \
+	Utils.c \
+	Error1.c \
+	Init.c \
 
 SRC_M		= $(addprefix $(SRC_DIR), $(_SRC))
 

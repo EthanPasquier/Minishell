@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   04-Executor.c                                      :+:      :+:    :+:   */
+/*   Executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/27 15:56:10 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/27 20:49:31 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,44 @@ void	ft_exec_single(t_child *child, char **envp, char *str)
 	ft_free_exec(child->cmd, child->cmd_path);
 }
 
-void	ft_exec_child(t_child *child, t_token *token, int *fd)
+void ft_child_pipe(t_child *c, t_token *t, int *fd)
 {
-	int	j;
-
-	(void)token;
-	j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
-	if (child->i == 0)
+	(void)t;
+	if (c->i == 0)
 	{
-		if (dup2(fd[j], STDOUT) == -1)
+		if (dup2(fd[c->j], STDOUT) == -1)
 			ft_error(1); // temp, bad exit
 	}
-	else if (child->i == child->cmd_nbr - 1)
+	else if (c->i == c->cmd_nbr - 1)
 	{
-		if (dup2(fd[j - 1], STDIN) == -1)
+		if (dup2(fd[c->j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
 	}
 	else
 	{
-		if (dup2(fd[j - 1], STDIN) == -1)
+		if (dup2(fd[c->j - 1], STDIN) == -1)
 			ft_error(1); // temp, bad exit
-		if (dup2(fd[j], STDOUT) == -1)
+		if (dup2(fd[c->j], STDOUT) == -1)
 			ft_error(1); // temp, bad exit//
 	}
+}
+
+// void	ft_child_redirection(t_child *child, t_token *token, int *fd)
+// {
+// 	if (token->next && token->next->type == GREAT)
+// 	{
+		
+// 	}
+// }
+
+void	ft_exec_child(t_child *child, t_token *token, int *fd)
+{
+	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
+	if ((token->next && token->next->type == PIPE)
+		|| (token->prev && token->prev->type == PIPE))
+		ft_child_pipe(child, token, fd);
+	// if (token->next && token->next->type == GREAT)
+	// 	ft_child_redirection(child, token, fd);
 	ft_close_child(fd, child->cmd_nbr);
 	execve(child->cmd_path, child->cmd, child->envp);
 	ft_error(1);
@@ -66,6 +81,8 @@ void	ft_exec_multiple(t_token *t, t_child *c, int *fd, int *pid)
 	t_token	*tmp;
 
 	tmp = t;
+	while (tmp && tmp->type != CMD)
+		tmp = tmp->next;
 	while (c->i < c->cmd_nbr)
 	{
 		c->cmd = ft_split(tmp->str, ' ');
@@ -78,7 +95,7 @@ void	ft_exec_multiple(t_token *t, t_child *c, int *fd, int *pid)
 			if (pid[c->i] < 0)
 				ft_error(1);
 			else if (pid[c->i] == 0)
-				ft_exec_child(c, t, fd); // Change FD for | and < >.
+				ft_exec_child(c, tmp, fd); // Change FD for | and < >.
 		}
 		c->i++;
 		ft_free_exec(c->cmd, c->cmd_path);

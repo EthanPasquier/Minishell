@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/27 15:12:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/27 20:35:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_child
 	char **all_path;
 	char *cmd_path;
 	int i;
+	int	j;
 	int cmd_nbr;
 }					t_child;
 
