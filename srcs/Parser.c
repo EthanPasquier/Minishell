@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 11:33:42 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:16:39 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,138 @@ void	ft_assign_type(t_token *token)
 			temp->type = PIPE;
 		else
 			temp->type = CMD;
-		if (temp->type == CMD && temp->prev
-			&& temp->prev->type == GREAT)
+		if (temp->type == CMD && temp->prev && temp->prev->type == GREAT)
 			temp->type = FILE;
 		temp = temp->next;
 	}
+}
+
+char	*ft_find_var(char **envp, char *var)
+{
+	int		i;
+	char	*trim;
+
+	i = 0;
+	trim = NULL;
+	while (envp[i])
+	{
+		if (ft_strncmp(var, envp[i], ft_strlen(var)) == 0)
+		{
+			var = ft_strtrim(envp[i], var);
+			break ;
+		}
+		i++;
+	}
+	return (var);
+}
+
+int	ft_where(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i + 1);
+		i++;
+	}
+	return (-1);
+}
+
+char	*ft_take_var(char *str, int position)
+{
+	int		i;
+	int		nb;
+	char	*var;
+
+	i = position;
+	while (str[i])
+	{
+		if (ft_wake_word(str[i]) == 1 || str[i] == ' ' || str[i] == 39 || str[i] == 34)
+			break ;
+		i++;
+	}
+	nb = i - position;
+	var = malloc((sizeof(char) * nb) + 2);
+	i = 0;
+	while (i < nb)
+	{
+		var[i] = str[position];
+		i++;
+		position++;
+	}
+	var[i] = '=';
+	return (var);
+}
+
+char	*ft_redifine(char *mots, char *str, char sign)
+{
+	int		a;
+	int		b;
+	int		c;
+	int		tmp;
+	char	*new;
+
+	a = 0;
+	b = 0;
+	c = 0;
+	while (str[a] != sign && str[a])
+		a++;
+	c = a;
+	while ((str[c] != 32 && ft_wake_word(str[c]) == 0 && str[c] != 39 && str[c] != 34) && str[c])
+	{
+		c++;
+		b++;
+	}
+	tmp = c;
+	c = (ft_strlen(str) - b + ft_strlen(mots));
+	new = malloc((sizeof(char) * c) + 1);
+	b = 0;
+	while (b < a)
+	{
+		new[b] = str[b];
+		b++;
+	}
+	c = ft_strlen(mots);
+	a = 0;
+	while (a < c)
+	{
+		new[b] = mots[a];
+		b++;
+		a++;
+	}
+	while (str[tmp])
+	{
+		new[b] = str[tmp];
+		b++;
+		tmp++;
+	}
+	return (new);
 }
 
 void	ft_parser(t_init *var)
 {
 	t_token	*token;
 	char	**split;
+	int		a;
+	t_token	*tmp;
+	char	*mots;
 
+	mots = NULL;
+	a = ft_where(var->input, '$');
+	while (a != -1)
+	{
+		mots = ft_take_var(var->input, a);
+		// fprintf(stderr, "\nmots = %s\n", mots);
+		mots = ft_find_var(var->envp, mots);
+		var->input = ft_redifine(mots, var->input, '$');
+		a = ft_where(var->input, '$');
+	}
 	split = ft_split_input(var->input);
-
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	ft_assign_type(token);
-
-	t_token *tmp;
 	tmp = token;
 	// while (tmp)
 	// {

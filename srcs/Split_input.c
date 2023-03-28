@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Split_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:55:21 by epasquie          #+#    #+#             */
-/*   Updated: 2023/03/28 12:19:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:17:00 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static char	**ft_fill_substr(char *s, char c, char **str)
 	return (str);
 }
 
-#include <stdio.h>
 
 static size_t	count_words(char *s)
 {
