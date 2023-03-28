@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 15:16:39 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:32:53 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void	ft_assign_type(t_token *token)
 char	*ft_find_var(char **envp, char *var)
 {
 	int		i;
-	char	*trim;
 
 	i = 0;
-	trim = NULL;
 	while (envp[i])
 	{
 		if (ft_strncmp(var, envp[i], ft_strlen(var)) == 0)
@@ -168,7 +166,6 @@ void	ft_parser(t_init *var)
 	t_token	*token;
 	char	**split;
 	int		a;
-	t_token	*tmp;
 	char	*mots;
 
 	mots = NULL;
@@ -185,7 +182,6 @@ void	ft_parser(t_init *var)
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	ft_assign_type(token);
-	tmp = token;
 	// while (tmp)
 	// {
 	// 	printf("%s\n", tmp->str);

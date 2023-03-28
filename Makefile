@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/27 20:34:57 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/28 18:04:22 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ _SRC		= Minishell.c \
 	Utils.c \
 	Error1.c \
 	Init.c \
+	Child_Process.c
 
 SRC_M		= $(addprefix $(SRC_DIR), $(_SRC))
 

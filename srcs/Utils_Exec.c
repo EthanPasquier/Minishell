@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 14:49:06 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:02:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,6 @@ void	ft_close_child(int *fd_array, int cmd_nbr)
 	while (i < (cmd_nbr - 1) * 2)
 		close(fd_array[i++]);
 }
-
-// int	is_one_command(t_token *token)
-// {
-// 	t_token	*tmp;
-
-// 	tmp = token;
-// 	while (tmp)
-// 	{
-// 		if (tmp->type != CMD)
-// 			return (1);
-// 		tmp = tmp->next;
-// 	}
-// 	return (0);
-// }
 
 int	cmd_counter(t_token *token)
 {

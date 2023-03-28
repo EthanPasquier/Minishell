@@ -8,15 +8,7 @@ Gérer les reidrections pipe
 Besoin de Token ? Comment bien les utiliser ?
 
 
-Multipipe
-
-Stdin → PRG1  PRG2  PRG3 → Stdout  <three programs execution
-           \  /  \  /              <interprocess communication
-            P1    P2               <two pipes
-
-Single pipe
-		 ls    cat
-Stdin → PRG1  PRG2 →  <three programs execution
-           \  /	             <interprocess communication
-          1 P1 0	         <two pipes
-	  (les fichier)                         
+ls | cat | wc
+ET
+ls | cat | wc > test
+pas le même résultat, pourquoi ?
