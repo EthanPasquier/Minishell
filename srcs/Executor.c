@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 18:03:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:30:32 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	ft_executor(t_token *token, char **envp)
 	child.all_path = find_path(envp);
 	child.envp = envp;
 	child.i = 0;
-
 	ft_command(token, &child);
 	ft_free_double(child.all_path);
 }

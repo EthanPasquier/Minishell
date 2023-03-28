@@ -6,16 +6,16 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 18:09:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:30:12 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 // This function is for >
-void ft_great(int *fd2, t_token *tmp)
+void	ft_great(int *fd2, t_token *tmp)
 {
-	while(tmp && tmp->type == GREAT)
+	while (tmp && tmp->type == GREAT)
 	{
 		*fd2 = -1;
 		*fd2 = open(tmp->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
@@ -26,14 +26,14 @@ void ft_great(int *fd2, t_token *tmp)
 			tmp = tmp->next->next;
 		}
 		else
-			break;
-}	
+			break ;
+	}	
 }
 
-void ft_child_redirection(t_token *t)
+void	ft_child_redirection(t_token *t)
 {
-	int fd2;
-	t_token *tmp;
+	int		fd2;
+	t_token	*tmp;
 
 	tmp = t;
 	fd2 = -1;
@@ -51,7 +51,7 @@ void ft_child_redirection(t_token *t)
 	}
 }
 
-void ft_child_pipe(t_child *c, t_token *t, int *fd)
+void	ft_child_pipe(t_child *c, t_token *t, int *fd)
 {
 	if (t->prev && t->prev->type == PIPE && t->next && t->next->type == PIPE)
 	{
@@ -74,7 +74,6 @@ void ft_child_pipe(t_child *c, t_token *t, int *fd)
 			ft_error(1); // temp, bad exit
 		// fprintf(stderr, "fd[%d - 1], STDIN\n", c->j);
 	}
-
 }
 
 void	ft_exec_child(t_child *child, t_token *token, int *fd)
