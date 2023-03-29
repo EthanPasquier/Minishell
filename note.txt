@@ -1,14 +1,20 @@
 To do list:
 Gérer les redirections < > << >>, À quel moment check les redirections ?
-Gérer les reidrections pipe
 
 * Readline, text wrap quand terminal trop petit. \001 \002, bug quand "ENTER"
 
 * Changer la façon de init le envp.
-Besoin de Token ? Comment bien les utiliser ?
 
+** > **
+FONCTIONNE COMME BASH:
+ls > test.txt
+ls > coucou > test > abc > def
+ls | cat | grep Makefile | grep e | wc > coucou
+ls | cat | grep Makefile | grep e | wc > coucou > abc > def
+> note.txt ls
+> note.txt > ls > abc > def ls
+> abc ls | wc
+> abc > def >> abc > def > hij ls | wc > 123 > 456 > 789
+FONCTIONNE PAS:
 
-ls | cat | wc
-ET
-ls | cat | wc > test
-pas le même résultat, pourquoi ?
+** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash

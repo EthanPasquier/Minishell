@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:16 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 09:52:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:41:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_child_pipe(t_child *c, t_token *t, int *fd)
 }
 
 // This function is for >
-void	ft_multiple_great(int *fd2, t_token *tmp)
+void	ft_multiple_great_front(int *fd2, t_token *tmp)
 {
 	while (tmp && tmp->type == GREAT)
 	{
@@ -55,23 +55,20 @@ void	ft_multiple_great(int *fd2, t_token *tmp)
 	}	
 }
 
-void	ft_child_great(t_token *t)
+void	ft_child_great_front(t_token *t)
 {
 	int		fd2;
 	t_token	*tmp;
 
 	tmp = t;
 	fd2 = -1;
-	if (t->next && t->next->type == GREAT)
-	{
-		tmp = tmp->next;
-		if (tmp->next->next && tmp->next->next->type == GREAT)
-			ft_multiple_great(&fd2, tmp);
-		else
-			fd2 = open(tmp->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
-		if (dup2(fd2, STDOUT) == -1)
-			ft_error(1); // temp, bad exit
-		close(fd2);
-		// fprintf(stderr, "fd2, STDOUT\n");
-	}
+	tmp = tmp->next;
+	if (tmp->next->next && tmp->next->next->type == GREAT)
+		ft_multiple_great_front(&fd2, tmp);
+	else
+		fd2 = open(tmp->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
+	if (dup2(fd2, STDOUT) == -1)
+		ft_error(1); // temp, bad exit
+	close(fd2);
+	// fprintf(stderr, "fd2, STDOUT great_front\n");
 }
