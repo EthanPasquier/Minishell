@@ -17,4 +17,7 @@ ls | cat | grep Makefile | grep e | wc > coucou > abc > def
 > abc > def > abc > def > hij ls | wc > 123 > 456 > 789
 FONCTIONNE PAS:
 
+
+** changer makefile objs folder
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
+** dire Ethan gere " "", doit send error. (PDF)
