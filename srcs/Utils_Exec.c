@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 18:02:42 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/29 09:30:35 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	*ft_set_pipe(t_child *child)
 	fd_array = malloc(sizeof(int *) * (child->cmd_nbr) * 2);
 	if (!fd_array)
 		ft_error(1); // à Changer
-	while (index_cmd < child->cmd_nbr - 1)
+	while (index_cmd < child->cmd_nbr)
 	{
 		if (pipe(pipe_fd) == -1)
 			ft_error(1);
@@ -39,10 +39,17 @@ int	*ft_set_pipe(t_child *child)
 void	ft_close_child(int *fd_array, int cmd_nbr)
 {
 	int	i;
+	int index;
 
+	index = 0;
 	i = 0;
-	while (i < (cmd_nbr - 1) * 2)
-		close(fd_array[i++]);
+	while (index < cmd_nbr)
+	{
+		close(fd_array[i]);
+		close(fd_array[i + 1]);
+		i += 2;
+		index++;
+	}
 }
 
 int	cmd_counter(t_token *token)

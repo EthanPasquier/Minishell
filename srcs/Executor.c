@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/28 18:30:32 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/29 09:28:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	ft_exec_command(t_token *t, t_child *c, int *fd, int *pid)
 				ft_process_child(c, tmp, fd, pid);
 			else
 				printf("minishell: %s: command not found\n", c->cmd[0]);
+			ft_free_exec(c->cmd, c->cmd_path);
 		}
 		c->i++;
-		ft_free_exec(c->cmd, c->cmd_path);
 		while (tmp->next && tmp->next->type != CMD)
 			tmp = tmp->next;
 		if (tmp && tmp->next)
@@ -54,12 +54,12 @@ void	ft_command(t_token *token, t_child *child)
 	if (child->cmd_nbr > 1)
 		fd_array = ft_set_pipe(child);
 	ft_exec_command(token, child, fd_array, pid);
-	ft_close_child(fd_array, child->cmd_nbr);
+	if (child->cmd_nbr > 1)
+		ft_close_child(fd_array, child->cmd_nbr);
 	ft_wait(pid, child->cmd_nbr);
 	if (fd_array != NULL)
 		free(fd_array);
-	if (pid != NULL)
-		free(pid);
+	free(pid);
 }
 
 void	ft_executor(t_token *token, char **envp)
