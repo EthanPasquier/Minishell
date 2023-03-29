@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 14:54:12 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:38:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,11 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 	if ((token->next && token->next->type == GREAT)
 		|| (token->prev && token->prev->type == FILE
 		&& token->prev->prev && token->prev->prev->type == GREAT))
-		{
-			// fprintf(stderr, "great redirection\n");
 			ft_child_great_redirection(token);
-		}
-	if ((token->next && token->next->type == PIPE && (!token->prev || token->prev->type != FILE))
+	if ((token->next && token->next->type == PIPE
+		&& (!token->prev || token->prev->type != FILE))
 		|| (token->prev && token->prev->type == PIPE))
-		{
-			// fprintf(stderr, "pipe redirection\n");
 			ft_child_pipe(child, token, fd);
-		}
 	if (child->cmd_nbr > 1)
 		ft_close_child(fd, child->cmd_nbr);
 	execve(child->cmd_path, child->cmd, child->envp);

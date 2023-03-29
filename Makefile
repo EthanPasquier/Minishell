@@ -2,7 +2,7 @@ NAME	= minishell
 
 SRC_DIR		= srcs/
 
-EXEC = 	Child_Process Executor Redirections_Great Redirections_Pipe Utils_Exec
+EXEC = 	child_process executor child_great child_pipe utils_exec
 
 MAIN = Minishell
 

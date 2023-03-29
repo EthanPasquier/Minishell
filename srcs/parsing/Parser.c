@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 14:48:42 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:52:00 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ void	ft_assign_type(t_token *token)
 			temp->type = FILE;
 		temp = temp->next;
 	}
-/* Cat -e Makefile
-cat -e Makefile
-*/
 }
 
 char	*ft_find_var(char **envp, char *var)
@@ -168,20 +165,20 @@ void	ft_parser(t_init *var)
 {
 	t_token	*token;
 	char	**split;
-	// int		a;
-	// char	*mots;
+	int		a;
+	char	*mots;
 
-	// mots = NULL;
-	// a = ft_where(var->input, '$');
-	// while (a != -1)
-	// {
-	// 	mots = ft_take_var(var->input, a);
-	// 	// fprintf(stderr, "\nmots = %s\n", mots);
-	// 	mots = ft_find_var(var->envp, mots);
-	// 	var->input = ft_redifine(mots, var->input, '$');
-	// 	a = ft_where(var->input, '$');
-	// }
-	split = ft_split(var->input, ' ');
+	mots = NULL;
+	a = ft_where(var->input, '$');
+	while (a != -1)
+	{
+		mots = ft_take_var(var->input, a);
+		// fprintf(stderr, "\nmots = %s\n", mots);
+		mots = ft_find_var(var->envp, mots);
+		var->input = ft_redifine(mots, var->input, '$');
+		a = ft_where(var->input, '$');
+	}
+	split = ft_split_input(var->input);
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	ft_assign_type(token);
