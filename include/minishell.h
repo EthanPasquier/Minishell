@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 10:36:00 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:20:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void				ft_exec_child(t_child *child, t_token *token, int *fd);
 void				ft_close_child(int *fd_array, int cmd_nbr);
 void				ft_child_pipe(t_child *c, t_token *t, int *fd);
 void				ft_child_great_front(t_token *t);
+void				ft_multiple_great_front(int *fd2, t_token *tmp);
+void				ft_child_great_back(t_token *t);
 
 // Free & End function.
 void				*ft_free_double(char **str);

@@ -1,32 +1,21 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/20 14:49:21 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/29 13:23:22 by jalevesq         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME	= minishell
 
 SRC_DIR		= srcs/
 
-_SRC		= Minishell.c \
-	Parser.c \
-	Split_input.c \
-	Executor.c \
-	Utils_Exec.c \
-	Signal.c \
-	Utils.c \
-	Error1.c \
-	Init.c \
-	Child_Process.c \
-	Child_Redirections.c \
+EXEC = 	Child_Process Executor Redirections_Great Redirections_Pipe Utils_Exec
 
-SRC_M		= $(addprefix $(SRC_DIR), $(_SRC))
+MAIN = Minishell
 
-OBJ_M		= $(SRC_M:.c=.o)
+PARSING = Parser Split_input
+
+TOOLS = Utils Signal Error1 Init
+
+SRC = $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
+	  	$(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
+	  	$(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
+	  	$(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
+
+OBJ		= $(SRC:.c=.o)
 
 INCLUDE		= include/
 
@@ -40,19 +29,20 @@ CFLAGS		= -Wall -Wextra -Werror -g
 
 LIBS	= $(LIBFT) -lcurses $(LIBRD)
 
-NAME	= minishell
+
+.PHONY: all clean fclean re cleanlib
 
 %.o:		%.c
 		-$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
 
-$(NAME): $(LIBFT) $(LIBRD) $(OBJ_M)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_M) $(LIBS)
+all:	$(NAME)
+
+$(NAME): $(LIBFT) $(LIBRD) $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS)
 
 $(LIBFT):
 		make -C libft/
 
-all:	$(NAME)
-	
 $(LIBRD):
 	curl -O ftp://ftp.cwru.edu/pub/bash/$(LIBRLINE).tar.gz
 	tar -xf $(LIBRLINE).tar.gz
@@ -64,14 +54,15 @@ $(LIBRD):
 	mv ./$(LIBRLINE)/*.h ./include/readline
 	rm -rf $(LIBRLINE)
 
-cleanlib:	
-	cd include/ && rm -rf readline
+
 clean:
-		rm -f $(OBJ_M) $(LIBFT)
+		rm -f $(OBJ) $(LIBFT)
 		make -C libft/ clean
 
 fclean:		clean
 		rm -f $(NAME) $(NAME_BONUS)
 
-
 re:		fclean all
+
+cleanlib:	
+	cd include/ && rm -rf readline

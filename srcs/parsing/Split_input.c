@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Split_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:55:21 by epasquie          #+#    #+#             */
-/*   Updated: 2023/03/28 15:17:00 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:48:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../include/minishell.h"
-
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	ft_wake_word(char c)
 {

@@ -14,7 +14,7 @@ ls | cat | grep Makefile | grep e | wc > coucou > abc > def
 > note.txt ls
 > note.txt > ls > abc > def ls
 > abc ls | wc
-> abc > def >> abc > def > hij ls | wc > 123 > 456 > 789
+> abc > def > abc > def > hij ls | wc > 123 > 456 > 789
 FONCTIONNE PAS:
 
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash

@@ -6,11 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 12:40:08 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:48:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 // Error func good ?
 t_token	*ft_fill_list(char **split_input)
@@ -57,6 +57,9 @@ void	ft_assign_type(t_token *token)
 			temp->type = FILE;
 		temp = temp->next;
 	}
+/* Cat -e Makefile
+cat -e Makefile
+*/
 }
 
 char	*ft_find_var(char **envp, char *var)
