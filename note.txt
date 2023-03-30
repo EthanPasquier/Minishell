@@ -26,9 +26,9 @@ cat < Makefile < note.txt
 FONCTIONNE PAS:
 < Makefile cat (tout ce qui commence par <, pas encore dev)
 
-** < && > **
-cat < Makefile > Outfile
-Faire plus de test quand ft_less_back_redirection dev
+** < && > && |**
+TOUT CE QUI EST COMBINAISON INTER SYMBOL NE FONCTIONNE PAS.
+DEV < FRONT AVANT DE GERE COMPATIBILITE
 
 
 A ESSAYER QUAND PARSER FONCTIONNEL
