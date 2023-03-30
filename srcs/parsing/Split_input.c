@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:55:21 by epasquie          #+#    #+#             */
-/*   Updated: 2023/03/29 14:48:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:43:19 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,45 +30,57 @@ static void	*ft_free(char **split, size_t j)
 	return (NULL);
 }
 
-static char	**ft_fill_substr(char *s, char c, char **str)
+static char	**ft_fill_substr(char *s, char **str)
 {
 	size_t	i;
 	size_t	j;
+	int		b;
 	int		index;
 
 	i = 0;
 	j = 0;
 	index = -1;
+	// printf("s = %c\n", s[i]);
+	if (s[0] == 29)
+	{
+		str[0] = ft_substr(s, 0, 2);
+		i = 2;
+		j = 1;
+	}
 	while (i <= ft_strlen(s))
 	{
+		b = 1;
 		if (s[i] == '"')
 			s[i] = 32;
-		if ((s[i] != c && s[i] != '<' && s[i] != '>' && s[i] != '|')
-			&& index < 0)
+		if ((ft_wake_word(s[i]) == 0) && index < 0)
 			index = i;
-		else if ((s[i] == '<' || s[i] == '>' || s[i] == '|'
-					|| i == ft_strlen(s)) && index >= 0)
+		else if (((ft_wake_word(s[i]) == 1) || i == ft_strlen(s)) && index >= 0)
 		{
+			// if (i <= 1)
+			// 	str[j] = ft_substr(s, 0, i);
+			// else
 			str[j] = ft_substr(s, index, i - index);
 			if (!str[j++])
 				return (ft_free(str, j));
 			if (s[i] == '<' || s[i] == '>' || s[i] == '|')
 			{
-				if (s[i + 1] == s[i])
-					str[j] = ft_substr(s, i, 2);
-				else
-					str[j] = ft_substr(s, i, 1);
+				while (s[i + b] == '<' || s[i + b] == '>' || s[i + b] == '|'
+					|| s[i + b] == 32)
+					b++;
+				str[j] = ft_substr(s, i, b);
 				if (!str[j++])
 					return (ft_free(str, j));
 			}
 			index = -1;
 		}
-		i++;
+		if (b > 1)
+			i += b;
+		else
+			i++;
 	}
 	str[j] = NULL;
 	return (str);
 }
-
 
 static size_t	count_words(char *s)
 {
@@ -82,20 +94,26 @@ static size_t	count_words(char *s)
 	while (s[i])
 	{
 		if (ft_wake_word(s[i]) == 1)
+		{
+			while ((ft_wake_word(s[i]) == 1 || s[i] == ' ' || s[i] == 29)
+				&& s[i])
+				i++;
 			count++;
+		}
 		i++;
 	}
+	// printf("count = %lu\n", count * 2);
 	return (count * 2);
 }
 
 char	**ft_split_input(char *s)
 {
-	char	**str;
-	char	c;
+	char **str;
 
-	c = 32;
 	str = (char **)malloc((count_words(s) + 1) * sizeof(char *));
 	if (!str)
 		return (NULL);
-	return (ft_fill_substr(s, c, str));
+	str = ft_fill_substr(s, str);
+
+	return (str);
 }

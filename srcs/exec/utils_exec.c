@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils_Exec.c                                       :+:      :+:    :+:   */
+/*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 14:48:33 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:24:58 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	*ft_set_pipe(t_child *child)
 	return (fd_array);
 }
 
-void	ft_close_child(int *fd_array, int cmd_nbr)
+void	ft_close_fd(int *fd_array, int cmd_nbr)
 {
 	int	i;
 	int index;

@@ -1,8 +1,20 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
+#    Updated: 2023/03/30 12:22:36 by jalevesq         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME	= minishell
 
 SRC_DIR		= srcs/
 
-EXEC = 	child_process executor child_great child_pipe utils_exec
+EXEC = 	child_process executor child_great child_less child_pipe utils_exec
 
 MAIN = Minishell
 
@@ -15,7 +27,8 @@ SRC = $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
 	  	$(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
 	  	$(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
 
-OBJ		= $(SRC:.c=.o)
+OBJ_DIR = objs/
+OBJ		= $(addprefix $(OBJ_DIR), $(subst srcs/,,$(SRC:.c=.o)))
 
 INCLUDE		= include/
 
@@ -29,10 +42,10 @@ CFLAGS		= -Wall -Wextra -Werror -g
 
 LIBS	= $(LIBFT) -lcurses $(LIBRD)
 
-
 .PHONY: all clean fclean re cleanlib
 
-%.o:		%.c
+$(OBJ_DIR)%.o:	srcs/%.c
+		mkdir -p $(dir $@)
 		-$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
 
 all:	$(NAME)
@@ -54,10 +67,10 @@ $(LIBRD):
 	mv ./$(LIBRLINE)/*.h ./include/readline
 	rm -rf $(LIBRLINE)
 
-
 clean:
 		rm -f $(OBJ) $(LIBFT)
 		make -C libft/ clean
+		rm -rf $(OBJ_DIR)
 
 fclean:		clean
 		rm -f $(NAME) $(NAME_BONUS)

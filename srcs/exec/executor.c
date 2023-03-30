@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Executor.c                                         :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 16:26:32 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 14:11:10 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_command(t_token *token, t_child *child)
 		fd_array = ft_set_pipe(child);
 	ft_exec_command(token, child, fd_array, pid);
 	if (child->cmd_nbr > 1)
-		ft_close_child(fd_array, child->cmd_nbr);
+		ft_close_fd(fd_array, child->cmd_nbr);
 	ft_wait(pid, child->cmd_nbr);
 	if (fd_array != NULL)
 		free(fd_array);
@@ -70,6 +70,8 @@ void	ft_executor(t_token *token, char **envp)
 	child.all_path = find_path(envp);
 	child.envp = envp;
 	child.i = 0;
+	if (child.cmd_nbr < 1)
+		ft_child_great_redirection(token);
 	ft_command(token, &child);
 	ft_free_double(child.all_path);
 }

@@ -1,46 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Child_Process.c                                    :+:      :+:    :+:   */
+/*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 16:20:34 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 13:56:53 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_child_great_redirection(t_token *token)
-{
-	if (token->next && token->next->type == GREAT)
-	{
-		// fprintf(stderr, "great_front\n");
-		ft_child_great_front(token);
-	}
-	if (token->prev && token->prev->type == FILE
-		&& token->prev->prev && token->prev->prev->type == GREAT)
-		{
-			// fprintf(stderr, "great_back\n");
-			ft_child_great_back(token);
-		}
-}
-
 // Check which redirection 
 void	ft_exec_child(t_child *child, t_token *token, int *fd)
 {
 	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
+	if ((token->next && token->next->type == LESS)
+		|| (token->prev && token->prev->prev
+		&& token->prev->prev->type == LESS))
+		{
+			fprintf(stderr, "TEST2\n");
+			ft_child_less_redirections(token);
+			token = token->next->next;
+			while (token->next && token->next->type == LESS && token->next->next)
+				token = token->next->next;
+				
+		}
 	if ((token->next && token->next->type == GREAT)
 		|| (token->prev && token->prev->type == FILE
 		&& token->prev->prev && token->prev->prev->type == GREAT))
+		{
+			fprintf(stderr, "TEST1\n");
 			ft_child_great_redirection(token);
+		}
+
 	if ((token->next && token->next->type == PIPE
 		&& (!token->prev || token->prev->type != FILE))
 		|| (token->prev && token->prev->type == PIPE))
-			ft_child_pipe(child, token, fd);
+		ft_child_pipe(child, token, fd);
+	
 	if (child->cmd_nbr > 1)
-		ft_close_child(fd, child->cmd_nbr);
+		ft_close_fd(fd, child->cmd_nbr);
 	execve(child->cmd_path, child->cmd, child->envp);
 	ft_error(1);
 }

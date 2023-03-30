@@ -16,8 +16,30 @@ ls | cat | grep Makefile | grep e | wc > coucou > abc > def
 > abc ls | wc
 > abc > def > abc > def > hij ls | wc > 123 > 456 > 789
 FONCTIONNE PAS:
+> file ( doit creer le fichier)
 
 
-** changer makefile objs folder
+** < **
+FONCTIONNE COMME BASH:
+cat < Makefile < note.txt
+
+FONCTIONNE PAS:
+< Makefile cat (tout ce qui commence par <, pas encore dev)
+
+** < && > **
+cat < Makefile > Outfile
+Faire plus de test quand ft_less_back_redirection dev
+
+
+A ESSAYER QUAND PARSER FONCTIONNEL
+> outfile cat < Makefile
+< Makefile (Doit rien faire, ou si file existe pas dire no such file or...)
+> Outfile (doit creer outfile)
+
+NE PAS GERER
+<>, |>, <|
+
+
+** check  les Exit_status ?
+** Plusieurs possibilites de leak dans split_input
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
-** dire Ethan gere " "", doit send error. (PDF)

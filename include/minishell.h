@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/29 14:20:44 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:41:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,22 @@ void				ft_title(void);
 
 // Every function for Executor
 void				ft_executor(t_token *token, char **envp);
-int					cmd_counter(t_token *token);
-void				ft_wait(pid_t *pid, int cmd_nbr);
-int					*ft_set_pipe(t_child *child);
 void				ft_process_child(t_child *c, t_token *tmp, int *fd, int *pid);
 void				ft_exec_child(t_child *child, t_token *token, int *fd);
-void				ft_close_child(int *fd_array, int cmd_nbr);
+
+int					*ft_set_pipe(t_child *child);
+int					cmd_counter(t_token *token);
+void				ft_wait(pid_t *pid, int cmd_nbr);
+void				ft_close_fd(int *fd_array, int cmd_nbr);
+
 void				ft_child_pipe(t_child *c, t_token *t, int *fd);
-void				ft_child_great_front(t_token *t);
+
 void				ft_multiple_great_front(int *fd2, t_token *tmp);
+void				ft_child_great_front(t_token *t);
 void				ft_child_great_back(t_token *t);
+
+void				ft_child_great_redirection(t_token *token);
+void				ft_child_less_redirections(t_token *token);
 
 // Free & End function.
 void				*ft_free_double(char **str);
