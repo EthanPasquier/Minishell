@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 11:41:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 15:10:15 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,18 @@ typedef struct s_child
 	int cmd_nbr;
 }					t_child;
 
+
+// Evert function for Parser
 t_init				ft_init(char *input, char **envp);
+void				ft_parser(t_init *var);
+int					ft_count_parsing(char *str);
+int					ft_wake_word(char c);
+int					ft_syntax(char *str);
 t_token				*new_node(char *str);
 
-void				ft_parser(t_init *var);
-char				**ft_split_input(char *s);
-int					ft_wake_word(char c);
-
-
-char				**find_path(char **envp);
-char				*find_cmd_path(char **cmd, char **path);
 
 void				ft_ctrlc(int sig);
 void				ft_title(void);
-// int				ft_is_next_pipe(t_token *tmp_cmd);
-// int				ft_is_prev_pipe(t_token *tmp_cmd);
 
 
 // Every function for Executor
@@ -94,6 +91,10 @@ void				ft_child_great_back(t_token *t);
 
 void				ft_child_great_redirection(t_token *token);
 void				ft_child_less_redirections(t_token *token);
+
+char				*find_cmd_path(char **cmd, char **path);
+char				**find_path(char **envp);
+
 
 // Free & End function.
 void				*ft_free_double(char **str);

@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/30 12:22:36 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/03/30 15:09:12 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ EXEC = 	child_process executor child_great child_less child_pipe utils_exec
 
 MAIN = Minishell
 
-PARSING = Parser Split_input
+PARSING = Parser Split_input syntax
 
 TOOLS = Utils Signal Error1 Init
 

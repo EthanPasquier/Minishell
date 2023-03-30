@@ -1,47 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Split_input.c                                      :+:      :+:    :+:   */
+/*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 10:55:21 by epasquie          #+#    #+#             */
-/*   Updated: 2023/03/30 15:08:46 by jalevesq         ###   ########.fr       */
+/*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
+/*   Updated: 2023/03/30 15:06:36 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_wake_word(char c)
+int ft_error_syntax(char c)
 {
-	if (c == '|')
-		return (1);
-	else if (c == '>' || c == '<')
-		return (2);
-	return (0);
+    fprintf(stderr, "minishell: syntax error near: [%c]\n", c);
+    return (1);
 }
 
-int	ft_count_parsing(char *str)
+int ft_syntax(char *str)
 {
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (ft_wake_word(str[i]) >= 1)
-		{
-			while (ft_wake_word(str[i]) >= 1)
-				i++;
-			if (i == 0)
-				count += 1;
-			else
-				count += 2;
-			if (ft_wake_word(str[i]) == 2)
-				count++;
-		}
-		i++;
-	}
-	return (count);
+    int i;
+    int tmp;
+    i = 0;
+    tmp = 0;
+    while (str[i])
+    {
+        if (str[i] == 39 || str[i] == 34)
+            tmp++;
+        i++;
+    }
+    if (tmp % 2 != 0)
+        return (ft_error_syntax('"'));
+    return (0);
 }
