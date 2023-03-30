@@ -5,7 +5,7 @@ Gérer les redirections < > << >>, À quel moment check les redirections ?
 
 * Changer la façon de init le envp.
 
-** > **
+***** > *****
 FONCTIONNE COMME BASH:
 ls > test.txt
 ls > coucou > test > abc > def
@@ -19,16 +19,23 @@ FONCTIONNE PAS:
 > file ( doit creer le fichier)
 
 
-** < **
+***** < *****
 FONCTIONNE COMME BASH:
 cat < Makefile < note.txt
+< Makefile cat
+
 
 FONCTIONNE PAS:
-< Makefile cat (tout ce qui commence par <, pas encore dev)
 
-** < && > && |**
-TOUT CE QUI EST COMBINAISON INTER SYMBOL NE FONCTIONNE PAS.
-DEV < FRONT AVANT DE GERE COMPATIBILITE
+***** < && > && | *****
+FONCTIONNE COMME BASH:
+< Makefile cat > outfile
+< Makefile cat | < note.txt cat
+< Makefile cat > abc | < note.txt cat > def
+< Makefile < note.txt < outfile cat > abc
+
+FONCTIONNE PAS:
+< Makefile cat -e | grep e | wc // cat -e n'ecrit pas dans le pipe
 
 
 A ESSAYER QUAND PARSER FONCTIONNEL
@@ -40,6 +47,6 @@ NE PAS GERER
 <>, |>, <|
 
 
-** check  les Exit_status ?
+** check les Exit status ?
 ** Plusieurs possibilites de leak dans split_input
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
