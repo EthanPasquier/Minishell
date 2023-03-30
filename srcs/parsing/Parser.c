@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 15:35:09 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 19:32:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,9 +168,9 @@ char	*ft_take_var(char *str, int position)
 
 char	*ft_chevronparsing(char *str, int i)
 {
-	int	j;
+	// int	j;
 
-	j = 0;
+	// j = 0;
 	while (str[i] == 32)
 		i++;
 	while (ft_wake_word(str[i]) == 0 && str[i] != 32)
@@ -183,7 +183,7 @@ char	*ft_write_cut(char *str)
 {
 	int		i;
 	int		j;
-	int		temoins;
+	// int		temoins;
 	int		count;
 	char	*output;
 
@@ -191,7 +191,7 @@ char	*ft_write_cut(char *str)
 	j = 0;
 	count = ft_count_parsing(str);
 	output = ft_calloc(sizeof(char), (ft_strlen(str) + count) + 1);
-	temoins = 0;
+	// temoins = 0;
 	while (str[i])
 	{
 		if (ft_wake_word(str[i]) >= 1)
@@ -251,11 +251,11 @@ void	ft_parser(t_init *var)
 	while (tmp)
 	{
 		tmp->str = ft_strtrim(tmp->str, " ");
-		// printf("%s\n", tmp->str);
-		// printf("%d\n", tmp->type);
+		printf("%s\n", tmp->str);
+		printf("%d\n", tmp->type);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 	}
-	ft_executor(token, var->envp);
+	// ft_executor(token, var->envp);
 	ft_free_list(token);
 }

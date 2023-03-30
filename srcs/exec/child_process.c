@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 14:26:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/30 19:26:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 		|| (token->prev && token->prev->prev
 		&& token->prev->prev->type == LESS))
 		{
-			fprintf(stderr, "TEST2\n");
+			fprintf(stderr, "LESS\n");
 			ft_child_less_redirections(token);
 			// token = token->next->next;
 			// while (token->next && token->next->type == LESS && token->next->next)
@@ -31,7 +31,7 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 		|| (token->prev && token->prev->type == FILE
 		&& token->prev->prev && token->prev->prev->type == GREAT))
 		{
-			fprintf(stderr, "TEST1\n");
+			fprintf(stderr, "GREAT\n");
 			ft_child_great_redirection(token);
 			// token = token->next->next;
 			// while (token->next && token->next->type == GREAT && token->next->next)
@@ -39,9 +39,12 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 		}
 
 	if ((token->next && token->next->type == PIPE
-		&& (!token->prev || token->prev->type != FILE))
+		&& (!token->prev || (token->prev->prev && token->prev->prev->type != GREAT)))
 		|| (token->prev && token->prev->type == PIPE))
-		ft_child_pipe(child, token, fd);
+		{
+			fprintf(stderr, "PIPE\n");
+			ft_child_pipe(child, token, fd);
+		}
 	
 	if (child->cmd_nbr > 1)
 		ft_close_fd(fd, child->cmd_nbr);

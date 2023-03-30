@@ -33,19 +33,34 @@ FONCTIONNE COMME BASH:
 < Makefile cat | < note.txt cat
 < Makefile cat > abc | < note.txt cat > def
 < Makefile < note.txt < outfile cat > abc
+< Makefile cat -e | grep e | wc // patch
+> outfile cat < Makefile
 
 FONCTIONNE PAS:
-< Makefile cat -e | grep e | wc // cat -e n'ecrit pas dans le pipe
 
 
 A ESSAYER QUAND PARSER FONCTIONNEL
-> outfile cat < Makefile
 < Makefile (Doit rien faire, ou si file existe pas dire no such file or...)
 > Outfile (doit creer outfile)
 
 NE PAS GERER
 <>, |>, <|
 
+Bug PARSER
+
+< Makefile cat -e | grep NAME > coucou
+Makefile
+1
+cat -e
+1
+|
+7
+ grep NAME
+1
+>
+3
+ coucou
+8
 
 ** check les Exit status ?
 ** Plusieurs possibilites de leak dans split_input
