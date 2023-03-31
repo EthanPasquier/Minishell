@@ -1,8 +1,7 @@
 To do list:
-Gérer les redirections < > << >>, À quel moment check les redirections ?
+Gérer les redirections < > << >>
 
 * Readline, text wrap quand terminal trop petit. \001 \002, bug quand "ENTER"
-
 * Changer la façon de init le envp.
 
 ***** > *****
@@ -38,7 +37,6 @@ FONCTIONNE COMME BASH:
 
 FONCTIONNE PAS:
 
-
 A ESSAYER QUAND PARSER FONCTIONNEL
 < Makefile (Doit rien faire, ou si file existe pas dire no such file or...)
 > Outfile (doit creer outfile)
@@ -47,20 +45,7 @@ NE PAS GERER
 <>, |>, <|
 
 Bug PARSER
-
 < Makefile cat -e | grep NAME > coucou
-Makefile
-1
-cat -e
-1
-|
-7
- grep NAME
-1
->
-3
- coucou
-8
 
 ** check les Exit status ?
 ** Plusieurs possibilites de leak dans split_input

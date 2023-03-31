@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 19:32:20 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 08:58:04 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ char	*ft_chevronparsing(char *str, int i)
 	// j = 0;
 	while (str[i] == 32)
 		i++;
-	while (ft_wake_word(str[i]) == 0 && str[i] != 32)
+	while (ft_wake_word(str[i]) == 0 && str[i] != 32 && str[i])
 		i++;
 	str[i] = 29;
 	return (str);

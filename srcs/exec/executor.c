@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 14:11:10 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 08:49:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void	ft_command(t_token *token, t_child *child)
 	free(pid);
 }
 
+void ft_redirection_no_cmd(t_token *token)
+{
+	if (token)
+}
+
 void	ft_executor(t_token *token, char **envp)
 {
 	t_child	child;
@@ -70,8 +75,12 @@ void	ft_executor(t_token *token, char **envp)
 	child.all_path = find_path(envp);
 	child.envp = envp;
 	child.i = 0;
-	if (child.cmd_nbr < 1)
+	if (child.cmd_nbr <= 0 && (token->type == GREAT || token->type == LESS))
+	{
 		ft_child_great_redirection(token);
-	ft_command(token, &child);
+		
+	}
+	else
+		ft_command(token, &child);
 	ft_free_double(child.all_path);
 }
