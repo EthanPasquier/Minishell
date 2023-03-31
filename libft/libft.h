@@ -84,6 +84,6 @@ char	*ft_freeGNL(char *str1, char *str2);
 char	*ft_strjoin_gnl(char *stash, char *buffer, size_t size);
 
 
-
+char	**ft_split_parser(char const *s, char c);
 
 #endif

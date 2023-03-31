@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 10:17:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 12:05:00 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	ft_assign_type(t_token *token)
 			temp->type = PIPE;
 		else
 			temp->type = CMD;
-		if (temp->type == CMD && (temp->prev
-		&& (temp->prev->type == GREAT || temp->prev->type == LESS)))
+		if (temp->type == CMD && (temp->prev && (temp->prev->type == GREAT
+					|| temp->prev->type == LESS)))
 			temp->type = FILE;
 		temp = temp->next;
 	}
@@ -169,13 +169,15 @@ char	*ft_take_var(char *str, int position)
 char	*ft_chevronparsing(char *str, int i)
 {
 	// int	j;
-
 	// j = 0;
 	while (str[i] == 32)
 		i++;
-	while (ft_wake_word(str[i]) == 0 && str[i] != 32 && str[i])
+	while ((ft_wake_word(str[i]) > 0 || str[i] == 32) && str[i])
 		i++;
-	str[i] = 29;
+	while (ft_isalnum(str[i]))
+		i++;
+	if (i < (int)ft_strlen(str))
+		str[i] = 29;
 	return (str);
 }
 
@@ -183,15 +185,17 @@ char	*ft_write_cut(char *str)
 {
 	int		i;
 	int		j;
-	// int		temoins;
 	int		count;
 	char	*output;
 
+	// int		temoins;
 	i = 0;
 	j = 0;
 	count = ft_count_parsing(str);
+	// printf("count = %d\n", count);
 	output = ft_calloc(sizeof(char), (ft_strlen(str) + count) + 1);
 	// temoins = 0;
+	str[ft_strlen(str)] = 0;
 	while (str[i])
 	{
 		if (ft_wake_word(str[i]) >= 1)
@@ -203,7 +207,7 @@ char	*ft_write_cut(char *str)
 				output[j] = 29;
 				j++;
 			}
-			while (ft_wake_word(str[i]) >= 1)
+			while (ft_wake_word(str[i]) >= 1 || str[i] == 32)
 			{
 				output[j] = str[i];
 				j++;
@@ -229,21 +233,17 @@ void	ft_parser(t_init *var)
 	char *mots;
 
 	var->input = ft_strtrim(var->input, " ");
-	if (ft_syntax(var->input) == 1)
-		return ;
 	mots = NULL;
 	a = ft_where(var->input, '$', 0);
 	while (a != -1)
 	{
 		mots = ft_take_var(var->input, a);
-		// fprintf(stderr, "\nmots = %s\n", mots);
 		var->input = ft_find_var(var, var->envp, mots);
 		a = ft_where(var->input, '$', a);
 	}
-	// split = ft_split_input(var->input);
-	// split = ft_write_cut(var->input);
 	var->input = ft_write_cut(var->input);
-	split = ft_split(var->input, 29);
+	// printf("input = %s\n", var->input);
+	split = ft_split_parser(var->input, 29);
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	ft_assign_type(token);
@@ -251,11 +251,24 @@ void	ft_parser(t_init *var)
 	while (tmp)
 	{
 		tmp->str = ft_strtrim(tmp->str, " ");
-		printf("%s\n", tmp->str);
-		printf("%d\n", tmp->type);
+		if (ft_syntax(tmp->str) == 1)
+			return ;
+		if (!tmp->next)
+		{
+			if (ft_wake_word(tmp->str[0]) > 0)
+			{
+				// 	printf("next = %c\n", tmp->str[0]);
+				ft_error_syntax(tmp->str);
+				return ;
+			}
+		}
+		// tmp->str = ft_guillemet(tmp->str);
+		// printf("%s\n", tmp->str);
+		// printf("%d\n", tmp->type);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 	}
+
 	ft_executor(token, var->envp);
 	ft_free_list(token);
 }

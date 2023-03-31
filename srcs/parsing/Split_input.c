@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:55:21 by epasquie          #+#    #+#             */
-/*   Updated: 2023/03/30 15:08:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:48:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	ft_wake_word(char c)
 
 int	ft_count_parsing(char *str)
 {
-	int	i;
-	int	count;
+	int i;
+	int count;
 
 	i = 0;
 	count = 0;
@@ -32,7 +32,7 @@ int	ft_count_parsing(char *str)
 	{
 		if (ft_wake_word(str[i]) >= 1)
 		{
-			while (ft_wake_word(str[i]) >= 1)
+			while (ft_wake_word(str[i]) >= 1 || str[i] == 32)
 				i++;
 			if (i == 0)
 				count += 1;
@@ -43,5 +43,6 @@ int	ft_count_parsing(char *str)
 		}
 		i++;
 	}
+	
 	return (count);
 }

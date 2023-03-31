@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 19:26:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 12:11:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	ft_exec_child(t_child *child, t_token *token, int *fd)
 {
 	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
+	fprintf(stderr, "%s\n", token->str);
 	if ((token->next && token->next->type == LESS)
 		|| (token->prev && token->prev->prev
 		&& token->prev->prev->type == LESS))
@@ -27,6 +28,9 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 			// 	token = token->next->next;
 				
 		}
+	while (token->type != CMD && token->next && token->next->type == LESS)
+		token = token->next->next; // Faire une fonction qui verifie si il y a un autre type de redirection ?
+	// fprintf(stderr, "%s\n", token->str);
 	if ((token->next && token->next->type == GREAT)
 		|| (token->prev && token->prev->type == FILE
 		&& token->prev->prev && token->prev->prev->type == GREAT))
@@ -37,7 +41,9 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 			// while (token->next && token->next->type == GREAT && token->next->next)
 			// 	token = token->next->next;
 		}
-
+	while (token->type != CMD && token->next && token->next->type == GREAT)
+		token = token->next->next;
+	// fprintf(stderr, "%s\n", token->str);
 	if ((token->next && token->next->type == PIPE
 		&& (!token->prev || (token->prev->prev && token->prev->prev->type != GREAT)))
 		|| (token->prev && token->prev->type == PIPE))
@@ -48,6 +54,7 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 	
 	if (child->cmd_nbr > 1)
 		ft_close_fd(fd, child->cmd_nbr);
+	fprintf(stderr, "EXECVE\n");
 	execve(child->cmd_path, child->cmd, child->envp);
 	ft_error(1);
 }
