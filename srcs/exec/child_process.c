@@ -6,44 +6,43 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 12:11:24 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:13:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+void ft_child_redirection_back(t_token *token)
+{
+	t_token *tmp;
+	int fd2;
+	int first_great;
+	int first_less;
+
+	tmp = token->prev;
+	while (tmp->prev && (tmp->prev->type == LESS && tmp->prev->type == GREAT))
+	{
+		if (tmp->prev->type == LESS)
+		{
+			fd2 = open(tmp->str, O_RDONLY);
+			perror(tmp->str);
+			exit(EXIT_SUCCESS);
+		}
+		else if (tmp->prev->type == GREAT)
+			fd2 = open(tmp->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
+	}
+}
+
 // Check which redirection 
 void	ft_exec_child(t_child *child, t_token *token, int *fd)
 {
 	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
-	fprintf(stderr, "%s\n", token->str);
-	if ((token->next && token->next->type == LESS)
-		|| (token->prev && token->prev->prev
-		&& token->prev->prev->type == LESS))
-		{
-			fprintf(stderr, "LESS\n");
-			ft_child_less_redirections(token);
-			// token = token->next->next;
-			// while (token->next && token->next->type == LESS && token->next->next)
-			// 	token = token->next->next;
-				
-		}
-	while (token->type != CMD && token->next && token->next->type == LESS)
-		token = token->next->next; // Faire une fonction qui verifie si il y a un autre type de redirection ?
-	// fprintf(stderr, "%s\n", token->str);
-	if ((token->next && token->next->type == GREAT)
-		|| (token->prev && token->prev->type == FILE
-		&& token->prev->prev && token->prev->prev->type == GREAT))
-		{
-			fprintf(stderr, "GREAT\n");
-			ft_child_great_redirection(token);
-			// token = token->next->next;
-			// while (token->next && token->next->type == GREAT && token->next->next)
-			// 	token = token->next->next;
-		}
-	while (token->type != CMD && token->next && token->next->type == GREAT)
-		token = token->next->next;
-	// fprintf(stderr, "%s\n", token->str);
+	if (token->next
+		&& (token->next->type == LESS || token->next->type == GREAT))
+		ft_child_redirection_front(token);
+	if (((token->prev && token->prev->prev)
+		&& (token->prev->prev->type == LESS || token->prev->prev->type == GREAT)))		
+		ft_child_redirection_back(token);
 	if ((token->next && token->next->type == PIPE
 		&& (!token->prev || (token->prev->prev && token->prev->prev->type != GREAT)))
 		|| (token->prev && token->prev->type == PIPE))

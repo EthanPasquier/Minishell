@@ -38,8 +38,6 @@ FONCTIONNE COMME BASH:
 
 FONCTIONNE PAS:
 cat < note.txt > output
-
-A ESSAYER QUAND PARSER FONCTIONNEL
 < Makefile (Doit rien faire, ou si file existe pas dire no such file or...)
 > Outfile (doit creer outfile)
 
@@ -49,6 +47,15 @@ NE PAS GERER
 Bug PARSER
 < Makefile cat -e | grep NAME > coucou
 
+*** TRUC WTF EN BASH ***
+cat < Makefile > outfile abc 
+(Si les deux existe pas, cree outfile mais pas abc et n'ecrit rien)
+(Si outfile existe, ne cree pas abc 'cat: abc: No such file or directory', ecrase tout dans outfile)
+
+
+** POUR LES REDIRECTIONS EN AVANT DE LA COMMANDE **
+LA COMMANDE ECRIRA TOUJOURS DANS LE DERNIER FICHIER SUIVANT >
+ET SON INPUT SERA TOUJOURS LE DERNIER FICHIERS SUIVANT <
 ** check les Exit status ?
 ** Plusieurs possibilites de leak dans split_input
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash

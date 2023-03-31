@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 12:05:00 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 13:52:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ char	*ft_chevronparsing(char *str, int i)
 		i++;
 	while ((ft_wake_word(str[i]) > 0 || str[i] == 32) && str[i])
 		i++;
-	while (ft_isalnum(str[i]))
+	while ((ft_wake_word(str[i]) == 0 && str[i] != 32) && str[i])
 		i++;
 	if (i < (int)ft_strlen(str))
 		str[i] = 29;
@@ -263,8 +263,8 @@ void	ft_parser(t_init *var)
 			}
 		}
 		// tmp->str = ft_guillemet(tmp->str);
-		// printf("%s\n", tmp->str);
-		// printf("%d\n", tmp->type);
+		printf("%s\n", tmp->str);
+		printf("%d\n", tmp->type);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 11:50:51 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:37:36 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void				ft_multiple_great_front(int *fd2, t_token *tmp);
 void				ft_child_great_front(t_token *t);
 void				ft_child_great_back(t_token *t);
 
-void				ft_child_great_redirection(t_token *token);
-void				ft_child_less_redirections(t_token *token);
+void				ft_child_redirection_front(t_token *token);
+
 
 void				ft_type_great(t_token *tmp, int *flag, int *fd2);
 t_token				*ft_next_redir(t_token *token);
