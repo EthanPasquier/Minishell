@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 08:49:57 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:13:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_exec_command(t_token *t, t_child *c, int *fd, int *pid)
 			if (c->cmd_path != NULL)
 				ft_process_child(c, tmp, fd, pid);
 			else
-				printf("minishell: %s: command not found\n", c->cmd[0]);
+				printf("\u274C Minishell: %s: command not found\n", c->cmd[0]);
 			ft_free_exec(c->cmd, c->cmd_path);
 		}
 		c->i++;
@@ -64,7 +64,23 @@ void	ft_command(t_token *token, t_child *child)
 
 void ft_redirection_no_cmd(t_token *token)
 {
-	if (token)
+	t_token *tmp;
+	int fd2;
+	int flag;
+
+	tmp = token;
+	while (tmp && (tmp->type == LESS || tmp->type == GREAT))
+	{
+		flag = -1;
+		fd2 = -1;
+		if (tmp->type == LESS)
+			ft_type_less(tmp, &flag, &fd2);
+		else if (tmp->type == GREAT)
+			ft_type_great(tmp, &flag, &fd2);
+		if (flag != -1)
+			return ;
+		tmp = ft_next_redir(tmp);
+	}
 }
 
 void	ft_executor(t_token *token, char **envp)
@@ -75,11 +91,9 @@ void	ft_executor(t_token *token, char **envp)
 	child.all_path = find_path(envp);
 	child.envp = envp;
 	child.i = 0;
-	if (child.cmd_nbr <= 0 && (token->type == GREAT || token->type == LESS))
-	{
-		ft_child_great_redirection(token);
-		
-	}
+	if (child.cmd_nbr <= 0
+		&& (token->type == GREAT || token->type == LESS))
+		ft_redirection_no_cmd(token);
 	else
 		ft_command(token, &child);
 	ft_free_double(child.all_path);

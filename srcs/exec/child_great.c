@@ -6,30 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:16 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 14:09:28 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:24:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// This function is for >
-void	ft_multiple_great_front(int *fd2, t_token *t)
-{
-	while (t && t->type == GREAT)
-	{
-		*fd2 = -1;
-		*fd2 = open(t->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
-		if (t->next && t->next->next && t->next->type == FILE
-			&& t->next->next->type == GREAT)
-		{
-			close(*fd2);
-			t = t->next->next;
-		}
-		else
-			break ;
-	}	
-}
-
+// This func is for > at the front of the comd (Only used if at least 1 cmd)
 void	ft_child_great_front(t_token *t)
 {
 	int		fd2;
@@ -47,6 +30,7 @@ void	ft_child_great_front(t_token *t)
 	// fprintf(stderr, "fd2, STDOUT great_front\n");
 }
 
+// This func is for > at the back of the cmd (Only used if at least 1 cmd)
 void ft_child_great_back(t_token *t)
 {
 	// t_token *tmp;
@@ -72,6 +56,7 @@ void ft_child_great_back(t_token *t)
 	}
 }
 
+// This func is for check if > is in front or at the back (If at least 1 cmd)
 void	ft_child_great_redirection(t_token *token)
 {
 	if (token->next && token->next->type == GREAT)
@@ -81,8 +66,8 @@ void	ft_child_great_redirection(t_token *token)
 	}
 	if (token->prev && token->prev->type == FILE
 		&& token->prev->prev && token->prev->prev->type == GREAT)
-		{
-			// fprintf(stderr, "great_back\n");
-			ft_child_great_back(token);
-		}
+	{
+		// fprintf(stderr, "great_back\n");
+		ft_child_great_back(token);
+	}
 }

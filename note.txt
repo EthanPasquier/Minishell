@@ -14,8 +14,8 @@ ls | cat | grep Makefile | grep e | wc > coucou > abc > def
 > note.txt > ls > abc > def ls
 > abc ls | wc
 > abc > def > abc > def > hij ls | wc > 123 > 456 > 789
+> file > file1 > file2
 FONCTIONNE PAS:
-> file ( doit creer le fichier)
 
 
 ***** < *****
@@ -34,8 +34,10 @@ FONCTIONNE COMME BASH:
 < Makefile < note.txt < outfile cat > abc
 < Makefile cat -e | grep e | wc // patch
 > outfile cat < Makefile
+< Makefile > abc < note.txt > def > hij < file > coucou (file does not exist et coucou pas cree)
 
 FONCTIONNE PAS:
+cat < note.txt > output
 
 A ESSAYER QUAND PARSER FONCTIONNEL
 < Makefile (Doit rien faire, ou si file existe pas dire no such file or...)

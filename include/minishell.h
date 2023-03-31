@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 15:10:15 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 11:23:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int					ft_count_parsing(char *str);
 int					ft_wake_word(char c);
 int					ft_syntax(char *str);
 t_token				*new_node(char *str);
+int					ft_error_syntax(char c);
 
 
 void				ft_ctrlc(int sig);
@@ -82,6 +83,7 @@ int					*ft_set_pipe(t_child *child);
 int					cmd_counter(t_token *token);
 void				ft_wait(pid_t *pid, int cmd_nbr);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
+void				file_does_not_exist(t_token *tmp);
 
 void				ft_child_pipe(t_child *c, t_token *t, int *fd);
 
@@ -91,6 +93,10 @@ void				ft_child_great_back(t_token *t);
 
 void				ft_child_great_redirection(t_token *token);
 void				ft_child_less_redirections(t_token *token);
+
+void				ft_type_great(t_token *tmp, int *flag, int *fd2);
+t_token				*ft_next_redir(t_token *token);
+void				ft_type_less(t_token *tmp, int *flag, int *fd2);
 
 char				*find_cmd_path(char **cmd, char **path);
 char				**find_path(char **envp);

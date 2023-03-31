@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 08:58:04 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:17:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,6 @@ void	ft_parser(t_init *var)
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 	}
-	// ft_executor(token, var->envp);
+	ft_executor(token, var->envp);
 	ft_free_list(token);
 }
