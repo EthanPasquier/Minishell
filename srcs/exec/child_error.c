@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 12:01:53 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 12:21:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ void ft_fd_error(t_token *token, t_child *c, int flag)
 		fprintf(stderr, "\u26A0 Dup2 error at %s.\n", token->next->str);
 		exit(EXIT_SUCCESS);
 	}
-}
-
-void ft_pid_error()
-{
-
 }
 
 void	ft_child_error(t_token *token, t_child *c, int flag)

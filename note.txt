@@ -29,8 +29,6 @@ FONCTIONNE PAS:
 ***** < && > && | *****
 FONCTIONNE COMME BASH:
 < Makefile cat > outfile
-< Makefile cat | < note.txt cat
-< Makefile cat > abc | < note.txt cat > def
 < Makefile < note.txt < outfile cat > abc
 < Makefile cat -e | grep e | wc // patch
 > outfile cat < Makefile
@@ -41,8 +39,9 @@ cat < note.txt > output
 < Makefile cat -e | grep NAME > coucou
 
 FONCTIONNE PAS:
-< ls | cat
-
+< Makefile cat > abc | < note.txt cat > def
+< Makefile cat | < note.txt cat
+< ls | cat // doit etre identique a bash ?
 
 NE PAS GERER
 <>, |>, <|
@@ -59,3 +58,6 @@ ET SON INPUT SERA TOUJOURS LE DERNIER FICHIERS SUIVANT <
 ** check les Exit status ?
 ** Plusieurs possibilites de leak dans split_input
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
+
+Doit marcher, j'ai dis de la merde a Ethan
+ < Makefile cat | < note.txt cat
