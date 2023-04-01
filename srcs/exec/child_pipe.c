@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:42:54 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 11:34:45 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 14:24:32 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_child_pipe(t_child *c, t_token *t)
 		(dup2(c->fd_array[c->j], STDOUT) == -1))
 			ft_child_error(t, c, ERR_DUP2);
 	}
-	else if (c->i == 0 && t->next && t->next->type == PIPE) // Retirer c->i == 0 ?
+	else if (t->next && t->next->type == PIPE)
 	{
 		if (dup2(c->fd_array[c->j], STDOUT) == -1)
 			ft_child_error(t, c, ERR_DUP2);

@@ -6,13 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 11:23:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 14:05:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-
 
 int	ft_open_back_less(int *first_less, t_token *tmp, t_child *c)
 {

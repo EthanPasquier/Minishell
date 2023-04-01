@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 12:08:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 14:48:32 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_exec_command(t_token *t, t_child *c, int *pid)
 			if (c->cmd_path != NULL)
 				ft_process_child(c, tmp, pid);
 			else
-				fprintf(stderr, "\u274C Minishell: %s: command not found\n", c->cmd[0]);
+				fprintf(stderr,"\u274C Minishell: %s: command not found\n", c->cmd[0]);
 			ft_free_exec(c->cmd, c->cmd_path);
 		}
 		c->i++;

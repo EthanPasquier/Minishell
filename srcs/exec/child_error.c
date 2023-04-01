@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 12:21:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 14:58:19 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void ft_fd_error(t_token *token, t_child *c, int flag)
 	else if (flag == ERR_DUP2)
 	{
 		ft_close_fd(c->fd_array, c->cmd_nbr);
-		fprintf(stderr, "\u26A0 Dup2 error at %s.\n", token->next->str);
+		fprintf(stderr, "\u26A0 Dup2 error at: %s.\n", token->next->str);
 		exit(EXIT_SUCCESS);
 	}
 }

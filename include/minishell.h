@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 11:38:57 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 14:23:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,16 @@ void				file_does_not_exist(t_token *tmp);
 
 void				ft_child_error(t_token *token, t_child *c, int flag);
 
+int					ft_is_prev_pipe(t_token *token);
+int					ft_is_next_pipe(t_token *token);
+
 void				ft_child_pipe(t_child *c, t_token *t);
 void				ft_child_redirection_front(t_token *token, t_child *c);
 void				ft_child_redirection_back(t_token *token, t_child *c);
 
 void				ft_type_great(t_token *tmp, int *flag, int *fd2);
-t_token				*ft_next_redir(t_token *token);
 void				ft_type_less(t_token *tmp, int *flag, int *fd2);
+t_token				*ft_next_redir(t_token *token);
 
 char				*find_cmd_path(char **cmd, char **path);
 char				**find_path(char **envp);
