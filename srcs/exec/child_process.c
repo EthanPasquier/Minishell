@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 11:22:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 12:00:55 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_process_child(t_child *c, t_token *tmp, int *pid)
 {
 	pid[c->i] = fork();
 	if (pid[c->i] < 0)
-		ft_error(1);
+		return ;
 	else if (pid[c->i] == 0)
 		ft_exec_child(c, tmp); // Change FD for | and < >.
 }

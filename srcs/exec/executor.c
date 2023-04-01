@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 11:03:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 12:02:04 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_command(t_token *token, t_child *child)
 	pid = malloc(sizeof(pid_t) * child->cmd_nbr);
 	if (!pid)
 	{
-		printf("PID ERROR wtf\n");
+		fprintf(stderr, "PID ERROR\n");
 		exit(EXIT_FAILURE);
 	}
 	if (child->cmd_nbr > 1)
