@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 15:46:21 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:56:32 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ void	ft_exec_child(t_child *child, t_token *token)
 					ft_child_error(start2, child, ERR_OPEN);
 				j++;
 				if (j < less_mark)
+				{
 					close(fd);
+				}
 			}
 			start2 = start2->next;
 		}

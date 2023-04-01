@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 14:23:52 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:33:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_token
 
 typedef struct s_child
 {
+	int	great_mark;
+	int	less_mark;
 	char **envp;
 	char **cmd;
 	char **all_path;

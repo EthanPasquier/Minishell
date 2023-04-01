@@ -16,6 +16,7 @@ ls | cat | grep Makefile | grep e | wc > coucou > abc > def
 > abc > def > abc > def > hij ls | wc > 123 > 456 > 789
 > file > file1 > file2
 FONCTIONNE PAS:
+ls | > outfile | cat avc
 
 
 ***** < *****
@@ -28,10 +29,10 @@ FONCTIONNE PAS:
 
 ***** < && > && | *****
 FONCTIONNE COMME BASH:
+> outfile cat < Makefile
 < Makefile cat > outfile
 < Makefile < note.txt < outfile cat > abc
-< Makefile cat -e | grep e | wc // patch
-> outfile cat < Makefile
+< Makefile cat -e | grep e | wc 
 < Makefile > abc < note.txt > def > hij < file > coucou (file does not exist et coucou pas cree)
 cat < note.txt > output
 < Makefile (Doit rien faire, ou si file existe pas dire no such file or...)
@@ -41,12 +42,12 @@ cat < note.txt > output
 FONCTIONNE PAS:
 < Makefile cat > abc | < note.txt cat > def
 < Makefile cat | < note.txt cat
-< ls | cat // doit etre identique a bash ?
 
 NE PAS GERER
 <>, |>, <|
 
-*** TRUC WTF EN BASH ***
+*** TRUC WTF EN BASH, DOIT ETRE IDENTIQUE ??? ***
+< ls | cat // doit etre identique a bash ?
 cat < Makefile > outfile abc 
 (Si les deux existe pas, cree outfile mais pas abc et n'ecrit rien)
 (Si outfile existe, ne cree pas abc 'cat: abc: No such file or directory', ecrase tout dans outfile)
