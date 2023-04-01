@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/31 15:35:02 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/01 09:32:18 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAIN = Minishell
 
 PARSING = Parser Split_input syntax
 
-TOOLS = Utils Signal Error1 Init
+TOOLS = utils signal error init
 
 SRC = $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
 	  	$(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \

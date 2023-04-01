@@ -35,17 +35,17 @@ FONCTIONNE COMME BASH:
 < Makefile cat -e | grep e | wc // patch
 > outfile cat < Makefile
 < Makefile > abc < note.txt > def > hij < file > coucou (file does not exist et coucou pas cree)
-
-FONCTIONNE PAS:
 cat < note.txt > output
 < Makefile (Doit rien faire, ou si file existe pas dire no such file or...)
 > Outfile (doit creer outfile)
+< Makefile cat -e | grep NAME > coucou
+
+FONCTIONNE PAS:
+< ls | cat
+
 
 NE PAS GERER
 <>, |>, <|
-
-Bug PARSER
-< Makefile cat -e | grep NAME > coucou
 
 *** TRUC WTF EN BASH ***
 cat < Makefile > outfile abc 
@@ -59,6 +59,3 @@ ET SON INPUT SERA TOUJOURS LE DERNIER FICHIERS SUIVANT <
 ** check les Exit status ?
 ** Plusieurs possibilites de leak dans split_input
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
-
-** TO DO LIST **
-Faire une fonction qui close les fd et exit le child process quand erreur.

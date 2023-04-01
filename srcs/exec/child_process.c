@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 17:15:39 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:01:36 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ void	ft_exec_child(t_child *child, t_token *token, int *fd)
 	if ((token->next && token->next->type == PIPE
 		&& (!token->prev || (token->prev->prev && token->prev->prev->type != GREAT)))
 		|| (token->prev && token->prev->type == PIPE))
-		{
-			fprintf(stderr, "PIPE\n");
-			ft_child_pipe(child, token, fd);
-		}
+	{
+		fprintf(stderr, "PIPE\n");
+		ft_child_pipe(child, token, fd);
+	}
 	
 	if (child->cmd_nbr > 1)
 		ft_close_fd(fd, child->cmd_nbr);
