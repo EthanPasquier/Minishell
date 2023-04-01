@@ -6,51 +6,53 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 10:35:41 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 11:23:46 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_open_back_less(int *first_less, t_token *tmp)
+
+
+int	ft_open_back_less(int *first_less, t_token *tmp, t_child *c)
 {
 	int	fd2;
 
 	fd2 = open(tmp->next->str, O_RDONLY);
 	if (fd2 == -1)
-	{
-		perror(tmp->next->str);
-		exit(EXIT_SUCCESS);
-	}
+		ft_child_error(tmp, c, ERR_OPEN);
 	if (*first_less == 0)
 	{
 		*first_less = 1;
 		if (dup2(fd2, STDIN) == -1)
-			ft_error(1);
+		{
+			close(fd2);
+			ft_child_error(tmp, c, ERR_DUP2);
+		}
 	}
 	return (fd2);
 }
 
-int	ft_open_back_great(int *first_great, t_token *tmp)
+int	ft_open_back_great(int *first_great, t_token *tmp, t_child *c)
 {
 	int	fd2;
 
 	fd2 = open(tmp->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
 	if (fd2 == -1)
-	{
-		perror(tmp->next->str);
-		exit(EXIT_SUCCESS);
-	}
+		ft_child_error(tmp, c, ERR_OPEN);
 	if (*first_great == 0)
 	{
 		*first_great = 1;
 		if (dup2(fd2, STDOUT) == -1)
-			ft_error(1);
+		{
+			close(fd2);
+			ft_child_error(tmp, c, ERR_DUP2);
+		}
 	}
 	return (fd2);
 }
 
-void	ft_child_redirection_back(t_token *token)
+void	ft_child_redirection_back(t_token *token, t_child *c)
 {
 	t_token	*tmp;
 	int		fd2;
@@ -64,9 +66,9 @@ void	ft_child_redirection_back(t_token *token)
 	while (tmp && (tmp->type == LESS || tmp->type == GREAT))
 	{
 		if (tmp->type == LESS)
-			fd2 = ft_open_back_less(&first_less, tmp);
+			fd2 = ft_open_back_less(&first_less, tmp, c);
 		else if (tmp->type == GREAT)
-			fd2 = ft_open_back_great(&first_great, tmp);
+			fd2 = ft_open_back_great(&first_great, tmp, c);
 		close(fd2);
 		if (tmp->prev && tmp->prev->prev
 			&& (tmp->prev->prev->type == GREAT

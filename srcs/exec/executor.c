@@ -6,13 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 11:13:57 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 11:03:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_exec_command(t_token *t, t_child *c, int *fd, int *pid)
+void	ft_exec_command(t_token *t, t_child *c, int *pid)
 {
 	t_token	*tmp;
 
@@ -26,7 +26,7 @@ void	ft_exec_command(t_token *t, t_child *c, int *fd, int *pid)
 			c->cmd = ft_split(tmp->str, ' ');
 			c->cmd_path = find_cmd_path(c->cmd, c->all_path);
 			if (c->cmd_path != NULL)
-				ft_process_child(c, tmp, fd, pid);
+				ft_process_child(c, tmp, pid);
 			else
 				printf("\u274C Minishell: %s: command not found\n", c->cmd[0]);
 			ft_free_exec(c->cmd, c->cmd_path);
@@ -41,10 +41,9 @@ void	ft_exec_command(t_token *t, t_child *c, int *fd, int *pid)
 
 void	ft_command(t_token *token, t_child *child)
 {
-	int		*fd_array;
 	pid_t	*pid;
 
-	fd_array = NULL;
+	child->fd_array = NULL;
 	pid = malloc(sizeof(pid_t) * child->cmd_nbr);
 	if (!pid)
 	{
@@ -52,13 +51,13 @@ void	ft_command(t_token *token, t_child *child)
 		exit(EXIT_FAILURE);
 	}
 	if (child->cmd_nbr > 1)
-		fd_array = ft_set_pipe(child);
-	ft_exec_command(token, child, fd_array, pid);
+		child->fd_array = ft_set_pipe(child);
+	ft_exec_command(token, child, pid);
 	if (child->cmd_nbr > 1)
-		ft_close_fd(fd_array, child->cmd_nbr);
+		ft_close_fd(child->fd_array, child->cmd_nbr);
 	ft_wait(pid, child->cmd_nbr);
-	if (fd_array != NULL)
-		free(fd_array);
+	if (child->fd_array != NULL)
+		free(child->fd_array);
 	free(pid);
 }
 

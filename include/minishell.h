@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 10:02:21 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 11:28:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,21 @@
 # include <stdlib.h>
 # include <string.h>
 
+// Define type in linked list
 # define CMD 1
-# define ARG 2
-# define GREAT 3
-# define GREAT_GREAT 4
-# define LESS 5
-# define LESS_LESS 6
-# define PIPE 7
-# define FILE 8
+# define GREAT 2
+# define GREAT_GREAT 3
+# define LESS 4
+# define LESS_LESS 5
+# define PIPE 6
+# define FILE 7
 
+// Error code.
+# define ERR_EXECVE 1
+# define ERR_OPEN 2
+# define ERR_DUP2 3
+
+// Standard fd
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
@@ -54,9 +60,10 @@ typedef struct s_child
 	char **cmd;
 	char **all_path;
 	char *cmd_path;
+	int cmd_nbr;
+	int	*fd_array;
 	int i;
 	int	j;
-	int cmd_nbr;
 }					t_child;
 
 
@@ -76,8 +83,8 @@ void				ft_title(void);
 
 // Every function for Executor
 void				ft_executor(t_token *token, char **envp);
-void				ft_process_child(t_child *c, t_token *tmp, int *fd, int *pid);
-void				ft_exec_child(t_child *child, t_token *token, int *fd);
+void				ft_process_child(t_child *c, t_token *tmp, int *pid);
+void				ft_exec_child(t_child *child, t_token *token);
 
 int					*ft_set_pipe(t_child *child);
 int					cmd_counter(t_token *token);
@@ -85,10 +92,11 @@ void				ft_wait(pid_t *pid, int cmd_nbr);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
 void				file_does_not_exist(t_token *tmp);
 
-void				ft_child_pipe(t_child *c, t_token *t, int *fd);
+void				ft_child_error(t_token *token, t_child *c, int flag);
 
-void				ft_child_redirection_front(t_token *token);
-void				ft_child_redirection_back(t_token *token);
+void				ft_child_pipe(t_child *c, t_token *t);
+void				ft_child_redirection_front(t_token *token, t_child *c);
+void				ft_child_redirection_back(t_token *token, t_child *c);
 
 void				ft_type_great(t_token *tmp, int *flag, int *fd2);
 t_token				*ft_next_redir(t_token *token);

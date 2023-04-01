@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/30 09:24:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 10:45:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ void	ft_close_fd(int *fd_array, int cmd_nbr)
 
 	index = 0;
 	i = 0;
-	while (index < cmd_nbr)
+	if (cmd_nbr > 1)
 	{
-		close(fd_array[i]);
-		close(fd_array[i + 1]);
-		i += 2;
-		index++;
+		while (index < cmd_nbr)
+		{
+			close(fd_array[i]);
+			close(fd_array[i + 1]);
+			i += 2;
+			index++;
+		}
 	}
 }
 
