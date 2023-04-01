@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:16 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 22:23:39 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 09:58:00 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	ft_is_last_front(t_token *token, int type)
 {
 	t_token	*tmp;
 
-	tmp = token->next;
+	tmp = token;
 	while (tmp && tmp->type != CMD)
 	{
 		if (tmp->type == type)
-			return (1);
+			return (0);
 		tmp = tmp->next;
 	}
-	return (0);
+	return (1);
 }
 
-int ft_open(t_token *tmp)
+int ft_open_front(t_token *tmp)
 {
 	int fd2;
 
@@ -70,7 +70,7 @@ void ft_child_redirection_front(t_token *token)
 	tmp = token->next;
 	while (tmp->type == LESS || tmp->type == GREAT)
 	{
-		fd2 = ft_open(tmp);
+		fd2 = ft_open_front(tmp);
 		ft_is_last_redir(tmp, token, &fd2);
 		if (tmp->next->next)
 		{

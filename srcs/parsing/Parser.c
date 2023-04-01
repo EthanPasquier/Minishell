@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/03/31 13:52:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/01 10:07:10 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,8 +263,8 @@ void	ft_parser(t_init *var)
 			}
 		}
 		// tmp->str = ft_guillemet(tmp->str);
-		printf("%s\n", tmp->str);
-		printf("%d\n", tmp->type);
+		// printf("%s\n", tmp->str);
+		// printf("%d\n", tmp->type);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 	}
