@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 16:33:08 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/02 16:35:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,17 @@ int					*ft_set_pipe(t_child *child);
 int					cmd_counter(t_token *token);
 void				ft_wait(pid_t *pid, int cmd_nbr);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
-void				file_does_not_exist(t_token *tmp);
+int					ft_mark_count(t_token *token, int type);
 
 void				ft_child_error(t_token *token, t_child *c, int flag);
 
-int					ft_is_prev_pipe(t_token *token);
-int					ft_is_next_pipe(t_token *token);
+void				ft_great_child(t_child *child, t_token *token);
+void				ft_less_child(t_child *child, t_token *token);
+void				ft_pipe_child(t_child *child, t_token *token);
 
-void				ft_child_pipe(t_child *c, t_token *t);
+// These are for when there is no cmd, only redirection
 void				ft_child_redirection_front(t_token *token, t_child *c);
 void				ft_child_redirection_back(t_token *token, t_child *c);
-
 void				ft_type_great(t_token *tmp, int *flag, int *fd2);
 void				ft_type_less(t_token *tmp, int *flag, int *fd2);
 t_token				*ft_next_redir(t_token *token);

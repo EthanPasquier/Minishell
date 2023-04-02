@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/01 14:26:12 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/02 16:33:39 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= minishell
 
 SRC_DIR		= srcs/
 
-EXEC = 	child_process executor redir_back redir_front child_pipe utils_exec utils_redir child_error utils_pipe
+EXEC = 	child_process executor redir_great redir_less child_pipe utils_exec utils_redir child_error
 
 MAIN = Minishell
 
