@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 16:56:32 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/02 11:06:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,42 +29,46 @@
 	// 	// ;
 	// // else
 
+int	ft_mark_count(t_token *token, int type)
+{
+	t_token *tmp;
+	int i;
+
+	i = 0;
+	tmp = token;
+	while(tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == type)
+			i += 1;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
 // Check which redirection 
 void	ft_exec_child(t_child *child, t_token *token)
 {
 	t_token	*tmp;
 	t_token *start;
 	t_token	*start2;
-	int		great_mark;
-	int		less_mark;
-	int		i;
+
 	int		j;
 	int		fd;
 
-	i = 0;
-	great_mark = 0;
-	less_mark = 0;
 	tmp = token;
 	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
 	///////////////////
 	while(tmp->prev && tmp->prev->type != PIPE)
 		tmp = tmp->prev;
+	child->great_mark = ft_mark_count(tmp, GREAT);
+	child->less_mark = ft_mark_count(tmp, LESS);
+	///////////////////
 	start = tmp;
 	start2 = tmp;
-	while(tmp && tmp->type != PIPE)
-	{
-		if (tmp->type == GREAT)
-			great_mark += 1;
-		else if (tmp->type == LESS)
-			less_mark += 1;
-		i++;
-		tmp = tmp->next;
-	}
-	///////////////////
 	j = 0;
-	if (less_mark > 0)
+	if (child->less_mark > 0)
 	{
-		while(j < less_mark && start2)
+		while(j < child->less_mark && start2)
 		{
 			if (start2->type == LESS)
 			{
@@ -72,7 +76,7 @@ void	ft_exec_child(t_child *child, t_token *token)
 				if (fd == -1)
 					ft_child_error(start2, child, ERR_OPEN);
 				j++;
-				if (j < less_mark)
+				if (j < child->less_mark)
 				{
 					close(fd);
 				}
@@ -89,9 +93,9 @@ void	ft_exec_child(t_child *child, t_token *token)
 	///////////////////
 	j = 0;
 	fd = -1;
-	if (great_mark > 0)
+	if (child->great_mark > 0)
 	{
-		while (j < great_mark && start)
+		while (j < child->great_mark && start)
 		{
 			if (start->type == GREAT)
 			{
@@ -102,7 +106,7 @@ void	ft_exec_child(t_child *child, t_token *token)
 					exit(EXIT_SUCCESS);
 				}
 				j++;
-				if (j < great_mark)
+				if (j < child->great_mark)
 				{
 					close(fd);
 				}
@@ -119,12 +123,12 @@ void	ft_exec_child(t_child *child, t_token *token)
 	fd = -1;
 	///////////////////
 	// void ft_is_pipe
-	if (great_mark == 0 && ft_is_next_pipe(token) == 1)
+	if (child->great_mark == 0 && ft_is_next_pipe(token) == 1)
 	{
 		if (dup2(child->fd_array[child->j], STDOUT) == -1)
 			ft_child_error(token, child, ERR_DUP2);
 	}
-	if (less_mark == 0 && ft_is_prev_pipe(token) == 1)
+	if (child->less_mark == 0 && ft_is_prev_pipe(token) == 1)
 	{
 		if (dup2(child->fd_array[child->j - 1], STDIN) == -1)
 			ft_child_error(token, child, ERR_DUP2);
