@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/02 16:10:57 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 17:10:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	*ft_set_pipe(t_child *child)
 
 	index_cmd = 0;
 	fd_index = 0;
-	fd_array = malloc(sizeof(int *) * (child->cmd_nbr) * 2);
+	fd_array = malloc(sizeof(int *) * (child->pipe_nbr) * 2);
 	if (!fd_array)
 		ft_error(1); // à Changer
-	while (index_cmd < child->cmd_nbr)
+	while (index_cmd < child->pipe_nbr)
 	{
 		if (pipe(pipe_fd) == -1)
 			ft_error(1);
@@ -36,16 +36,16 @@ int	*ft_set_pipe(t_child *child)
 	return (fd_array);
 }
 
-void	ft_close_fd(int *fd_array, int cmd_nbr)
+void	ft_close_fd(int *fd_array, int pipe_nbr)
 {
 	int	i;
 	int index;
 
 	index = 0;
 	i = 0;
-	if (cmd_nbr > 1)
+	if (pipe_nbr > 0)
 	{
-		while (index < cmd_nbr)
+		while (index < pipe_nbr)
 		{
 			close(fd_array[i]);
 			close(fd_array[i + 1]);
@@ -81,4 +81,22 @@ void	ft_wait(pid_t *pid, int cmd_nbr)
 		waitpid(pid[i], NULL, 0);
 		i++;
 	}
+}
+
+int	ft_is_cmd(t_token *token)
+{
+	t_token *tmp;
+	
+	tmp = token;
+	
+	fprintf(stderr, "%s\n", tmp->str);
+	while (tmp && tmp->prev && tmp->prev->type != PIPE)
+		tmp = tmp->prev;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == CMD)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }

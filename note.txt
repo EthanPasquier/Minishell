@@ -57,8 +57,21 @@ cat < Makefile > outfile abc
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
 
 Doit marcher, j'ai dis de la merde a Ethan
- < Makefile cat | < note.txt cat
+ < Makefile cat | << note.txt cat
 
+
+Implementer $?
+Ctrl \ = seg fault
 
  ** Builtin Echo **
  tjr prendre le builtin ? Ou juste selec builtin quand unset path ?
+
+ *** > ***
+cat > |< Makefile 
+
+
+
+
+1. Mettre |> dans un char *
+2. Free la node dans la quelle etait |>
+3. Rediriger le pointeur next de ls vers cat

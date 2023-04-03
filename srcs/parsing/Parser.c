@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 17:30:34 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:07:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,21 +229,21 @@ void	ft_parser(t_init *var)
 {
 	t_token *token;
 	char **split;
-	int a;
-	char *mots;
+	// int a;
+	// char *mots;
 
-	var->input = ft_strtrim(var->input, " ");
-	mots = NULL;
-	a = ft_where(var->input, '$', 0);
-	while (a != -1)
-	{
-		mots = ft_take_var(var->input, a);
-		var->input = ft_find_var(var, var->envp, mots);
-		a = ft_where(var->input, '$', a);
-	}
-	var->input = ft_write_cut(var->input);
-	// printf("input = %s\n", var->input);
-	split = ft_split_parser(var->input, 29);
+	// var->input = ft_strtrim(var->input, " ");
+	// mots = NULL;
+	// a = ft_where(var->input, '$', 0);
+	// while (a != -1)
+	// {
+	// 	mots = ft_take_var(var->input, a);
+	// 	var->input = ft_find_var(var, var->envp, mots);
+	// 	a = ft_where(var->input, '$', a);
+	// }
+	// var->input = ft_write_cut(var->input);
+	// // printf("input = %s\n", var->input);
+	split = ft_split_parser(var->input, ' ');
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	ft_assign_type(token);
@@ -268,7 +268,6 @@ void	ft_parser(t_init *var)
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 	}
-
 	ft_executor(token, var->envp);
 	ft_free_list(token);
 }

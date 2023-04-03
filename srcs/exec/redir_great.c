@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:47:16 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/02 16:28:31 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 12:14:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ void	ft_open_great(t_child *child, t_token *start, int *fd)
 		{
 			*fd = open(start->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
 			if (*fd == -1)
-			{
 				ft_child_error(start, child, ERR_OPEN);
-				exit(EXIT_SUCCESS);
-			}
 			j++;
 			if (j < child->great_mark)
 				close(*fd);

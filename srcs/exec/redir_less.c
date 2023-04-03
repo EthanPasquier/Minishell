@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/02 16:23:52 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:38:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ static void	ft_open_less(t_token *start, t_child *child, int *fd)
 		{
 			*fd = open(start->next->str, O_RDONLY);
 			if (*fd == -1)
+			{
+				fprintf(stderr, "%s\n", start->next->str);
 				ft_child_error(start, child, ERR_OPEN);
+			}
 			j++;
 			if (j < child->less_mark)
 				close(*fd);
