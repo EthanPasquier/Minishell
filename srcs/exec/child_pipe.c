@@ -6,7 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:42:54 by jalevesq          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2023/04/04 17:09:18 by jalevesq         ###   ########.fr       */
+=======
+/*   Updated: 2023/04/04 17:24:05 by jalevesq         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +56,4 @@ void	ft_pipe_child(t_child *child, t_token *token)
 	}
 }
 // coucou
+// test
