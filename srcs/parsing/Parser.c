@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 11:50:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:52:31 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	ft_assign_type(t_token *token)
 		else
 			temp->type = CMD;
 		if (temp->type == CMD && (temp->prev && (temp->prev->type == GREAT
-					|| temp->prev->type == LESS)))
+			|| temp->prev->type == GREAT_GREAT 
+			|| temp->prev->type == LESS_LESS || temp->prev->type == LESS)))
 			temp->type = FILE;
 		temp = temp->next;
 	}
@@ -319,7 +320,6 @@ void	ft_parser(t_init *var)
 		}
 		// mettre le code pour le | > ici
 		// printf("%s\n", tmp->str);
-		// printf("%d\n", tmp->type);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 		i++;

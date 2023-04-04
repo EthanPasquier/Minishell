@@ -59,7 +59,7 @@ cat < Makefile > outfile abc
 Implementer $?
 Ctrl \ = seg fault
 
- ** Builtin Echo **
- tjr prendre le builtin ? Ou juste selec builtin quand unset path ?
 
-
+ERREUR:
+>> EOF
+❌ Minishell: EOF: command not found
