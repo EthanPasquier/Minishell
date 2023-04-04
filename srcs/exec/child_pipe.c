@@ -55,5 +55,3 @@ void	ft_pipe_child(t_child *child, t_token *token)
 			ft_child_error(token, child, ERR_DUP2);
 	}
 }
-// coucou
-// test
