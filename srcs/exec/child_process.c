@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 11:48:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:54:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ static void	ft_exec_child(t_child *child, t_token *token)
 		child->cmd_path = find_cmd_path(child->cmd, child->all_path);
 		if (!child->cmd_path)
 		{
-			ft_free_double(child->cmd);
 			fprintf(stderr,"\u274C Minishell: %s: command not found\n", child->cmd[0]);
+			ft_free_double(child->cmd);
 			exit(EXIT_SUCCESS);
 		}
 		else
