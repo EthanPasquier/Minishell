@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 20:29:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:11:01 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	ft_less_n_great(t_child *child, t_token *tmp)
 	less = 0;
 	while (tmp2 && tmp2->type != PIPE)
 	{
-		fprintf(stderr, "While loop less_n_great\n");
-		fprintf(stderr, "%d\n", tmp2->type);
+		// fprintf(stderr, "While loop less_n_great\n");
+		// fprintf(stderr, "%d\n", tmp2->type);
 		if (tmp2->type == GREAT)
 		{
-			fprintf(stderr, "ft_great_child\n");
+			// fprintf(stderr, "ft_great_child\n");
 			great++;
 			ft_great_child(child, tmp2, great);
 		}
 		else if (tmp2->type == LESS)
 		{
-			fprintf(stderr, "ft_less_child\n");
+			// fprintf(stderr, "ft_less_child\n");
 			less++;	
 			ft_less_child(child, tmp2, less);
 		}
@@ -56,6 +56,8 @@ static void	ft_exec_child(t_child *child, t_token *token)
 	t_token *tmp;
 
 	tmp = token;
+	if (tmp->type == PIPE)
+		tmp = tmp->next;
 	ft_redirection(tmp, child);
 	ft_close_fd(child->fd_array, child->pipe_nbr);
 	if (ft_is_cmd(token) == 1)
@@ -65,13 +67,19 @@ static void	ft_exec_child(t_child *child, t_token *token)
 		child->cmd = ft_split(tmp->str, ' ');
 		child->cmd_path = find_cmd_path(child->cmd, child->all_path);
 		if (!child->cmd_path)
+		{
+			ft_free_double(child->cmd);
 			fprintf(stderr,"\u274C Minishell: %s: command not found\n", child->cmd[0]);
+			exit(EXIT_SUCCESS);
+		}
 		else
 		{
 			execve(child->cmd_path, child->cmd, child->envp);
 			ft_child_error(token, child, ERR_EXECVE);
 		}
 	}
+	else
+		exit(EXIT_SUCCESS);
 }
 
 void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)

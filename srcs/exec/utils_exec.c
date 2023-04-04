@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 19:23:19 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:11:21 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	ft_is_cmd(t_token *token)
 	t_token *tmp;
 	
 	tmp = token;
+	// fprintf(stderr, "%s\n", tmp->str);
 	if (tmp->type == PIPE)
 		tmp = tmp->next;
 	while (tmp && tmp->type != PIPE)

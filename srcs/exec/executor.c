@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 19:43:22 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:20:32 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,6 @@ void	ft_command(t_token *token, t_child *child)
 	free(pid);
 }
 
-void ft_redirection_no_cmd(t_token *token)
-{
-	t_token *tmp;
-	int fd2;
-	int flag;
-
-	tmp = token;
-	while (tmp && (tmp->type == LESS || tmp->type == GREAT))
-	{
-		flag = -1;
-		fd2 = -1;
-		if (tmp->type == LESS)
-			ft_type_less(tmp, &flag, &fd2);
-		else if (tmp->type == GREAT)
-			ft_type_great(tmp, &flag, &fd2);
-		if (flag != -1)
-			return ;
-		tmp = ft_next_redir(tmp);
-	}
-}
-
 int	ft_pipe_counter(t_token *token)
 {
 	t_token *tmp;
@@ -96,11 +75,6 @@ void	ft_executor(t_token *token, char **envp)
 	child.all_path = find_path(envp);
 	child.envp = envp;
 	child.i = 0;
-	if (child.cmd_nbr <= 0
-		&& (token->type == GREAT || token->type == LESS))
-		ft_redirection_no_cmd(token);
-	else
-		ft_command(token, &child);
+	ft_command(token, &child);
 	ft_free_double(child.all_path);
 }
-
