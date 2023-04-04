@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 17:16:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:29:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void ft_fd_error(t_token *token, t_child *c, int flag)
 	if (flag == ERR_OPEN)
 	{
 		ft_close_fd(c->fd_array, c->cmd_nbr);
-		%s: No such file or directory\n", token->next->str);
+		fprintf(stderr, "%s: No such file or directory\n", token->next->str);
 		exit(EXIT_SUCCESS);
 	}
 	else if (flag == ERR_DUP2)

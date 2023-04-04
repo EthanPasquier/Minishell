@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 11:09:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/02 16:11:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:28:02 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	ft_mark_count(t_token *token, int type)
 
 	i = 0;
 	tmp = token;
+	if (tmp->type == PIPE)
+		tmp = tmp->next;
 	while(tmp && tmp->type != PIPE)
 	{
 		if (tmp->type == type)

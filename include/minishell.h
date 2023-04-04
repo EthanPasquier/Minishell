@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 17:03:02 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:14:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int					ft_mark_count(t_token *token, int type);
 
 void				ft_child_error(t_token *token, t_child *c, int flag);
 
-void				ft_great_child(t_child *child, t_token *token);
-void				ft_less_child(t_child *child, t_token *token);
+void				ft_great_child(t_child *child, t_token *token, int great);
+void				ft_less_child(t_child *child, t_token *token, int less);
 void				ft_pipe_child(t_child *child, t_token *token);
 
 // These are for when there is no cmd, only redirection

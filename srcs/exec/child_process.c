@@ -6,39 +6,71 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 17:02:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:29:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-static void	ft_redirection(t_token *token, t_child *child)
+void	ft_less_n_great(t_child *child, t_token *tmp)
 {
-	t_token	*tmp;
+	t_token *tmp2;
+	int		great;
+	int		less;
 
-	tmp = token;
+	tmp2 = tmp;
+	great = 0;
+	less = 0;
+	while (tmp2 && tmp2->type != PIPE)
+	{
+		fprintf(stderr, "While loop less_n_great\n");
+		fprintf(stderr, "%d\n", tmp2->type);
+		if (tmp2->type == GREAT)
+		{
+			fprintf(stderr, "ft_great_child\n");
+			great++;
+			ft_great_child(child, tmp2, great);
+		}
+		else if (tmp2->type == LESS)
+		{
+			fprintf(stderr, "ft_less_child\n");
+			less++;	
+			ft_less_child(child, tmp2, less);
+		}
+		tmp2 = tmp2->next;
+	}
+}
+
+static void	ft_redirection(t_token *tmp, t_child *child)
+{
 	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
-	while (tmp && tmp->prev && tmp->prev->type != PIPE)
-		tmp = tmp->prev;
 	child->great_mark = ft_mark_count(tmp, GREAT);
 	child->less_mark = ft_mark_count(tmp, LESS);
-	ft_less_child(child, tmp);
-	ft_great_child(child, tmp);
-	ft_pipe_child(child, token);
+	if (child->less_mark > 0 || child->great_mark > 0)
+		ft_less_n_great(child, tmp);
+	ft_pipe_child(child, tmp);
 }
 
 static void	ft_exec_child(t_child *child, t_token *token)
 {
-	ft_redirection(token, child);
+	t_token *tmp;
+
+	tmp = token;
+	ft_redirection(tmp, child);
 	ft_close_fd(child->fd_array, child->pipe_nbr);
-	// if (ft_is_builtin == 0)
-		// ;
-	// else
 	if (ft_is_cmd(token) == 1)
 	{
-		execve(child->cmd_path, child->cmd, child->envp);
-		ft_child_error(token, child, ERR_EXECVE);
+		while (tmp->type != CMD)
+			tmp = tmp->next;
+		child->cmd = ft_split(tmp->str, ' ');
+		child->cmd_path = find_cmd_path(child->cmd, child->all_path);
+		if (!child->cmd_path)
+			fprintf(stderr,"\u274C Minishell: %s: command not found\n", child->cmd[0]);
+		else
+		{
+			execve(child->cmd_path, child->cmd, child->envp);
+			ft_child_error(token, child, ERR_EXECVE);
+		}
 	}
 }
 
