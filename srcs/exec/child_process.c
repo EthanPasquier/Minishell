@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 09:11:01 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:41:49 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,13 @@ void	ft_less_n_great(t_child *child, t_token *tmp)
 	less = 0;
 	while (tmp2 && tmp2->type != PIPE)
 	{
-		// fprintf(stderr, "While loop less_n_great\n");
-		// fprintf(stderr, "%d\n", tmp2->type);
-		if (tmp2->type == GREAT)
+		if (tmp2->type == GREAT || tmp->type == GREAT_GREAT)
 		{
-			// fprintf(stderr, "ft_great_child\n");
 			great++;
 			ft_great_child(child, tmp2, great);
 		}
 		else if (tmp2->type == LESS)
 		{
-			// fprintf(stderr, "ft_less_child\n");
 			less++;	
 			ft_less_child(child, tmp2, less);
 		}
@@ -45,7 +41,9 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 {
 	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
 	child->great_mark = ft_mark_count(tmp, GREAT);
+	child->great_mark += ft_mark_count(tmp, GREAT_GREAT);
 	child->less_mark = ft_mark_count(tmp, LESS);
+	fprintf(stderr, "%d\n", child->great_mark);
 	if (child->less_mark > 0 || child->great_mark > 0)
 		ft_less_n_great(child, tmp);
 	ft_pipe_child(child, tmp);

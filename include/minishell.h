@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 20:14:57 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:39:11 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,6 @@ void				ft_child_error(t_token *token, t_child *c, int flag);
 void				ft_great_child(t_child *child, t_token *token, int great);
 void				ft_less_child(t_child *child, t_token *token, int less);
 void				ft_pipe_child(t_child *child, t_token *token);
-
-// These are for when there is no cmd, only redirection
-void				ft_child_redirection_front(t_token *token, t_child *c);
-void				ft_child_redirection_back(t_token *token, t_child *c);
-void				ft_type_great(t_token *tmp, int *flag, int *fd2);
-void				ft_type_less(t_token *tmp, int *flag, int *fd2);
-t_token				*ft_next_redir(t_token *token);
 
 char				*find_cmd_path(char **cmd, char **path);
 char				**find_path(char **envp);
