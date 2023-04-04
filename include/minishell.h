@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 09:39:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:47:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,13 @@ void				ft_parser(t_init *var);
 int					ft_count_parsing(char *str);
 int					ft_wake_word(char c);
 int					ft_syntax(char *str);
-int					ft_error_syntax(char *str);
 t_token				*new_node(char *str);
-
+int					ft_error_syntax(char *str);
+char				*ft_guillemet(char *str, t_init *var);
+int					ft_where(char *str, char c, int position);
+char				*ft_find_var(char *str, char **envp, char *vars);
+char				*ft_take_var(char *str, int position);
+char				*ft_globvar(char *str, t_init *var,char c);
 
 void				ft_ctrlc(int sig);
 void				ft_title(void);

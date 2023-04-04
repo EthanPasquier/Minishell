@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 10:35:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 11:21:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*ft_redifine(char *mots, char *str, char sign)
 	return (new);
 }
 
-char	*ft_find_var(t_init *var, char **envp, char *vars)
+char	*ft_find_var(char *str, char **envp, char *vars)
 {
 	int	i;
 
@@ -116,13 +116,14 @@ char	*ft_find_var(t_init *var, char **envp, char *vars)
 		if (ft_strncmp(vars, envp[i], ft_strlen(vars)) == 0)
 		{
 			vars = ft_strtrim(envp[i], vars);
-			var->input = ft_redifine(vars, var->input, '$');
-			return (var->input);
+			// printf("vars = %s\n", vars);
+			str = ft_redifine(vars, str, '$');
+			return (str);
 		}
 		i++;
 	}
-	var->input = ft_redifine("", var->input, '$');
-	return (var->input);
+	str = ft_redifine("", str, '$');
+	return (str);
 }
 
 int	ft_where(char *str, char c, int position)
@@ -174,9 +175,10 @@ char	*ft_chevronparsing(char *str, int i)
 		i++;
 	while ((ft_wake_word(str[i]) > 0 || str[i] == 32) && str[i])
 		i++;
-	while ((ft_wake_word(str[i]) == 0 && str[i] != 32) && str[i])
+	while ((ft_wake_word(str[i]) == 0 && str[i] != 32 && str[i] != 29)
+		&& str[i])
 		i++;
-	if (i < (int)ft_strlen(str))
+	if (i < (int)ft_strlen(str) && ft_wake_word(str[i]) == 0)
 		str[i] = 29;
 	return (str);
 }
@@ -209,6 +211,8 @@ char	*ft_write_cut(char *str)
 			}
 			while (ft_wake_word(str[i]) >= 1 || str[i] == 32)
 			{
+				if (ft_wake_word(str[i]) == 2)
+					str = ft_chevronparsing(str, i + 1);
 				output[j] = str[i];
 				j++;
 				i++;
@@ -225,29 +229,70 @@ char	*ft_write_cut(char *str)
 	return (output);
 }
 
+void	ft_insertNode(t_token *head, int character, int position)
+{
+	t_token	*newNode;
+	t_token	*currentNode;
+	int		i;
+	char	*newData;
+
+	newNode = (t_token *)malloc(sizeof(t_token));
+	newData = ft_calloc(sizeof(char), 4);
+	if (character == 2 || character == 4)
+		newData[0] = '<';
+	if (character == 3 || character == 5)
+		newData[0] = '>';
+	if (character == 4)
+		newData[1] = '<';
+	if (character == 5)
+		newData[1] = '>';
+	newNode->str = newData;
+	currentNode = head;
+	i = 1;
+	while (i < position && currentNode != NULL)
+	{
+		currentNode = currentNode->next;
+		i++;
+	}
+	if (currentNode == NULL)
+	{
+		printf("error link list in parser\n");
+		return ;
+	}
+	newNode->next = currentNode->next;
+	currentNode->next = newNode;
+	newNode->prev = currentNode;
+	if (newNode->next != NULL)
+		newNode->next->prev = newNode;
+}
+
+char	*ft_resize(char *str)
+{
+	char	*newstr;
+
+	free(str);
+	newstr = ft_calloc(2, sizeof(char));
+	newstr[0] = '|';
+	return (newstr);
+	return (newstr);
+}
+
 void	ft_parser(t_init *var)
 {
 	t_token *token;
 	char **split;
-	int a;
-	char *mots;
+	int result;
+	int j;
+	int i;
 
 	var->input = ft_strtrim(var->input, " ");
-	mots = NULL;
-	a = ft_where(var->input, '$', 0);
-	while (a != -1)
-	{
-		mots = ft_take_var(var->input, a);
-		var->input = ft_find_var(var, var->envp, mots);
-		a = ft_where(var->input, '$', a);
-	}
 	var->input = ft_write_cut(var->input);
-	// printf("input = %s\n", var->input);
 	split = ft_split_parser(var->input, 29);
 	token = ft_fill_list(split);
 	ft_free_double(split);
-	ft_assign_type(token);
 	t_token *tmp = token;
+	i = 1;
+	j = 1;
 	while (tmp)
 	{
 		tmp->str = ft_strtrim(tmp->str, " ");
@@ -262,13 +307,24 @@ void	ft_parser(t_init *var)
 				return ;
 			}
 		}
-		// tmp->str = ft_guillemet(tmp->str);
-		printf("%s\n", tmp->str);
-		printf("%d\n", tmp->type);
+		tmp->str = ft_guillemet(tmp->str, var);
+		tmp->str = ft_strtrim(tmp->str, " ");
+		if (ft_syntax(tmp->str) >= 2)
+		{
+			result = ft_syntax(tmp->str);
+			// tmp->str[1] = ft_resize(tmp->str);
+			tmp->str[1] = 0;
+			// printf("result = %d\n", result);
+			ft_insertNode(tmp, result, 1);
+		}
+		// mettre le code pour le | > ici
+		// printf("%s\n", tmp->str);
+		// printf("%d\n", tmp->type);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
+		i++;
 	}
-	// exit(EXIT_SUCCESS);
+	ft_assign_type(token);
 	ft_executor(token, var->envp);
 	ft_free_list(token);
 }

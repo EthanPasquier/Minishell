@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 10:41:49 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:47:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 	child->great_mark = ft_mark_count(tmp, GREAT);
 	child->great_mark += ft_mark_count(tmp, GREAT_GREAT);
 	child->less_mark = ft_mark_count(tmp, LESS);
-	fprintf(stderr, "%d\n", child->great_mark);
+	// fprintf(stderr, "%d\n", child->great_mark);
 	if (child->less_mark > 0 || child->great_mark > 0)
 		ft_less_n_great(child, tmp);
 	ft_pipe_child(child, tmp);
