@@ -6,11 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:42:54 by jalevesq          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2023/04/04 17:09:18 by jalevesq         ###   ########.fr       */
-=======
-/*   Updated: 2023/04/04 17:24:05 by jalevesq         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2023/04/04 17:28:04 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
