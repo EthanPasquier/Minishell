@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 17:23:20 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:46:06 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	ft_command(t_token *token, t_child *child)
 	pid_t	*pid;
 
 	child->fd_array = NULL;
-	// +1 because ls | cat == 2 child process.
 	pid = (pid_t *)malloc(sizeof(pid_t) * (child->pipe_nbr + 1));
 	if (!pid)
 	{
@@ -60,8 +59,8 @@ void	ft_command(t_token *token, t_child *child)
 
 int	ft_pipe_counter(t_token *token)
 {
-	t_token *tmp;
-	int i;
+	t_token	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = token;

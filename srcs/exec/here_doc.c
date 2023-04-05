@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 17:24:29 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:02:43 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_heredoc_nbr(t_token *t)
 {
-	t_token *tmp;
+	t_token	*tmp;
 	int		i;
 
 	tmp = t;
@@ -30,18 +30,19 @@ int	ft_heredoc_nbr(t_token *t)
 	return (i);
 }
 
-
 void	ft_do_heredoc(t_token *token, t_child *child, int i)
 {
 	while (1)
 	{
 		child->heredoc.str = readline(">");
 		if (ft_strncmp(child->heredoc.str, token->next->str, ft_strlen(token->next->str)) == 0
-		&& ft_strlen(token->next->str) == ft_strlen(child->heredoc.str))
-		break;
-		if (child->heredoc.flag_doc == 1 && i == child->heredoc.here_doc_nbr - 1)
+			&& ft_strlen(token->next->str) == ft_strlen(child->heredoc.str))
+			break ;
+		if (child->heredoc.flag_doc == 1
+			&& i == child->heredoc.here_doc_nbr - 1)
 		{
-			write(child->heredoc.here_docfd[1], child->heredoc.str, ft_strlen(child->heredoc.str));
+			write(child->heredoc.here_docfd[1],
+				child->heredoc.str, ft_strlen(child->heredoc.str));
 			write(child->heredoc.here_docfd[1], "\n", 1);
 		}
 	}
@@ -50,8 +51,8 @@ void	ft_do_heredoc(t_token *token, t_child *child, int i)
 
 int	ft_is_doc_last(t_token *token)
 {
-	t_token *tmp;
-	int type;
+	t_token	*tmp;
+	int		type;
 
 	tmp = token;
 	if (tmp->type == PIPE)
@@ -68,22 +69,27 @@ int	ft_is_doc_last(t_token *token)
 	return (0);
 }
 
+static void	ft_pipe_doc(t_child *child)
+{
+	if (child->heredoc.flag_doc == 1)
+	{
+		if (pipe(child->heredoc.here_docfd) == -1)
+			ft_error(1);
+	}
+}
+
 void	ft_heredoc(t_token *token, t_child *child)
 {
 	int		i;
-	t_token *tmp;
+	t_token	*tmp;
 	pid_t	*pid;
 
 	i = 0;
 	tmp = token;
 	if (child->heredoc.here_doc_nbr > 0)
 	{
-		if (child->heredoc.flag_doc == 1)
-		{
-			if (pipe(child->heredoc.here_docfd) == -1)
-				ft_error(1);
-		}
-		pid = malloc(sizeof(int) *  child->heredoc.here_doc_nbr);
+		ft_pipe_doc(child);
+		pid = malloc(sizeof(int) * child->heredoc.here_doc_nbr);
 		while (i < child->heredoc.here_doc_nbr)
 		{
 			while (tmp->type != LESS_LESS)

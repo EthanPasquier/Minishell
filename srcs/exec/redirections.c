@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 17:21:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:55:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_mark_count(t_token *token, int type)
 {
-	t_token *tmp;
-	int i;
+	t_token	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = token;
 	if (tmp->type == PIPE)
 		tmp = tmp->next;
-	while(tmp && tmp->type != PIPE)
+	while (tmp && tmp->type != PIPE)
 	{
 		if (tmp->type == type)
 			i += 1;
@@ -30,7 +30,7 @@ int	ft_mark_count(t_token *token, int type)
 	return (i);
 }
 
-void ft_less_child(t_child *child, t_token *token, int less)
+void	ft_less_child(t_child *child, t_token *token, int less)
 {
 	int		fd;
 
@@ -38,8 +38,8 @@ void ft_less_child(t_child *child, t_token *token, int less)
 	if (token->type == LESS)
 	{
 		fd = open(token->next->str, O_RDONLY);
-			if (fd == -1)
-				ft_child_error(token, child, ERR_OPEN);
+		if (fd == -1)
+			ft_child_error(token, child, ERR_OPEN);
 		if (less == child->less_mark)
 		{
 			if (dup2(fd, STDIN) == -1)
@@ -48,7 +48,7 @@ void ft_less_child(t_child *child, t_token *token, int less)
 				ft_child_error(token, child, ERR_DUP2);
 			}
 		}
-		close(fd);	
+		close(fd);
 	}
 }
 

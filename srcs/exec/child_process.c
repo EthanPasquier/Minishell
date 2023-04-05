@@ -6,15 +6,15 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 15:37:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:45:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_less_n_great(t_child *child, t_token *tmp)
+static void	ft_less_n_great(t_child *child, t_token *tmp)
 {
-	t_token *tmp2;
+	t_token	*tmp2;
 	int		great;
 	int		less;
 
@@ -30,7 +30,7 @@ void	ft_less_n_great(t_child *child, t_token *tmp)
 		}
 		else if (tmp2->type == LESS)
 		{
-			less++;	
+			less++;
 			ft_less_child(child, tmp2, less);
 		}
 		tmp2 = tmp2->next;
@@ -39,7 +39,7 @@ void	ft_less_n_great(t_child *child, t_token *tmp)
 
 static void	ft_redirection(t_token *tmp, t_child *child)
 {
-	child->j = child->i * 2; // j = pipfd[1] et j+1 = pipfd[0]
+	child->j = child->i * 2;
 	child->great_mark = ft_mark_count(tmp, GREAT);
 	child->great_mark += ft_mark_count(tmp, GREAT_GREAT);
 	child->less_mark = ft_mark_count(tmp, LESS);
@@ -59,9 +59,24 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 	ft_pipe_child(child, tmp);
 }
 
+static void	ft_exec_cmd(t_child *child, t_token *token)
+{
+	if (!child->cmd_path)
+	{
+		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf
+		ft_free_double(child->cmd);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		execve(child->cmd_path, child->cmd, child->envp);
+		ft_child_error(token, child, ERR_EXECVE);
+	}
+}
+
 static void	ft_exec_child(t_child *child, t_token *token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = token;
 	if (tmp->type == PIPE)
@@ -74,17 +89,7 @@ static void	ft_exec_child(t_child *child, t_token *token)
 			tmp = tmp->next;
 		child->cmd = ft_split(tmp->str, ' ');
 		child->cmd_path = find_cmd_path(child->cmd, child->all_path);
-		if (!child->cmd_path)
-		{
-			fprintf(stderr,"\u274C Minishell: %s: command not found\n", child->cmd[0]);
-			ft_free_double(child->cmd);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			execve(child->cmd_path, child->cmd, child->envp);
-			ft_child_error(token, child, ERR_EXECVE);
-		}
+		ft_exec_cmd(child, token);
 	}
 	else
 		exit(EXIT_SUCCESS);
@@ -96,5 +101,5 @@ void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 	if (pid[c->i] < 0)
 		ft_error(1);
 	else if (pid[c->i] == 0)
-		ft_exec_child(c, tmp); // Change FD for | and < >.
+		ft_exec_child(c, tmp);
 }
