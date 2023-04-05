@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:42:54 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 17:28:04 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 08:45:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	ft_is_next_pipe(t_token *token)
 int	ft_is_prev_pipe(t_token *token)
 {
 	t_token *tmp;
-	
-	//test
+
 	tmp = token;
 	while (tmp && tmp->type != PIPE)
 		tmp = tmp->prev;

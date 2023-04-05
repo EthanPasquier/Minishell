@@ -59,7 +59,5 @@ cat < Makefile > outfile abc
 Implementer $?
 Ctrl \ = seg fault
 
-
-ERREUR:
->> EOF
-❌ Minishell: EOF: command not found
+*** BUILTIN ***
+echo salut > file1 123 = doit mettre salut 123 dans file1
