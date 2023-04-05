@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 15:29:00 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:07:18 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,9 @@ void ft_less_child(t_child *child, t_token *token, int less)
 		}
 		close(fd);	
 	}
+	// else if (token->type == LESS_LESS)
+	// {
+		
+	// }
 }
 

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 10:47:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:01:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ typedef struct s_child
 	int	pipe_nbr;
 	int cmd_nbr;
 	int	*fd_array;
+	int	here_docfd[2];
+	int	here_doc_nbr;
 	int i;
 	int	j;
 }					t_child;

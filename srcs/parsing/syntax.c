@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 10:44:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:37:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ int	ft_error_pipe(char *str)
 
 int	ft_error_redirection(char *str)
 {
-	int		temoins;
+	// int		temoins;
 	char	c;
 
 	c = str[0];
-	temoins = 0;
+	// temoins = 0;
 	if (ft_wake_word(str[1]) == 1)
 		return (ft_error_syntax("pipes"));
 	else if (str[1] == 32)
@@ -88,10 +88,10 @@ int	ft_syntax(char *str)
 {
 	int		i;
 	int		temoins;
-	char	c;
+	// char	c;
 	int		tmp;
 
-	c = 29;
+	// c = 29;
 	i = 0;
 	tmp = 0;
 	temoins = 0;
