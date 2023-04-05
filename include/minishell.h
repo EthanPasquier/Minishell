@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 20:01:38 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:40:06 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,29 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_heredoc
+{
+	int		here_docfd[2];
+	int		here_doc_nbr;
+	int		flag_doc;
+	char	*str;
+} t_heredoc;
+
 typedef struct s_child
 {
-	int	great_mark;
-	int	less_mark;
-	char **envp;
-	char **cmd;
-	char **all_path;
-	char *cmd_path;
-	int	pipe_nbr;
-	int cmd_nbr;
-	int	*fd_array;
-	int	here_docfd[2];
-	int	here_doc_nbr;
-	int i;
-	int	j;
+	int		great_mark;
+	int		less_mark;
+	char	**envp;
+	char	**cmd;
+	char	**all_path;
+	char	*cmd_path;
+	int		pipe_nbr;
+	int		cmd_nbr;
+	int		*fd_array;
+	int		i;
+	int		j;
+	t_heredoc heredoc;
 }					t_child;
-
 
 // Evert function for Parser
 t_init				ft_init(char *input, char **envp);
@@ -85,13 +91,11 @@ char				*ft_guillemet(char *str, t_init *var);
 int					ft_where(char *str, char c, int position);
 char				*ft_find_var(char *str, char **envp, char *vars);
 char				*ft_take_var(char *str, int position);
-char				*ft_globvar(char *str, t_init *var,char c);
-
+char				*ft_globvar(char *str, t_init *var, char c);
 void				ft_ctrlc(int sig);
 void				ft_title(void);
 
-int	ft_is_cmd(t_token *token);
-
+int					ft_is_cmd(t_token *token);
 // Every function for Executor
 void				ft_executor(t_token *token, char **envp);
 void				ft_process_child(t_child *c, t_token *tmp, int *pid);
@@ -110,7 +114,6 @@ void				ft_pipe_child(t_child *child, t_token *token);
 
 char				*find_cmd_path(char **cmd, char **path);
 char				**find_path(char **envp);
-
 
 // Free & End function.
 void				*ft_free_double(char **str);

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 20:06:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:37:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_less_n_great(t_child *child, t_token *tmp)
 			great++;
 			ft_great_child(child, tmp2, great);
 		}
-		else if (tmp2->type == LESS || tmp2->type == LESS_LESS)
+		else if (tmp2->type == LESS)
 		{
 			less++;	
 			ft_less_child(child, tmp2, less);
@@ -43,9 +43,19 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 	child->great_mark = ft_mark_count(tmp, GREAT);
 	child->great_mark += ft_mark_count(tmp, GREAT_GREAT);
 	child->less_mark = ft_mark_count(tmp, LESS);
-	child->less_mark += ft_mark_count(tmp, LESS_LESS);
 	if (child->less_mark > 0 || child->great_mark > 0)
 		ft_less_n_great(child, tmp);
+	if (child->heredoc.flag_doc == 1)
+	{
+		if (dup2(child->heredoc.here_docfd[0], STDIN) == -1)
+		{
+			close(child->heredoc.here_docfd[0]);
+			close(child->heredoc.here_docfd[1]);
+			ft_error(1);
+		}
+		close(child->heredoc.here_docfd[0]);
+		close(child->heredoc.here_docfd[1]);
+	}
 	ft_pipe_child(child, tmp);
 }
 

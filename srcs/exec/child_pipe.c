@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 13:42:54 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 08:45:08 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:33:11 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_pipe_child(t_child *child, t_token *token)
 		if (dup2(child->fd_array[child->j], STDOUT) == -1)
 			ft_child_error(token, child, ERR_DUP2);
 	}
-	if (child->less_mark == 0 && ft_is_prev_pipe(token) == 1)
+	if (child->less_mark == 0 && child->heredoc.flag_doc == 0 && ft_is_prev_pipe(token) == 1)
 	{
 		if (dup2(child->fd_array[child->j - 1], STDIN) == -1)
 			ft_child_error(token, child, ERR_DUP2);
