@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   Utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 09:31:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:12:04 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_join(char **path)
 	}
 }
 
-char	**find_path(char **envp)
+char	**find_path(void)
 {
 	int		i;
 	char	*trim;
@@ -34,18 +34,9 @@ char	**find_path(char **envp)
 
 	i = 0;
 	path = NULL;
-	while (envp[i])
-	{
-		if (ft_strncmp("PATH=", envp[i], 5) == 0)
-		{
-			trim = ft_strtrim(envp[i], "PATH=");
-			path = ft_split(trim, ':');
-			free(trim);
-			ft_join(path);
-			break ;
-		}
-		i++;
-	}
+	trim = getenv("PATH");
+	path = ft_split(trim, ':');
+	ft_join(path);
 	return (path);
 }
 

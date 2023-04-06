@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 09:11:21 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:56:06 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	*ft_set_pipe(t_child *child)
 void	ft_close_fd(int *fd_array, int pipe_nbr)
 {
 	int	i;
-	int index;
+	int	index;
 
 	index = 0;
 	i = 0;
@@ -85,10 +85,9 @@ void	ft_wait(pid_t *pid, int cmd_nbr)
 
 int	ft_is_cmd(t_token *token)
 {
-	t_token *tmp;
-	
+	t_token	*tmp;
+
 	tmp = token;
-	// fprintf(stderr, "%s\n", tmp->str);
 	if (tmp->type == PIPE)
 		tmp = tmp->next;
 	while (tmp && tmp->type != PIPE)

@@ -14,7 +14,9 @@ NAME	= minishell
 
 SRC_DIR		= srcs/
 
-EXEC = 	child_process executor redir_great redir_less child_pipe utils_exec utils_redir child_error
+BUILT = pwd env unset builtins_utils
+
+EXEC = 	child_process executor redirections child_pipe exec_utils child_error here_doc
 
 MAIN = Minishell
 
@@ -23,6 +25,7 @@ PARSING = Parser Split_input syntax
 TOOLS = utils signal error init
 
 SRC = $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
+		$(addsuffix .c, $(addprefix srcs/built/, $(BUILT))) \
 	  	$(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 	  	$(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
 	  	$(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \

@@ -6,20 +6,19 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/03 18:29:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:42:46 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-void ft_failed_command()
+void	ft_failed_command(void)
 {
 	fprintf(stderr, "\u26A0 Command failed to execute.\n");
 	exit(EXIT_SUCCESS);
 }
 
-void ft_fd_error(t_token *token, t_child *c, int flag)
+void	ft_fd_error(t_token *token, t_child *c, int flag)
 {
 	if (flag == ERR_OPEN)
 	{

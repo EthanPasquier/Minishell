@@ -284,8 +284,8 @@ void	ft_parser(t_init *var)
 	t_token *token;
 	char **split;
 	int result;
-	int j;
-	int i;
+	// int j;
+	// int i;
 
 	var->input = ft_strtrim(var->input, " ");
 	var->input = ft_write_cut(var->input);
@@ -293,8 +293,8 @@ void	ft_parser(t_init *var)
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	t_token *tmp = token;
-	i = 1;
-	j = 1;
+	// i = 1;
+	// j = 1;
 	while (tmp)
 	{
 		tmp->str = ft_strtrim(tmp->str, " ");
@@ -323,7 +323,7 @@ void	ft_parser(t_init *var)
 		// printf("%s\n", tmp->str);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
-		i++;
+		// i++;
 	}
 	ft_assign_type(token);
 	ft_executor(token, var->envp);

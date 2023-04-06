@@ -58,8 +58,7 @@ cat < Makefile > outfile abc
 
 Implementer $?
 Ctrl \ = seg fault
+Ctrl C dans here_doc ne marche pas
 
-
-ERREUR:
->> EOF
-❌ Minishell: EOF: command not found
+*** BUILTIN ***
+echo salut > file1 123 = doit mettre salut 123 dans file1

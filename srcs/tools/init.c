@@ -1,25 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   Init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:42:34 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 09:30:41 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 10:38:55 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_init	ft_init(char *input, char **envp)
+char **ft_copy_env(char **env)
 {
-	t_init	var;
+    char **copy_env;
+    int i;
+    int j;
 
-	var.input = input;
-	var.envp = envp;
-	return (var);
+    i = 0;
+    while (env[i])
+        i++;
+    copy_env = (char **)malloc(sizeof(char*) * (i + 1));
+    if (copy_env == NULL)
+        return (NULL);
+    j = 0;
+    while (env[j])
+    {
+        copy_env[j] = (char *)malloc(sizeof(char) * (ft_strlen(env[j]) + 1));
+        if (copy_env[j] == NULL)
+            return (NULL);
+        ft_strlcpy(copy_env[j], env[j], ft_strlen(env[j]));
+        j++;
+    }
+    copy_env[j] = NULL;
+    return (copy_env);
 }
+
+// t_init	ft_init(char *input)
+// {
+// 	t_init	var;
+
+// 	var.input = input;
+// 	return (var);
+// }
 
 t_token	*new_node(char *str)
 {

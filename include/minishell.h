@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 10:47:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:54:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,33 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_heredoc
+{
+	int		here_docfd[2];
+	int		here_doc_nbr;
+	int		flag_doc;
+	char	*str;
+} t_heredoc;
+
 typedef struct s_child
 {
-	int	great_mark;
-	int	less_mark;
-	char **envp;
-	char **cmd;
-	char **all_path;
-	char *cmd_path;
-	int	pipe_nbr;
-	int cmd_nbr;
-	int	*fd_array;
-	int i;
-	int	j;
+	int		great_mark;
+	int		less_mark;
+	char	**envp;
+	char	**cmd;
+	char	**all_path;
+	char	*cmd_path;
+	int		pipe_nbr;
+	int		cmd_nbr;
+	int		*fd_array;
+	int		is_builtin;
+	int		i;
+	int		j;
+	t_heredoc heredoc;
 }					t_child;
 
-
 // Evert function for Parser
-t_init				ft_init(char *input, char **envp);
+t_init				ft_init(char *input);
 void				ft_parser(t_init *var);
 int					ft_count_parsing(char *str);
 int					ft_wake_word(char c);
@@ -83,32 +92,49 @@ char				*ft_guillemet(char *str, t_init *var);
 int					ft_where(char *str, char c, int position);
 char				*ft_find_var(char *str, char **envp, char *vars);
 char				*ft_take_var(char *str, int position);
-char				*ft_globvar(char *str, t_init *var,char c);
-
+char				*ft_globvar(char *str, t_init *var, char c);
 void				ft_ctrlc(int sig);
 void				ft_title(void);
 
-int	ft_is_cmd(t_token *token);
+int					ft_is_cmd(t_token *token);
 
-// Every function for Executor
+
+/* *** EVERY FUNCTION FOR EXECUTOR *** */
+
+/* MAIN FUNCTION */
 void				ft_executor(t_token *token, char **envp);
 void				ft_process_child(t_child *c, t_token *tmp, int *pid);
 
+/* CHILD ERROR FUNCTION */
+void				ft_child_error(t_token *token, t_child *c, int flag);
+
+/* REDIRECTION && HERE_DOC */
+void				ft_great_child(t_child *child, t_token *token, int great);
+void				ft_less_child(t_child *child, t_token *token, int less);
+void				ft_pipe_child(t_child *child, t_token *token);
+
+void				ft_heredoc(t_token *token, t_child *child);
+int					ft_heredoc_nbr(t_token *t);
+int					ft_is_doc_last(t_token *token);
+
+/* UTILS FOR EXECUTOR */
 int					*ft_set_pipe(t_child *child);
 int					cmd_counter(t_token *token);
 void				ft_wait(pid_t *pid, int cmd_nbr);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
 int					ft_mark_count(t_token *token, int type);
-
-void				ft_child_error(t_token *token, t_child *c, int flag);
-
-void				ft_great_child(t_child *child, t_token *token, int great);
-void				ft_less_child(t_child *child, t_token *token, int less);
-void				ft_pipe_child(t_child *child, t_token *token);
-
 char				*find_cmd_path(char **cmd, char **path);
-char				**find_path(char **envp);
+char				**find_path(void);
 
+/* BUILTIN */
+
+char				**ft_copy_env(char **env);
+void				ft_which_builtins(t_child *child);
+int					ft_is_builtins(t_token *token);
+void				ft_env(t_child *child);
+
+void				ft_pwd(void);
+/*********************************************************/
 
 // Free & End function.
 void				*ft_free_double(char **str);
@@ -116,8 +142,4 @@ void				ft_end_list(t_token *token);
 void				ft_free_list(t_token *token);
 void				ft_error(int flag);
 void				ft_free_exec(char **cmd, char *cmd_path);
-// void				free_container(t_cmd *container);
-// void				error_cmd_path(t_cmd *container);
-// void				free_cmd(t_cmd *container);
-
 #endif
