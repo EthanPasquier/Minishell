@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 17:31:43 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:05:03 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_child
 }					t_child;
 
 // Evert function for Parser
-t_init				ft_init(char *input, char **envp);
+t_init				ft_init(char *input);
 void				ft_parser(t_init *var);
 int					ft_count_parsing(char *str);
 int					ft_wake_word(char c);
@@ -97,6 +97,8 @@ void				ft_title(void);
 
 int					ft_is_cmd(t_token *token);
 
+
+char				**ft_copy_env(char **env);
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 
 /* MAIN FUNCTION */

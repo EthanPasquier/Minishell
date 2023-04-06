@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 11:35:32 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:02:15 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_readline(char **envp)
 	char	*input;
 	t_init	var;
 
+	var.envp = ft_copy_env(envp);
 	signal(SIGINT, ft_ctrlc);
 	while (1)
 	{
@@ -26,7 +27,7 @@ void	ft_readline(char **envp)
 			if (ft_strlen(input) > 0)
 			{
 				add_history(input);
-				var = ft_init(input, envp);
+				var = ft_init(input);
 				ft_parser(&var);
 				free(input);
 			}
