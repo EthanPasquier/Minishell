@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 17:45:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 08:53:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ static void	ft_exec_cmd(t_child *child, t_token *token)
 {
 	if (!child->cmd_path)
 	{
-		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf
+		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf 
 		ft_free_double(child->cmd);
+		ft_free_double(child->all_path);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -83,6 +84,7 @@ static void	ft_exec_child(t_child *child, t_token *token)
 		tmp = tmp->next;
 	ft_redirection(tmp, child);
 	ft_close_fd(child->fd_array, child->pipe_nbr);
+	free(child->fd_array);
 	if (ft_is_cmd(token) == 1)
 	{
 		while (tmp->type != CMD)
@@ -92,7 +94,10 @@ static void	ft_exec_child(t_child *child, t_token *token)
 		ft_exec_cmd(child, token);
 	}
 	else
+	{
+		ft_free_double(child->all_path);
 		exit(EXIT_SUCCESS);
+	}
 }
 
 void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)

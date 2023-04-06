@@ -58,6 +58,7 @@ cat < Makefile > outfile abc
 
 Implementer $?
 Ctrl \ = seg fault
+Ctrl C dans here_doc ne marche pas
 
 *** BUILTIN ***
 echo salut > file1 123 = doit mettre salut 123 dans file1
