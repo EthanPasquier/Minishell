@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 14:24:49 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:20:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ int	ft_is_builtins(t_token *token)
 			return (1);
 		else if (ft_strcmp_caps((tmp->str), "env", 3) == 0)
 			return (2);
-		else if (ft_strcmp_caps((tmp->str), "unset", 5) == 0)
-			return (3);
-		else if (ft_strcmp_caps((tmp->str), "export", 6) == 0)
-			return (4);
-		else if (ft_strcmp_caps((tmp->str), "cd", 2) == 0)
-			return (5);
-		else if (ft_strcmp_caps((tmp->str), "exit", 4) == 0)
-			return (6);
-		else if (ft_strcmp_caps((tmp->str), "echo", 4) == 0)
-			return (7);
+		// else if (ft_strcmp_caps((tmp->str), "unset", 5) == 0)
+		// 	return (3);
+		// else if (ft_strcmp_caps((tmp->str), "export", 6) == 0)
+		// 	return (4);
+		// else if (ft_strcmp_caps((tmp->str), "cd", 2) == 0)
+		// 	return (5);
+		// else if (ft_strcmp_caps((tmp->str), "exit", 4) == 0)
+		// 	return (6);
+		// else if (ft_strcmp_caps((tmp->str), "echo", 4) == 0)
+		// 	return (7);
 	}
 	return (-1);
 }
