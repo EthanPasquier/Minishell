@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/04 18:37:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:51:18 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_error_redirection(char *str)
 		if (str[1] != c)
 			return (ft_error_syntax("different redirection"));
 	}
-	if (str[2] != 0)
+	if (ft_strlen(str) > 2)
 		return (ft_error_syntax("trop argument"));
 	return (0);
 }
@@ -112,6 +112,37 @@ int	ft_syntax(char *str)
 	return (0);
 }
 
+char	*ft_suppspace(char *str)
+{
+	int		i;
+	int		size;
+	char	*final;
+
+	i = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (str[i] == 29)
+			size++;
+		i++;
+	}
+	if (size <= 0)
+		return (str);
+	final = ft_calloc(sizeof(char), i - size);
+	i = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (str[i] != 29)
+		{
+			final[size] = str[i];
+			size++;
+		}
+		i++;
+	}
+	return (final);
+}
+
 char	*ft_guillemet(char *str, t_init *var)
 {
 	int		i;
@@ -129,10 +160,11 @@ char	*ft_guillemet(char *str, t_init *var)
 	while (str[i])
 	{
 		if (str[i] == c)
-			str[i] = 32;
+			str[i] = 29;
 		i++;
 	}
 	str = ft_globvar(ft_strtrim(str, " "), var, c);
+	str = ft_suppspace(str);
 	return (str);
 }
 
