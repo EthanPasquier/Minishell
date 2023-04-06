@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/18 13:47:04 by jalevesq          #+#    #+#              #
-#    Updated: 2023/03/22 09:13:15 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/06 11:35:24 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS = ft_bzero.c \
 	ft_striteri.c \
 	ft_strmapi.c \
 	ft_itoa.c \
+	ft_strcmp_caps.c \
 	./get_next_line/get_next_line.c \
 	./get_next_line/get_next_line_utils.c \
 

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 09:05:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:54:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_child
 	int		pipe_nbr;
 	int		cmd_nbr;
 	int		*fd_array;
+	int		is_builtin;
 	int		i;
 	int		j;
 	t_heredoc heredoc;
@@ -98,7 +99,6 @@ void				ft_title(void);
 int					ft_is_cmd(t_token *token);
 
 
-char				**ft_copy_env(char **env);
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 
 /* MAIN FUNCTION */
@@ -124,8 +124,16 @@ void				ft_wait(pid_t *pid, int cmd_nbr);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
 int					ft_mark_count(t_token *token, int type);
 char				*find_cmd_path(char **cmd, char **path);
-char				**find_path(char **envp);
+char				**find_path(void);
 
+/* BUILTIN */
+
+char				**ft_copy_env(char **env);
+void				ft_which_builtins(t_child *child);
+int					ft_is_builtins(t_token *token);
+void				ft_env(t_child *child);
+
+void				ft_pwd(void);
 /*********************************************************/
 
 // Free & End function.

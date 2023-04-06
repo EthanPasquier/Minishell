@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 09:04:51 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:55:01 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 		c->heredoc.flag_doc = ft_is_doc_last(tmp);
 		if (c->i == 0 || tmp->type == PIPE)
 		{
+			c->is_builtin = ft_is_builtins(tmp);
 			ft_heredoc(tmp, c);
 			ft_process_child(c, tmp, pid);
 			if (c->heredoc.flag_doc == 1)
@@ -75,13 +76,15 @@ int	ft_pipe_counter(t_token *token)
 
 void	ft_executor(t_token *token, char **envp)
 {
-	t_child	child;
+	t_child	*child;
 
-	child.pipe_nbr = ft_pipe_counter(token);
-	child.cmd_nbr = cmd_counter(token);
-	child.all_path = find_path(envp);
-	child.envp = envp;
-	child.i = 0;
-	ft_command(token, &child);
-	ft_free_double(child.all_path);
+	child = malloc(sizeof(t_child));
+	child->pipe_nbr = ft_pipe_counter(token);
+	child->cmd_nbr = cmd_counter(token);
+	child->all_path = find_path();
+	child->envp = envp;
+	child->i = 0;
+	ft_command(token, child);
+	ft_free_double(child->all_path);	
+	free(child);
 }

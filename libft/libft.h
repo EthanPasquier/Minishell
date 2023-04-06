@@ -51,6 +51,8 @@ size_t	ft_strlen(const char *c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dest, const char *src, size_t dstsize);
 
+int		ft_strcmp_caps(const char *s1, const char *s2, size_t n);
+
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);

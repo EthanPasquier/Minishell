@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 08:53:08 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:37:40 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,16 @@ static void	ft_exec_child(t_child *child, t_token *token)
 		while (tmp->type != CMD)
 			tmp = tmp->next;
 		child->cmd = ft_split(tmp->str, ' ');
-		child->cmd_path = find_cmd_path(child->cmd, child->all_path);
-		ft_exec_cmd(child, token);
+		if (child->is_builtin > 0 && child->is_builtin < 8)
+			ft_which_builtins(child);
+		else
+		{
+			child->cmd_path = find_cmd_path(child->cmd, child->all_path);
+			ft_exec_cmd(child, token);
+		}
 	}
 	else
-	{
-		ft_free_double(child->all_path);
 		exit(EXIT_SUCCESS);
-	}
 }
 
 void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)

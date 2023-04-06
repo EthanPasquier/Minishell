@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/05 17:23:48 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/06 14:14:21 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME	= minishell
 
 SRC_DIR		= srcs/
 
-EXEC = 	child_process executor redirections child_pipe utils_exec child_error here_doc
+BUILT = pwd env unset builtins_utils
+
+EXEC = 	child_process executor redirections child_pipe exec_utils child_error here_doc
 
 MAIN = Minishell
 
@@ -23,6 +25,7 @@ PARSING = Parser Split_input syntax
 TOOLS = utils signal error init
 
 SRC = $(addsuffix .c, $(addprefix srcs/exec/, $(EXEC))) \
+		$(addsuffix .c, $(addprefix srcs/built/, $(BUILT))) \
 	  	$(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 	  	$(addsuffix .c, $(addprefix srcs/parsing/, $(PARSING))) \
 	  	$(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
@@ -38,7 +41,7 @@ LIBRLINE = readline-8.2
 LIBRD	=	include/readline/libreadline.a include/readline/libhistory.a
 
 CC		= gcc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
 
 LIBS	= $(LIBFT) -lcurses $(LIBRD)
 

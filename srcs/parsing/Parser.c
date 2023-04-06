@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 09:21:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:54:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,9 +325,6 @@ void	ft_parser(t_init *var)
 		// i++;
 	}
 	ft_assign_type(token);
-	// ft_executor(token, var->envp);
-	for (int i = 0; var->envp[i]; i++)
-		printf("%s\n", var->envp[i]);
-	// ft_free_double(var->envp);
+	ft_executor(token, var->envp);
 	ft_free_list(token);
 }
