@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 15:06:54 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:46:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@
 # define STDOUT 1
 # define STDERR 2
 
-typedef struct s_init
-{
-	char			**envp;
-	char			*input;
-	char			*tmp;
-}					t_init;
-
 typedef struct s_token
 {
 	char			*str;
@@ -55,6 +48,20 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
+	
+typedef struct s_env
+{
+	char *envp;
+	struct s_env *next;
+}	t_env;
+
+typedef struct s_init
+{
+	t_env 			*env;
+	char			**envp;
+	char			*input;
+	char			*tmp;
+}					t_init;
 
 typedef struct s_heredoc
 {
@@ -66,20 +73,21 @@ typedef struct s_heredoc
 
 typedef struct s_child
 {
-	int		great_mark;
-	int		less_mark;
-	char	**envp;
-	char	**cmd;
-	char	**all_path;
-	char	*cmd_path;
-	int		pipe_nbr;
-	int		cmd_nbr;
-	int		*fd_array;
-	int		is_builtin;
-	int		i;
-	int		j;
-	t_heredoc heredoc;
-}					t_child;
+	int			great_mark;
+	int			less_mark;
+	char		**envp;
+	char		**cmd;
+	char		**all_path;
+	char		*cmd_path;
+	int			pipe_nbr;
+	int			cmd_nbr;
+	int			*fd_array;
+	int			is_builtin;
+	int			i;
+	int			j;
+	t_env		*env;
+	t_heredoc	heredoc;
+}				t_child;
 
 // Evert function for Parser
 t_init				ft_init(char *input);
@@ -119,6 +127,7 @@ int					ft_heredoc_nbr(t_token *t);
 int					ft_is_doc_last(t_token *token);
 
 /* UTILS FOR EXECUTOR */
+char				**ft_find_cmd(t_token *token);
 int					*ft_set_pipe(t_child *child);
 int					cmd_counter(t_token *token);
 void				ft_wait(pid_t *pid, int cmd_nbr);
@@ -130,14 +139,17 @@ char				**find_path(void);
 /* BUILTIN */
 
 char				**ft_copy_env(char **env);
-void				ft_which_builtins(t_child *child);
 int					ft_is_builtins(t_token *token);
-void				ft_env(t_child *child);
+void				ft_which_builtins(t_child *child, t_token *token);
+void				ft_which_builtins_child(t_child *child);
 
+void				ft_env(t_child *child);
 void				ft_pwd(void);
+void				ft_unset(t_child *child);
 /*********************************************************/
 
 // Free & End function.
+void				ft_end_list_env(t_env *env);
 void				*ft_free_double(char **str);
 void				ft_end_list(t_token *token);
 void				ft_free_list(t_token *token);

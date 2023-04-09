@@ -6,11 +6,46 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 14:55:01 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 14:31:30 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char **ft_find_cmd(t_token *token)
+{
+	t_token *tmp;
+	char	**cmd;
+
+	tmp = token;
+	if (tmp->type == PIPE)
+		tmp = tmp->next;
+	while (tmp && tmp->type != PIPE && tmp->type != CMD)
+		tmp = tmp->next;
+	if (tmp->type == CMD)
+	{
+		cmd = ft_split(tmp->str, ' ');
+		if (cmd)
+			return (cmd);
+	}
+	return (NULL);
+}
+
+int	ft_pipe_counter(t_token *token)
+{
+	t_token	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == PIPE)
+			i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
 
 void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 {
@@ -58,21 +93,6 @@ void	ft_command(t_token *token, t_child *child)
 		free(child->fd_array);
 }
 
-int	ft_pipe_counter(t_token *token)
-{
-	t_token	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = token;
-	while (tmp)
-	{
-		if (tmp->type == PIPE)
-			i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
 
 void	ft_executor(t_token *token, char **envp)
 {
