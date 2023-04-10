@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 12:37:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:38:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,16 @@ static void	ft_exec_cmd(t_child *child, t_token *token)
 {
 	if (!child->cmd_path)
 	{
-		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf 
-		ft_free_double(child->cmd);
-		ft_free_double(child->all_path);
+		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf
+		if (child->cmd)
+			ft_free_double(child->cmd);
+		if (child->all_path)	
+			ft_free_double(child->all_path);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		execve(child->cmd_path, child->cmd, child->envp);
+		execve(child->cmd_path, child->cmd, child->init->envp);
 		ft_child_error(token, child, ERR_EXECVE);
 	}
 }
@@ -89,12 +91,14 @@ static void	ft_exec_child(t_child *child, t_token *token)
 	{
 		while (tmp->type != CMD)
 			tmp = tmp->next;
-		child->cmd = ft_split(tmp->str, ' ');
-		if (child->is_builtin > 0 && child->is_builtin < 8)
-			ft_which_builtins(child);
+		if (child->is_builtin > 4)
+			ft_which_builtins_child(child);
+		else if (child->is_builtin > 0 && child->is_builtin < 5)
+			exit(EXIT_SUCCESS);
 		else
 		{
-			child->cmd_path = find_cmd_path(child->cmd, child->all_path);
+			if (child->cmd && child->all_path)
+				child->cmd_path = find_cmd_path(child->cmd, child->all_path);
 			ft_exec_cmd(child, token);
 		}
 	}
@@ -104,9 +108,14 @@ static void	ft_exec_child(t_child *child, t_token *token)
 
 void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 {
+	c->cmd = ft_find_cmd(tmp);
+	if (c->is_builtin > 0 && c->is_builtin < 5 && c->cmd_nbr == 1)
+		ft_which_builtins(c, tmp);
 	pid[c->i] = fork();
 	if (pid[c->i] < 0)
 		ft_error(1);
 	else if (pid[c->i] == 0)
 		ft_exec_child(c, tmp);
+	if (c->cmd != NULL)
+		ft_free_double(c->cmd);
 }

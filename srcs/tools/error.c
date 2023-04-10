@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error                                              :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 09:30:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 15:49:39 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,27 @@ void	ft_error(int flag)
 	exit(EXIT_SUCCESS);
 }
 
-// void	free_container(t_cmd *container)
-// {
-// 	ft_free_double(container->all_path);
-// 	ft_free_double(container->pipe_split);
-// 	// ft_free_double(container->cmd);
-// 	// Both already free in while loop in ft_parser
-// 	// free(container->cmd_path);
-// }
-
-// void	error_cmd_path(t_cmd *container)
-// {
-// 	printf("minishell: %s: command not found.\n", container->cmd[0]);
-// 	// ft_free_list(token);
-// 	// ft_free_double(container->cmd);
-// 	// ft_free_double(container->all_path);
-// 	// ft_free_double(container->pipe_split);
-// }
-
-// void	free_cmd(t_cmd *container)
-// {
-// 	ft_free_double(container->cmd);
-// 	free(container->cmd_path);
-// }
-
 void	ft_end_list(t_token *token)
 {
 	ft_free_list(token);
-	printf("Error in filling the list.");
+	printf("Error in filling the token list.");
 	exit(EXIT_FAILURE);
 }
+
+// void	ft_end_list_env(t_env *env)
+// {
+// 	t_env	*tmp;
+
+// 	if (env)
+// 	{
+// 		while (env)
+// 		{
+// 			tmp = env->next;
+// 			free(env->envp); // free le strdup dans new_node
+// 			free(env);
+// 			env = tmp;
+// 		}
+// 	}
+// 	printf("Error in filling the env list.");
+// 	exit(EXIT_SUCCESS);
+// }

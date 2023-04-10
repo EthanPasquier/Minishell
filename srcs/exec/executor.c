@@ -6,11 +6,47 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 14:55:01 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:37:31 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char **ft_find_cmd(t_token *token)
+{
+	t_token *tmp;
+	char	**cmd;
+
+	tmp = token;
+	if (tmp->type == PIPE)
+		tmp = tmp->next;
+	while (tmp && tmp->type != PIPE && tmp->type != CMD)
+		tmp = tmp->next;
+	if (tmp->type == CMD)
+	{
+		cmd = ft_split(tmp->str, ' ');
+		// printf("%s\n", cmd[0]);
+		if (cmd)
+			return (cmd);
+	}
+	return (NULL);
+}
+
+int	ft_pipe_counter(t_token *token)
+{
+	t_token	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == PIPE)
+			i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
 
 void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 {
@@ -58,33 +94,18 @@ void	ft_command(t_token *token, t_child *child)
 		free(child->fd_array);
 }
 
-int	ft_pipe_counter(t_token *token)
+
+void	ft_executor(t_token *token, t_child *child)
 {
-	t_token	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = token;
-	while (tmp)
-	{
-		if (tmp->type == PIPE)
-			i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
-
-void	ft_executor(t_token *token, char **envp)
-{
-	t_child	*child;
-
-	child = malloc(sizeof(t_child));
 	child->pipe_nbr = ft_pipe_counter(token);
 	child->cmd_nbr = cmd_counter(token);
-	child->all_path = find_path();
-	child->envp = envp;
+	child->all_path = find_path(child);
+	child->cmd_path = NULL;
 	child->i = 0;
+	// for (int i = 0; child->all_path[i]; i++)
+	// 	printf("%s\n", child->all_path[i]);
+	// exit(EXIT_SUCCESS);
 	ft_command(token, child);
-	ft_free_double(child->all_path);	
-	free(child);
+	if (child->all_path)
+		ft_free_double(child->all_path);
 }
