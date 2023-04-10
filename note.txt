@@ -69,9 +69,9 @@ TO DO LIST
 Norminette/Leaks
 fonction d'erreur
 echo Builtins
-echo $? (direct dans le builtin echo)
 faire des fonctions d'erreur (bien free et exit en cas d'erreur)
 Finalise Builtins
+sortie erreur executeur
 export n'a aucun error handling.
 cd ne change pas le pwd
 avoir un beau prompt (facultatif)
