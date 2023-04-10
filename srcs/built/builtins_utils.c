@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 16:33:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:14:41 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ int	ft_is_builtins(t_token *token)
 	if (tmp && tmp->type == CMD)
 	{
 		if (ft_strcmp_caps((tmp->str), "unset", 5) == 0 && len(tmp) == 5)
-		{
-			// fprintf(stderr, "TEST\n");
 			return (1);
-		}
 		else if (ft_strcmp_caps((tmp->str), "export", 6) == 0 && len(tmp) == 6)
 			return (2);
 		else if (ft_strcmp_caps((tmp->str), "cd", 2) == 0 && len(tmp) == 2)
