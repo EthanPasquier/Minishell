@@ -6,11 +6,9 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 15:19:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 11:03:40 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../include/minishell.h"
 
 #include "../../include/minishell.h"
 
@@ -77,9 +75,9 @@ char	*ft_redifine(char *mots, char *str, char sign)
 	c = 0;
 	while (str[a] != sign && str[a])
 		a++;
-	c = a;
-	while ((str[c] != 32 && ft_wake_word(str[c]) == 0 && str[c] != 39
-			&& str[c] != 34) && str[c])
+	c = a + 1;
+	while (str[c] != 32 && ft_wake_word(str[c]) == 0 && str[c] != 39
+		&& str[c] != 34 && str[c] != '$' && str[c])
 	{
 		c++;
 		b++;
@@ -107,26 +105,25 @@ char	*ft_redifine(char *mots, char *str, char sign)
 		b++;
 		tmp++;
 	}
+	new[b] = 0;
 	return (new);
 }
 
-char	*ft_find_var(char *str, char **envp, char *vars)
+char	*ft_find_var(char *str, char *vars, t_child *child)
 {
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	while (child->init->envp[i])
 	{
-		if (ft_strncmp(vars, envp[i], ft_strlen(vars)) == 0)
+		if (ft_strncmp(vars, child->init->envp[i], ft_strlen(vars)) == 0)
 		{
-			vars = ft_strtrim(envp[i], vars);
-			// printf("vars = %s\n", vars);
+			vars = ft_strtrim(child->init->envp[i], vars);
 			str = ft_redifine(vars, str, '$');
 			return (str);
 		}
 		i++;
 	}
-	str = ft_redifine("", str, '$');
 	return (str);
 }
 
@@ -151,23 +148,33 @@ char	*ft_take_var(char *str, int position)
 	char	*var;
 
 	i = position;
-	while (str[i])
+	// printf("position = %s\n", str);
+	while (str[i] != 0)
 	{
-		if (ft_wake_word(str[i]) == 1 || str[i] == ' ' || str[i] == 39
-			|| str[i] == 34)
+		if (ft_isalpha(str[i]) == 0)
+		{
+			// printf("str[i] = %c\n", str[i]);
 			break ;
+		}
 		i++;
 	}
-	nb = i - position;
-	var = malloc((sizeof(char) * nb) + 2);
+	if (ft_isalpha(str[i]) == 0)
+		i--;
+	// printf("i = %d\n", i);
+	nb = i - position + 2;
+	// printf("nb = %d\n", nb);
+	// var = malloc((sizeof(char) * nb) + 2);
+	var = ft_calloc(sizeof(char), nb + 1);
 	i = 0;
-	while (i < nb)
+	while (i < nb - 1)
 	{
 		var[i] = str[position];
+		// printf("var = %s\n", var);
 		i++;
 		position++;
 	}
 	var[i] = '=';
+	// printf("var = %s\n", var);
 	return (var);
 }
 
@@ -281,26 +288,61 @@ char	*ft_resize(char *str)
 	return (newstr);
 }
 
-void	ft_parser(t_init *var)
+char	*ft_commandoption(char *str, int i)
 {
-	t_token *token;
-	char **split;
-	int result;
-	// int j;
-	// int i;
+	int	tmp;
 
-	var->input = ft_strtrim(var->input, " ");
-	var->input = ft_write_cut(var->input);
-	split = ft_split_parser(var->input, 29);
+	tmp = 0;
+	while (str[i])
+	{
+		if (tmp == 0 && str[i] == '-')
+			break ;
+		if (str[i] == 39 || str[i] == 34)
+		{
+			if (tmp == 0)
+				tmp = 1;
+			else if (tmp == 1)
+				tmp = 0;
+		}
+		i++;
+	}
+	if ((int)ft_strlen(str) <= i)
+		return (str);
+	i++;
+	while (str[i] && (ft_isalpha(str[i]) == 1 || str[i] == '-' || str[i] == 29))
+	{
+		tmp = i + 1;
+		while (str[tmp] && (ft_isalpha(str[tmp]) == 1 || str[tmp] == '-'
+				|| str[tmp] == 29))
+		{
+			if ((str[tmp] == str[i] && str[tmp] != 29) || str[tmp] == '-')
+				str[tmp] = 29;
+			tmp++;
+		}
+		i++;
+	}
+	if ((int)ft_strlen(str) > i)
+		return (ft_commandoption(str, i));
+	return (str);
+}
+
+void	ft_parser(t_child *child)
+{
+	t_token	*token;
+	char	**split;
+	int		result;
+	t_token	*tmp;
+
+	child->init->input = ft_strtrim(child->init->input, " ");
+	child->init->input = ft_write_cut(child->init->input);
+	split = ft_split_parser(child->init->input, 29);
 	token = ft_fill_list(split);
 	ft_free_double(split);
-	t_token *tmp = token;
-	// i = 1;
-	// j = 1;
+	tmp = token;
 	while (tmp)
 	{
 		tmp->str = ft_strtrim(tmp->str, " ");
-		if (ft_syntax(tmp->str) == 1)
+		if (ft_syntax(tmp->str) == 1 || ft_ordreguillemet(tmp->str) == 1)
 			return ;
 		if (!tmp->next)
 		{
@@ -311,8 +353,9 @@ void	ft_parser(t_init *var)
 				return ;
 			}
 		}
-		tmp->str = ft_guillemet(tmp->str, var);
+		tmp->str = ft_guillemet(tmp->str, child);
 		tmp->str = ft_strtrim(tmp->str, " ");
+		tmp->str = ft_commandoption(tmp->str, 0);
 		if (ft_syntax(tmp->str) >= 2)
 		{
 			result = ft_syntax(tmp->str);
@@ -328,6 +371,6 @@ void	ft_parser(t_init *var)
 		// i++;
 	}
 	ft_assign_type(token);
-	ft_executor(token, var->envp);
+	ft_executor(token, child);
 	ft_free_list(token);
 }

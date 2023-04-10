@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 12:12:04 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:35:43 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	ft_join(char **path)
+char	**ft_join(char **path)
 {
 	int		i;
 	char	*tmp;
@@ -24,21 +24,58 @@ static void	ft_join(char **path)
 		free(path[i]);
 		path[i++] = tmp;
 	}
-}
-
-char	**find_path(void)
-{
-	int		i;
-	char	*trim;
-	char	**path;
-
-	i = 0;
-	path = NULL;
-	trim = getenv("PATH");
-	path = ft_split(trim, ':');
-	ft_join(path);
 	return (path);
 }
+
+char	**find_path(t_child *child)
+{
+	char	*trim;
+	char	**path;
+	int		i;
+
+	path = NULL;
+	i = 0;
+	while (child->init->envp[i])
+	{
+		if (ft_strncmp("PATH=", child->init->envp[i], 5) == 0)
+		{
+			trim = ft_strtrim(child->init->envp[i], "PATH=");
+			path = ft_split(trim, ':');
+			free(trim);
+			path = ft_join(path);
+			break;
+		}
+		i++;
+	}
+	return (path);
+}
+
+// void	find_path(t_data *data)
+// {
+// 	int		i;
+// 	char	*tmp;
+// 	char	*trim;
+
+// 	i = 0;
+// 	while (data->envp[i])
+// 	{
+// 		if (ft_strncmp("PATH=", data->envp[i], 5) == 0)
+// 		{
+// 			trim = ft_strtrim(data->envp[i], "PATH=");
+// 			data->path = ft_split(trim, ':');
+// 			free(trim);
+// 			i = 0;
+// 			while (data->path[i])
+// 			{
+// 				tmp = ft_strjoin(data->path[i], "/");
+// 				free(data->path[i]);
+// 				data->path[i++] = tmp;
+// 			}
+// 			break ;
+// 		}
+// 		i++;
+// 	}
+// }
 
 char	*find_cmd_path(char **cmd, char **path)
 {
