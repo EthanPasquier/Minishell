@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:33:11 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:58:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void				ft_which_builtins_child(t_child *child);
 
 void				ft_env(t_child *child);
 void				ft_cd(t_child *child);
-void				ft_pwd(void);
+void				ft_pwd(t_child *child);
 void				ft_unset(t_child *child);
 void				ft_export(t_child *child);
 void				ft_exit(t_child *child);

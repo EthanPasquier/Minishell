@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:45:52 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 16:26:19 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:59:02 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	ft_cd(t_child *child)
 		new_cd = child->cmd[1];
 	if (chdir(new_cd) == -1)
 		perror(new_cd);
+	// change pwd
 }

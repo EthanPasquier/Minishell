@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:34:02 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:59:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,17 +380,14 @@ void	ft_parser(t_child *child)
 			child->exit_code = ft_error_syntax(str);
 			return ;
 		}
-		if (!tmp->next || !tmp->prev)
+		if ((ft_wake_word(str[0]) > 0 && !tmp->next)
+			|| (ft_wake_word(str[0]) == 1 && !tmp->prev))
 		{
-			// printf("le premier = %c\n", str[0]);
-			if (ft_wake_word(str[0]) > 0)
-			{
-				// 	printf("next = %c\n", tmp->str[0]);
-				child->exit_code = ft_error_syntax(str);
-				free(str);
-				ft_free_list(token);
-				return ;
-			}
+			// 	printf("next = %c\n", tmp->str[0]);
+			child->exit_code = ft_error_syntax(str);
+			// free(str);
+			// ft_free_list(token);
+			return ;
 		}
 		tmp->str = ft_guillemet(str, child);
 		str = ft_strtrim(tmp->str, " ");
@@ -406,13 +403,13 @@ void	ft_parser(t_child *child)
 			ft_insertNode(tmp, result, 1);
 		}
 		// mettre le code pour le | > ici
-		printf("%s\n", tmp->str);
+		// printf("%s\n", tmp->str);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 		// i++;
 	}
 	ft_assign_type(token);
-	// ft_executor(token, child);
-	ft_free_list(token);
+	ft_executor(token, child);
+	if (token)
+		ft_free_list(token);
 }
-// test
