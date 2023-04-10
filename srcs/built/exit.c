@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 15:45:52 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 16:26:19 by jalevesq         ###   ########.fr       */
+/*   Created: 2023/04/10 16:31:32 by jalevesq          #+#    #+#             */
+/*   Updated: 2023/04/10 16:34:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_cd(t_child *child)
+void	ft_exit(t_child *child)
 {
-	char *new_cd;
-
-	if (!child->cmd[1])
-	{
-		new_cd = ft_getenv(child->init->envp, "HOME=");
-        if (new_cd == NULL)
-		{
-            write(2, "cd: No home directory found\n", 28);
-			return ;
-		}
-	}
-	else
-		new_cd = child->cmd[1];
-	if (chdir(new_cd) == -1)
-		perror(new_cd);
+	ft_free_double(child->init->envp);
+	ft_free_double(child->all_path);
+	ft_free_double(child->cmd);
+	free(child->init);
+	free(child);
+	printf("exit\n");
+	exit(EXIT_SUCCESS);
 }

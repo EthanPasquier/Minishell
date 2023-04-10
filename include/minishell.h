@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 15:41:10 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 16:34:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_child
 {
 	int			great_mark;
 	int			less_mark;
-	char		**envp;
 	char		**cmd;
 	char		**all_path;
 	char		*cmd_path;
@@ -132,15 +131,18 @@ char				**find_path(t_child *child);
 
 /* BUILTIN */
 
+char				*ft_getenv(char **envp, char *var);
 char				**ft_copy_env(char **env);
 int					ft_is_builtins(t_token *token);
 void				ft_which_builtins(t_child *child, t_token *token);
 void				ft_which_builtins_child(t_child *child);
 
 void				ft_env(t_child *child);
+void				ft_cd(t_child *child);
 void				ft_pwd(void);
 void				ft_unset(t_child *child);
 void				ft_export(t_child *child);
+void				ft_exit(t_child *child);
 /*********************************************************/
 
 // Free & End function.
