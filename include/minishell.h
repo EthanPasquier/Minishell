@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 16:34:08 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:32:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_child
 	int			cmd_nbr;
 	int			*fd_array;
 	int			is_builtin;
+	int			exit_code;
 	int			i;
 	int			j;
 	t_init		*init;

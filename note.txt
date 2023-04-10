@@ -63,3 +63,13 @@ Doit prendre les paths de commandes comme /bin/ls
 
 *** BUILTIN ***
 echo salut > file1 123 = doit mettre salut 123 dans file1
+
+
+TO DO LIST
+Norminette/Leaks
+echo Builtins
+echo $? (direct dans le builtin echo)
+faire des fonctions d'erreur (bien free et exit en cas d'erreur)
+Finalise Builtins
+avoir un beau prompt (facultatif)
+ls -rlr (Parser, charactere 29 en trop)
