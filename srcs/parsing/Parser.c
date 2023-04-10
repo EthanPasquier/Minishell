@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 15:05:36 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:34:02 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ char	*ft_write_cut(char *str)
 	int		count;
 	char	*output;
 
+	// char	*tmp;
 	// int		temoins;
 	i = 0;
 	j = 0;
@@ -375,13 +376,19 @@ void	ft_parser(t_child *child)
 		str = ft_strtrim(tmp->str, " ");
 		free(tmp->str);
 		if (ft_syntax(str) == 1 || ft_ordreguillemet(str) == 1)
-			return ;
-		if (!tmp->next)
 		{
+			child->exit_code = ft_error_syntax(str);
+			return ;
+		}
+		if (!tmp->next || !tmp->prev)
+		{
+			// printf("le premier = %c\n", str[0]);
 			if (ft_wake_word(str[0]) > 0)
 			{
 				// 	printf("next = %c\n", tmp->str[0]);
-				ft_error_syntax(str);
+				child->exit_code = ft_error_syntax(str);
+				free(str);
+				ft_free_list(token);
 				return ;
 			}
 		}
