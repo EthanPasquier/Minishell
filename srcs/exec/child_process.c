@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 12:31:29 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:38:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,16 @@ static void	ft_exec_cmd(t_child *child, t_token *token)
 {
 	if (!child->cmd_path)
 	{
-		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf 
-		ft_free_double(child->cmd);
-		ft_free_double(child->all_path);
+		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf
+		if (child->cmd)
+			ft_free_double(child->cmd);
+		if (child->all_path)	
+			ft_free_double(child->all_path);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		execve(child->cmd_path, child->cmd, child->envp);
+		execve(child->cmd_path, child->cmd, child->init->envp);
 		ft_child_error(token, child, ERR_EXECVE);
 	}
 }
@@ -95,7 +97,8 @@ static void	ft_exec_child(t_child *child, t_token *token)
 			exit(EXIT_SUCCESS);
 		else
 		{
-			child->cmd_path = find_cmd_path(child->cmd, child->all_path);
+			if (child->cmd && child->all_path)
+				child->cmd_path = find_cmd_path(child->cmd, child->all_path);
 			ft_exec_cmd(child, token);
 		}
 	}

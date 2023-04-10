@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:42:34 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 15:45:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:17:02 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char **ft_copy_env(char **env)
         copy_env[j] = (char *)malloc(sizeof(char) * (ft_strlen(env[j]) + 1));
         if (copy_env[j] == NULL)
             return (NULL);
-        ft_strlcpy(copy_env[j], env[j], ft_strlen(env[j] + 1));
+        ft_strlcpy(copy_env[j], env[j], ft_strlen(env[j]) + 1);
         j++;
     }
     copy_env[j] = NULL;

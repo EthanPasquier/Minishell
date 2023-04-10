@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 15:19:18 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:42:22 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ char	*ft_suppspace(char *str)
 	return (final);
 }
 
-char	*ft_guillemet(char *str, t_init *var)
+char	*ft_guillemet(char *str, t_child *child)
 {
 	int		i;
 	char	c;
@@ -163,12 +163,12 @@ char	*ft_guillemet(char *str, t_init *var)
 			str[i] = 29;
 		i++;
 	}
-	str = ft_globvar(ft_strtrim(str, " "), var, c);
+	str = ft_globvar(ft_strtrim(str, " "), child, c);
 	str = ft_suppspace(str);
 	return (str);
 }
 
-char	*ft_globvar(char *str, t_init *var, char c)
+char	*ft_globvar(char *str, t_child *child, char c)
 {
 	char *mots;
 	int a;
@@ -181,7 +181,7 @@ char	*ft_globvar(char *str, t_init *var, char c)
 	{
 		mots = ft_take_var(str, a);
 		// printf("mots = %s\n", mots);
-		str = ft_find_var(str, var->envp, mots);
+		str = ft_find_var(str, child->init->envp, mots);
 		// printf("str = %s\n", str);
 		a = ft_where(str, '$', a);
 	}

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 14:31:30 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:37:31 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char **ft_find_cmd(t_token *token)
 	if (tmp->type == CMD)
 	{
 		cmd = ft_split(tmp->str, ' ');
+		// printf("%s\n", cmd[0]);
 		if (cmd)
 			return (cmd);
 	}
@@ -94,17 +95,17 @@ void	ft_command(t_token *token, t_child *child)
 }
 
 
-void	ft_executor(t_token *token, char **envp)
+void	ft_executor(t_token *token, t_child *child)
 {
-	t_child	*child;
-
-	child = malloc(sizeof(t_child));
 	child->pipe_nbr = ft_pipe_counter(token);
 	child->cmd_nbr = cmd_counter(token);
-	child->all_path = find_path();
-	child->envp = envp;
+	child->all_path = find_path(child);
+	child->cmd_path = NULL;
 	child->i = 0;
+	// for (int i = 0; child->all_path[i]; i++)
+	// 	printf("%s\n", child->all_path[i]);
+	// exit(EXIT_SUCCESS);
 	ft_command(token, child);
-	ft_free_double(child->all_path);	
-	free(child);
+	if (child->all_path)
+		ft_free_double(child->all_path);
 }

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 15:46:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:03:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,23 +85,24 @@ typedef struct s_child
 	int			is_builtin;
 	int			i;
 	int			j;
+	t_init		*init;
 	t_env		*env;
 	t_heredoc	heredoc;
 }				t_child;
 
 // Evert function for Parser
 t_init				ft_init(char *input);
-void				ft_parser(t_init *var);
+void				ft_parser(t_child *child);
 int					ft_count_parsing(char *str);
 int					ft_wake_word(char c);
 int					ft_syntax(char *str);
 t_token				*new_node(char *str);
 int					ft_error_syntax(char *str);
-char				*ft_guillemet(char *str, t_init *var);
+char				*ft_guillemet(char *str, t_child *child);
 int					ft_where(char *str, char c, int position);
 char				*ft_find_var(char *str, char **envp, char *vars);
 char				*ft_take_var(char *str, int position);
-char				*ft_globvar(char *str, t_init *var, char c);
+char				*ft_globvar(char *str, t_child *child, char c);
 void				ft_ctrlc(int sig);
 void				ft_title(void);
 
@@ -111,7 +112,7 @@ int					ft_is_cmd(t_token *token);
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 
 /* MAIN FUNCTION */
-void				ft_executor(t_token *token, char **envp);
+void				ft_executor(t_token *token, t_child *child);
 void				ft_process_child(t_child *c, t_token *tmp, int *pid);
 
 /* CHILD ERROR FUNCTION */
@@ -134,7 +135,7 @@ void				ft_wait(pid_t *pid, int cmd_nbr);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
 int					ft_mark_count(t_token *token, int type);
 char				*find_cmd_path(char **cmd, char **path);
-char				**find_path(void);
+char				**find_path(t_child *child);
 
 /* BUILTIN */
 

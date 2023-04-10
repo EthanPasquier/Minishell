@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 15:45:45 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:49:16 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 void	ft_readline(char **envp)
 {
-	char	*input;
-	t_init	*var;
+	t_child	*child;
 
-	var = malloc(sizeof(t_init));
-	var->envp = ft_copy_env(envp);
+	child = malloc(sizeof(t_child));
+	child->init = malloc(sizeof(t_init));
+	child->init->envp = ft_copy_env(envp);
 	signal(SIGINT, ft_ctrlc);
 	while (1)
 	{
-		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
-		if (input)
+		child->init->input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
+		if (child->init->input)
 		{
-			if (ft_strlen(input) > 0)
+			if (ft_strlen(child->init->input) > 0)
 			{
-				add_history(input);
-				var->input = input;
-				ft_parser(var);
-				free(input);
+				add_history(child->init->input);
+				ft_parser(child);
+				free(child->init->input);
 			}
 		}
 		else
 		{
-			ft_free_double(var->envp);
-			free(var);
+			ft_free_double(child->init->envp);
+			free(child->init);
+			free(child);
 			exit(EXIT_SUCCESS);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 15:19:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:55:27 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_assign_type(t_token *token)
 	t_token	*temp;
 
 	temp = token;
-	while (temp != NULL)
+	while (temp)
 	{
 		if (ft_strncmp(temp->str, "<<", 2) == 0)
 			temp->type = LESS_LESS;
@@ -61,6 +61,8 @@ void	ft_assign_type(t_token *token)
 					|| temp->prev->type == LESS)))
 			temp->type = FILE;
 		temp = temp->next;
+		// printf("%s\n", temp->str);
+		// printf("%d\n", temp->type);
 	}
 }
 
@@ -281,7 +283,7 @@ char	*ft_resize(char *str)
 	return (newstr);
 }
 
-void	ft_parser(t_init *var)
+void	ft_parser(t_child *child)
 {
 	t_token *token;
 	char **split;
@@ -289,9 +291,9 @@ void	ft_parser(t_init *var)
 	// int j;
 	// int i;
 
-	var->input = ft_strtrim(var->input, " ");
-	var->input = ft_write_cut(var->input);
-	split = ft_split_parser(var->input, 29);
+	child->init->input = ft_strtrim(child->init->input, " ");
+	child->init->input = ft_write_cut(child->init->input);
+	split = ft_split_parser(child->init->input, 29);
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	t_token *tmp = token;
@@ -311,7 +313,7 @@ void	ft_parser(t_init *var)
 				return ;
 			}
 		}
-		tmp->str = ft_guillemet(tmp->str, var);
+		tmp->str = ft_guillemet(tmp->str, child);
 		tmp->str = ft_strtrim(tmp->str, " ");
 		if (ft_syntax(tmp->str) >= 2)
 		{
@@ -328,6 +330,12 @@ void	ft_parser(t_init *var)
 		// i++;
 	}
 	ft_assign_type(token);
-	ft_executor(token, var->envp);
+	// while (token)
+	// {
+	// 	printf("%s\n", token->str);
+	// 	printf("%d\n", token->type);
+	// 	token = token->next;
+	// }
+	ft_executor(token, child);
 	ft_free_list(token);
 }
