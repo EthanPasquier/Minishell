@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 21:49:16 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:22:55 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_readline(char **envp)
 	signal(SIGINT, ft_ctrlc);
 	while (1)
 	{
+		
 		child->init->input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
 		if (child->init->input)
 		{

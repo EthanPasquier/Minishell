@@ -6,7 +6,7 @@
 #    By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/10 11:53:42 by epasquie         ###   ########.fr        #
+#    Updated: 2023/04/10 17:14:14 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= minishell
 
 SRC_DIR		= srcs/
 
-BUILT = pwd env unset builtins_utils
+BUILT = pwd env exit echo unset cd export builtins_utils
 
 EXEC = 	child_process executor redirections child_pipe exec_utils child_error here_doc
 

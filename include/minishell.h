@@ -132,14 +132,18 @@ char				**find_path(t_child *child);
 
 /* BUILTIN */
 
+char				*ft_getenv(char **envp, char *var);
 char				**ft_copy_env(char **env);
 int					ft_is_builtins(t_token *token);
 void				ft_which_builtins(t_child *child, t_token *token);
 void				ft_which_builtins_child(t_child *child);
 
 void				ft_env(t_child *child);
+void				ft_cd(t_child *child);
 void				ft_pwd(void);
 void				ft_unset(t_child *child);
+void				ft_export(t_child *child);
+void				ft_exit(t_child *child);
 /*********************************************************/
 
 // Free & End function.
