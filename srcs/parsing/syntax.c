@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 21:42:22 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 11:03:23 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	ft_error_pipe(char *str)
 
 int	ft_error_redirection(char *str)
 {
-	// int		temoins;
 	char	c;
 
+	// int		temoins;
 	c = str[0];
 	// temoins = 0;
 	if (ft_wake_word(str[1]) == 1)
@@ -86,17 +86,19 @@ int	ft_error_redirection(char *str)
 
 int	ft_syntax(char *str)
 {
-	int		i;
-	int		temoins;
-	// char	c;
-	int		tmp;
+	int	i;
+	int	temoins;
+	int	tmp;
 
+	// char	c;
 	// c = 29;
 	i = 0;
 	tmp = 0;
 	temoins = 0;
 	while (str[i])
 	{
+		if (str[i] == '-' && ft_isalpha(str[i + 1]) == 0)
+			return (ft_error_syntax(str));
 		if (str[i] == 39)
 			tmp++;
 		if (str[i] == 34)
@@ -143,6 +145,44 @@ char	*ft_suppspace(char *str)
 	return (final);
 }
 
+int	ft_ordreguillemet(char *str)
+{
+	int		i;
+	int		j;
+	char	tmp;
+	char	c;
+
+	i = 0;
+	j = ft_strlen(str) - 1;
+	while (i < j)
+	{
+		c = 0;
+		tmp = 0;
+		if (str[i] == 39 || str[i] == 34)
+		{
+			tmp = str[i];
+			while (j > i)
+			{
+				if (str[j] == 39 || str[j] == 34)
+				{
+					c = str[j];
+					break ;
+				}
+				j--;
+			}
+			j--;
+			if (tmp != c)
+			{
+				// printf("tmp = %c\nc = %c\n", tmp, c);
+				ft_error_syntax("erreur de guillemets");
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
 char	*ft_guillemet(char *str, t_child *child)
 {
 	int		i;
@@ -156,6 +196,7 @@ char	*ft_guillemet(char *str, t_child *child)
 		i++;
 	}
 	c = str[i];
+	str = ft_globvar(str, c, child);
 	i = 0;
 	while (str[i])
 	{
@@ -163,12 +204,12 @@ char	*ft_guillemet(char *str, t_child *child)
 			str[i] = 29;
 		i++;
 	}
-	str = ft_globvar(ft_strtrim(str, " "), child, c);
+	str = ft_strtrim(str, " ");
 	str = ft_suppspace(str);
 	return (str);
 }
 
-char	*ft_globvar(char *str, t_child *child, char c)
+char	*ft_globvar(char *str, char c, t_child *child)
 {
 	char *mots;
 	int a;
@@ -181,8 +222,9 @@ char	*ft_globvar(char *str, t_child *child, char c)
 	{
 		mots = ft_take_var(str, a);
 		// printf("mots = %s\n", mots);
-		str = ft_find_var(str, child->init->envp, mots);
-		// printf("str = %s\n", str);
+		str = ft_find_var(str, mots, child);
+		// printf("str = %s|\n", str);
+		// return (str);
 		a = ft_where(str, '$', a);
 	}
 	return (str);

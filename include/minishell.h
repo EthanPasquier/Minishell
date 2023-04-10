@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 22:03:24 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 10:50:01 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,9 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
-	
-typedef struct s_env
-{
-	char *envp;
-	struct s_env *next;
-}	t_env;
 
 typedef struct s_init
 {
-	t_env 			*env;
 	char			**envp;
 	char			*input;
 	char			*tmp;
@@ -86,7 +79,6 @@ typedef struct s_child
 	int			i;
 	int			j;
 	t_init		*init;
-	t_env		*env;
 	t_heredoc	heredoc;
 }				t_child;
 
@@ -100,9 +92,10 @@ t_token				*new_node(char *str);
 int					ft_error_syntax(char *str);
 char				*ft_guillemet(char *str, t_child *child);
 int					ft_where(char *str, char c, int position);
-char				*ft_find_var(char *str, char **envp, char *vars);
+char				*ft_find_var(char *str, char *vars, t_child *child);
 char				*ft_take_var(char *str, int position);
-char				*ft_globvar(char *str, t_child *child, char c);
+int					ft_ordreguillemet(char *str);
+char				*ft_globvar(char *str, char c, t_child *child);
 void				ft_ctrlc(int sig);
 void				ft_title(void);
 
@@ -150,7 +143,6 @@ void				ft_unset(t_child *child);
 /*********************************************************/
 
 // Free & End function.
-void				ft_end_list_env(t_env *env);
 void				*ft_free_double(char **str);
 void				ft_end_list(t_token *token);
 void				ft_free_list(t_token *token);

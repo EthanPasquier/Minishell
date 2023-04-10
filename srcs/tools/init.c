@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:42:34 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 21:17:02 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 10:24:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,5 @@ t_token	*new_node(char *str)
 	new_node->next = NULL;
 	new_node->type = -1;
 	new_node->str = ft_strdup(str); // !!! Free les str dans les struct ET free le ft_split.
-	return (new_node);
-}
-
-t_env *new_node_env(char *str)
-{
-	t_env *new_node;
-
-	new_node = (t_env *)malloc(sizeof(t_env));
-	if (!new_node)
-		return (NULL);
-	new_node->next = NULL;
-	new_node->envp = ft_strdup(str);
 	return (new_node);
 }

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 22:30:27 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 10:27:41 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,8 @@ void	ft_unset(t_child *child)
 		while (child->cmd[i])
 		{
 			k = 0;
-            fprintf(stderr, "SDFDS\n");
 			while (child->init->envp[k])
 			{
-				// fprintf(stderr, "%s\n%s\n", child->envp[k], child->cmd[i]);
-				// fprintf(stderr, "%d\n", ft_strncmp(child->envp[k], child->cmd[i], len_equal(child->envp[k])));
 				if (ft_strncmp(child->init->envp[k], child->cmd[i], len_equal(child->init->envp[k])) == 0)
 				{
 					unset = ft_remove(child, k);
@@ -89,7 +86,6 @@ void	ft_unset(t_child *child)
                     }
 					break ;
 				}
-				// fprintf(stderr, "---\n");
 				k++;
 			}
 			i++;
