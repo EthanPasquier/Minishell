@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 12:20:33 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/10 14:59:33 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ int	ft_ordreguillemet(char *str)
 char	*ft_guillemet(char *str, t_child *child)
 {
 	int		i;
+	char	*new;
 	char	c;
 
 	i = 0;
@@ -196,16 +197,16 @@ char	*ft_guillemet(char *str, t_child *child)
 		i++;
 	}
 	c = str[i];
-	str = ft_globvar(str, c, child);
+	new = ft_globvar(str, c, child);
 	i = 0;
-	while (str[i])
+	while (new[i])
 	{
-		if (str[i] == c)
-			str[i] = 29;
+		if (new[i] == c)
+			new[i] = 29;
 		i++;
 	}
-	str = ft_strtrim(str, " ");
-	str = ft_suppspace(str);
+	str = ft_suppspace(new);
+	// free(new);
 	return (str);
 }
 

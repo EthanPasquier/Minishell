@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 12:34:06 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:05:36 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ char	*ft_redifine(char *mots, char *str, char sign)
 	}
 	tmp = c;
 	c = (ft_strlen(str) - b + ft_strlen(mots));
-	new = malloc((sizeof(char) * c) + 1);
-	// new = ft_calloc(sizeof(char), c + 1);
+	// new = malloc((sizeof(char) * c) + 1);
+	new = ft_calloc(sizeof(char), c + 1);
 	b = 0;
 	while (b < a)
 	{
@@ -135,7 +135,8 @@ char	*ft_rmword(char const *str, char const *mots)
 
 char	*ft_find_var(char *str, char *vars, t_child *child)
 {
-	int	i;
+	int		i;
+	char	*new;
 
 	i = 0;
 	while (child->init->envp[i])
@@ -144,8 +145,10 @@ char	*ft_find_var(char *str, char *vars, t_child *child)
 		{
 			// printf("selection = %s\n", vars);
 			vars = ft_rmword(child->init->envp[i], vars);
-			str = ft_redifine(vars, str, '$');
-			return (str);
+			new = ft_redifine(vars, str, '$');
+			free(str);
+			free(vars);
+			return (new);
 		}
 		i++;
 	}
@@ -383,10 +386,10 @@ void	ft_parser(t_child *child)
 			}
 		}
 		tmp->str = ft_guillemet(str, child);
-		free(str);
 		str = ft_strtrim(tmp->str, " ");
 		free(tmp->str);
 		tmp->str = ft_commandoption(str, 0);
+		// free(str);
 		if (ft_syntax(tmp->str) >= 2)
 		{
 			result = ft_syntax(tmp->str);
