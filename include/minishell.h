@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 10:50:01 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:41:10 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void				ft_which_builtins_child(t_child *child);
 void				ft_env(t_child *child);
 void				ft_pwd(void);
 void				ft_unset(t_child *child);
+void				ft_export(t_child *child);
 /*********************************************************/
 
 // Free & End function.
