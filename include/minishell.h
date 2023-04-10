@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:32:38 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:33:11 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,30 @@ typedef struct s_init
 
 typedef struct s_heredoc
 {
-	int		here_docfd[2];
-	int		here_doc_nbr;
-	int		flag_doc;
-	char	*str;
-} t_heredoc;
+	int				here_docfd[2];
+	int				here_doc_nbr;
+	int				flag_doc;
+	char			*str;
+}					t_heredoc;
 
 typedef struct s_child
 {
-	int			great_mark;
-	int			less_mark;
-	char		**cmd;
-	char		**all_path;
-	char		*cmd_path;
-	int			pipe_nbr;
-	int			cmd_nbr;
-	int			*fd_array;
-	int			is_builtin;
-	int			exit_code;
-	int			i;
-	int			j;
-	t_init		*init;
-	t_heredoc	heredoc;
-}				t_child;
+	int				great_mark;
+	int				less_mark;
+	char			**envp;
+	char			**cmd;
+	char			**all_path;
+	char			*cmd_path;
+	int				pipe_nbr;
+	int				cmd_nbr;
+	int				*fd_array;
+	int				is_builtin;
+	int				exit_code;
+	int				i;
+	int				j;
+	t_init			*init;
+	t_heredoc		heredoc;
+}					t_child;
 
 // Evert function for Parser
 t_init				ft_init(char *input);
@@ -100,7 +101,6 @@ void				ft_ctrlc(int sig);
 void				ft_title(void);
 
 int					ft_is_cmd(t_token *token);
-
 
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 
