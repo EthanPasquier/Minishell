@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:22:55 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 11:37:11 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	ft_readline(char **envp)
 	child = malloc(sizeof(t_child));
 	child->init = malloc(sizeof(t_init));
 	child->init->envp = ft_copy_env(envp);
+	child->exit_code = 0;
 	signal(SIGINT, ft_ctrlc);
 	while (1)
 	{
-		
 		child->init->input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
 		if (child->init->input)
 		{
