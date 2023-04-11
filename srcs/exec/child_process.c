@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 08:31:29 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:59:54 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,6 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 	ft_pipe_child(child, tmp);
 }
 
-static void	ft_exec_cmd(t_child *child, t_token *token)
-{
-		execve(child->cmd_path, child->cmd, child->init->envp);
-		ft_child_error(token, child, ERR_EXECVE);
-}
-
 static void	ft_exec_child(t_child *child, t_token *token)
 {
 	t_token	*tmp;
@@ -52,16 +46,20 @@ static void	ft_exec_child(t_child *child, t_token *token)
 	free(child->fd_array);
 	if (ft_is_cmd(token) == 1)
 	{
-		if (child->is_builtin > 0 && child->is_builtin < 5)
+		if ((child->is_builtin > 0 && child->is_builtin < 5) || (child->is_builtin == 2 && !child->cmd[1]))
 			exit(EXIT_SUCCESS);
 		while (tmp->type != CMD)
 			tmp = tmp->next;
-		if (child->is_builtin > 4)
-			ft_which_builtins_child(child);
-		else
+		if (child->is_builtin > 4
+			|| (child->is_builtin == 2 && !child->cmd[1]))
+			{
+				printf("coucou\n");
+				ft_which_builtins_child(child);
+			}
+		else if (child->cmd_path)
 		{
-			if (child->cmd_path)
-				ft_exec_cmd(child, token);
+			execve(child->cmd_path, child->cmd, child->init->envp);
+			ft_child_error(token, child, ERR_EXECVE);	
 		}
 	}
 	exit(EXIT_SUCCESS);
@@ -73,7 +71,10 @@ void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 	if (c->is_builtin > 0 && c->is_builtin < 5)
 	{
 		if (c->cmd_nbr == 1)
-			ft_which_builtins(c, tmp);
+		{
+			if (c->is_builtin != 2 || (c->is_builtin == 2 && c->cmd[1]))
+				ft_which_builtins(c, tmp);
+		}
 	}
 	else if (c->cmd && c->all_path)
 	{
@@ -85,13 +86,10 @@ void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 	}
 	pid[c->i] = fork();
 	if (pid[c->i] < 0)
-	{
-		write(2, "pid error\n", 10);
-		ft_free_double(c->cmd);
-		exit(EXIT_FAILURE);
-	}
+		return ;
 	else if (pid[c->i] == 0)
 		ft_exec_child(c, tmp);
-	free(c->cmd_path);
 	ft_free_double(c->cmd);
+	if (c->is_builtin < 0)
+		free(c->cmd_path);
 }

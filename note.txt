@@ -79,5 +79,8 @@ cd ne change pas le pwd // working
 avoir un beau prompt (facultatif)
 ls -rlr (Parser, charactere 29 en trop)
 
+essaye de faire passer export dans child process quand !cmd[1];
+
+
 a la fin:
 changer le Makefile

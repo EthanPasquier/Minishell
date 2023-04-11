@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:11:55 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:13:22 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,58 +36,62 @@ char **ft_remove(t_child *child, int n)
         i++;
     unset = (char **)calloc(sizeof(char *), i + 1);
     if (!unset)
-    {
-        fprintf(stderr, "MALLOC ERROR UNSET");    
         return (NULL);
-    }
-    i = 0;
-    j = 0;
-    while (child->init->envp[i])
+    i = -1;
+    j = -1;
+    while (child->init->envp[++i])
     {
         if (i != n)
         {
-            unset[j] = (char *)malloc(sizeof(char) * (ft_strlen(child->init->envp[i]) + 1));
+            unset[++j] = ft_strdup(child->init->envp[i]);
             if (!unset[j])
-            {
-                fprintf(stderr, "MALLOC ERROR UNSET J");
                 return (NULL);
-            }
-            ft_strlcpy(unset[j], child->init->envp[i], ft_strlen(child->init->envp[i]) + 1);
-            j++;
         }
-        i++;
     }
-    unset[j] = NULL; // terminate the array with a NULL pointer
+    unset[j] = NULL;
     return (unset);
+}
+
+int	ft_is_remove(t_child *child, int i)
+{
+	int k;
+	char **unset;
+
+	k = 0;
+	while (child->init->envp[k])
+	{
+		if (ft_strncmp(child->init->envp[k], child->cmd[i],
+				len_equal(child->init->envp[k])) == 0
+			&& len_equal(child->init->envp[k]) == (int)ft_strlen(child->cmd[i]))
+		{
+			unset = ft_remove(child, k);
+			child->init->envp = unset;
+			if (!child->init->envp)
+			{
+				write(2, "child unset error\n", 18);
+				return (1);
+			}
+			break ;
+		}
+		k++;
+	}
+	return (0);
 }
 
 int ft_unset(t_child *child)
 {
 	int i;
-	int k;
-	char **unset;
-	
+	int error;
+		
 	i = 1;
+	error = -1;
 	if (child->cmd[1])
 	{
 		while (child->cmd[i])
 		{
-			k = 0;
-			while (child->init->envp[k])
-			{
-				if (ft_strncmp(child->init->envp[k], child->cmd[i], len_equal(child->init->envp[k])) == 0)
-				{
-					unset = ft_remove(child, k);
-					child->init->envp = unset;
-                    if (!child->init->envp)
-                    {
-                        write(2, "child unset error\n", 18);
-                        return (1);
-                    }
-					break ;
-				}
-				k++;
-			}
+			error = ft_is_remove(child, i);
+			if (error == 1)
+				return (1);
 			i++;
 		}
 	}

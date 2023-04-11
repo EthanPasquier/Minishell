@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 11:37:11 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:26:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_readline(char **envp)
 	child = malloc(sizeof(t_child));
 	child->init = malloc(sizeof(t_init));
 	child->init->envp = ft_copy_env(envp);
-	child->exit_code = 0;
+	child->exit_code = -1;
 	signal(SIGINT, ft_ctrlc);
 	while (1)
 	{

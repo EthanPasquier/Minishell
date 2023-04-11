@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:03:45 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:28:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,17 @@ int	cmd_counter(t_token *token)
 	return (cmd_nbr);
 }
 
-void	ft_wait(pid_t *pid, int cmd_nbr)
+void	ft_wait(pid_t *pid, t_child *child)
 {
 	int	i;
+	int status;
 
 	i = 0;
-	while (i < cmd_nbr)
+	while (i < child->pipe_nbr + 1)
 	{
-		waitpid(pid[i], NULL, 0);
+		waitpid(pid[i], &status, 0);
+		if (child->exit_code == 0)
+			child->exit_code = status / 129;
 		i++;
 	}
 }

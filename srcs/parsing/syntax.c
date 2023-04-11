@@ -6,11 +6,9 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 08:56:16 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:49:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../include/minishell.h"
 
 #include "../../include/minishell.h"
 

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 08:45:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:21:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int					ft_is_doc_last(t_token *token);
 char				**ft_find_cmd(t_token *token);
 int					*ft_set_pipe(t_child *child);
 int					cmd_counter(t_token *token);
-void				ft_wait(pid_t *pid, int cmd_nbr);
+void				ft_wait(pid_t *pid, t_child *child);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
 int					ft_mark_count(t_token *token, int type);
 char				*find_cmd_path(char **cmd, char **path);

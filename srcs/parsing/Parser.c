@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 11:46:59 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:48:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ char	*ft_find_var(char *str, char *vars, t_child *child)
 		{
 			vars = ft_rmword(child->init->envp[i], vars);
 			new = ft_redifine(vars, str, '$');
-			printf("selection = %s\n", new);
 			free(str);
 			free(vars);
 			return (new);
@@ -188,36 +187,24 @@ char	*ft_take_var(char *str, int position)
 	char	*var;
 
 	i = position;
-	// printf("position = %s\n", str);
 	while (str[i] != 0)
 	{
 		if (ft_isalpha(str[i]) == 0 && str[i] != '?')
-		{
-			// printf("str[i] = %c\n", str[i]);
 			break ;
-		}
 		i++;
 	}
 	if (ft_isalpha(str[i]) == 0 && str[i] != '?')
 		i--;
-	// printf("i = %d\n", i);
 	nb = i - position + 2;
-	// printf("rtailel = %d\n", nb);
-	// printf("i = %d\n", i);
-	// printf("position = %d\n", position);
-	// printf("nb = %d\n", nb);
-	// var = malloc((sizeof(char) * nb) + 2);
 	var = ft_calloc(sizeof(char), nb + 1);
 	i = 0;
 	while (i < nb - 1)
 	{
 		var[i] = str[position];
-		// printf("var = %s\n", var);
 		i++;
 		position++;
 	}
 	var[i] = '=';
-	// printf("var = %s\n", var);
 	return (var);
 }
 
@@ -424,13 +411,13 @@ void	ft_parser(t_child *child)
 			ft_insertNode(tmp, result, 1);
 		}
 		// mettre le code pour le | > ici
-		printf("%s\n", tmp->str);
+		// printf("%s\n", tmp->str);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 		// i++;
 	}
 	ft_assign_type(token);
-	// ft_executor(token, child);
+	ft_executor(token, child);
 	if (token)
 		ft_free_list(token);
 }
