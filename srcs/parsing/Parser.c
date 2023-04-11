@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 08:55:59 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 11:23:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -418,13 +418,13 @@ void	ft_parser(t_child *child)
 			ft_insertNode(tmp, result, 1);
 		}
 		// mettre le code pour le | > ici
-		// printf("%s\n", tmp->str);
+		printf("%s\n", tmp->str);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 		// i++;
 	}
 	ft_assign_type(token);
-	ft_executor(token, child);
+	//ft_executor(token, child);
 	if (token)
 		ft_free_list(token);
 }

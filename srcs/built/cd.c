@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:45:52 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 11:01:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 11:25:03 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	ft_change_pwd(t_child *child, char *new_cd)
 	child->init->envp[i] = ft_strjoin("PWD=", new_cd);
 }
 
-static char	*ft_new_cd(char *old_pwd, t_child *child)
+static char	*ft_new_cd(t_child *child)
 {
 	char *new_cd;
 
@@ -83,9 +83,6 @@ static char	*ft_new_cd(char *old_pwd, t_child *child)
 			return (NULL);
 		}
 	}
-	else if (child->cmd[1][0] == '-'
-		&& ft_strlen(child->cmd[1]) == 1)
-		new_cd = old_pwd;
 	else
 		new_cd = child->cmd[1];
 	return (new_cd);
@@ -99,7 +96,7 @@ int	ft_cd(t_child *child)
 
 	if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
 		return (-1);
-	new_cd = ft_new_cd(old_pwd, child);
+	new_cd = ft_new_cd(child);
 	if (new_cd)
 	{
 		if (chdir(new_cd) == -1)
