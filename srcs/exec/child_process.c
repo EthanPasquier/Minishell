@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 16:59:54 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:44:33 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ static void	ft_exec_child(t_child *child, t_token *token)
 	free(child->fd_array);
 	if (ft_is_cmd(token) == 1)
 	{
-		if ((child->is_builtin > 0 && child->is_builtin < 5) || (child->is_builtin == 2 && !child->cmd[1]))
+		if ((child->is_builtin > 0 && child->is_builtin < 4))
 			exit(EXIT_SUCCESS);
 		while (tmp->type != CMD)
 			tmp = tmp->next;
-		if (child->is_builtin > 4
-			|| (child->is_builtin == 2 && !child->cmd[1]))
-			{
-				printf("coucou\n");
+		if (child->is_builtin > 3
+			|| (child->is_builtin == 4 && !child->cmd[1]))
 				ft_which_builtins_child(child);
-			}
 		else if (child->cmd_path)
 		{
 			execve(child->cmd_path, child->cmd, child->init->envp);
@@ -72,7 +69,7 @@ void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 	{
 		if (c->cmd_nbr == 1)
 		{
-			if (c->is_builtin != 2 || (c->is_builtin == 2 && c->cmd[1]))
+			if (c->is_builtin != 4 || (c->is_builtin == 4 && c->cmd[1]))
 				ft_which_builtins(c, tmp);
 		}
 	}

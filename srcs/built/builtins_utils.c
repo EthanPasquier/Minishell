@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 16:54:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:40:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	ft_is_builtins(t_token *token)
 	{
 		if (ft_strcmp_caps((tmp->str), "unset", 5) == 0 && len(tmp) == 5)
 			return (1);
-		else if (ft_strcmp_caps((tmp->str), "export", 6) == 0 && len(tmp) == 6)
-			return (2);
 		else if (ft_strcmp_caps((tmp->str), "cd", 2) == 0 && len(tmp) == 2)
-			return (3);
+			return (2);
 		else if (ft_strcmp_caps((tmp->str), "exit", 4) == 0 && len(tmp) == 4)
+			return (3);
+		else if (ft_strcmp_caps((tmp->str), "export", 6) == 0 && len(tmp) == 6)
 			return (4);
 		if (ft_strcmp_caps((tmp->str), "pwd", 3) == 0 && len(tmp) == 3)
 			return (5);
@@ -64,17 +64,17 @@ void	ft_which_builtins(t_child *child, t_token *token)
 	if (child->is_builtin == 1)
 		error = ft_unset(child);
 	else if (child->is_builtin == 2)
-		error = ft_export(child);
-	else if (child->is_builtin == 3)
 		error = ft_cd(child);
-	else if (child->is_builtin == 4)
+	else if (child->is_builtin == 3)
 		ft_exit(child);
+	else if (child->is_builtin == 4)
+		error = ft_export(child);
 	child->exit_code = error;
 }
 
 void	ft_which_builtins_child(t_child *child)
 {
-	if (child->is_builtin == 2)
+	if (child->is_builtin == 4)
 		ft_export(child);
 	else if (child->is_builtin == 5)
 		ft_pwd();

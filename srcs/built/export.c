@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:40:25 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 16:56:33 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:44:54 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	ft_export(t_child *child)
 	export_nbr = 0;
 	line = 0;
 	j = 1;
-	printf("%s\n", "TEST");
 	if (!child->cmd[1])
 		ft_env_alph_order(child->init->envp);
 	else if (child->cmd[1])

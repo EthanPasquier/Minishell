@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:45:52 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 11:25:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:33:17 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ static void	ft_oldpwd(t_child *child, char *old_cd)
 static void ft_change_oldpwd(t_child *child, char *old_cd)
 {
 	int i;
-	char	**old_pwd;
 
 	i = 0;
-	old_pwd = NULL;
-	(void)old_cd;
 	while (child->init->envp[i]
 		&& ft_strncmp(child->init->envp[i], "OLDPWD=", 4) != 0)
 		i++;
