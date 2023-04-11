@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:58:20 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:14:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,18 +138,18 @@ int					ft_is_builtins(t_token *token);
 void				ft_which_builtins(t_child *child, t_token *token);
 void				ft_which_builtins_child(t_child *child);
 
-void				ft_env(t_child *child);
-void				ft_cd(t_child *child);
-void				ft_pwd(t_child *child);
-void				ft_unset(t_child *child);
-void				ft_export(t_child *child);
-void				ft_exit(t_child *child);
+int				ft_env(t_child *child);
+int				ft_cd(t_child *child);
+int				ft_pwd(t_child *child);
+int				ft_unset(t_child *child);
+int				ft_export(t_child *child);
+void			ft_exit(t_child *child);
 /*********************************************************/
 
 // Free & End function.
 void				*ft_free_double(char **str);
 void				ft_end_list(t_token *token);
 void				ft_free_list(t_token *token);
-void				ft_error(int flag);
+void				ft_cmd_error(t_child *child);
 void				ft_free_exec(char **cmd, char *cmd_path);
 #endif

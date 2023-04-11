@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 18:02:43 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:01:17 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ static void	ft_pipe_doc(t_child *child)
 	if (child->heredoc.flag_doc == 1)
 	{
 		if (pipe(child->heredoc.here_docfd) == -1)
-			ft_error(1);
+		{
+			write(2, "Pipe here doc error\n", 20);
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
@@ -96,7 +99,10 @@ void	ft_heredoc(t_token *token, t_child *child)
 				tmp = tmp->next;
 			pid[i] = fork();
 			if (pid[i] < 0)
-				ft_error(1);
+			{
+				write(2, "pid error in here doc\n", 22);
+				return ;
+			}
 			if (pid[i] == 0)
 				ft_do_heredoc(tmp, child, i);
 			waitpid(pid[i], NULL, 0);

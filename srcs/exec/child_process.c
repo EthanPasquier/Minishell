@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 22:38:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:07:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 		{
 			close(child->heredoc.here_docfd[0]);
 			close(child->heredoc.here_docfd[1]);
-			ft_error(1);
+			write(2, "Error dup2 here_doc\n", 22);
 		}
 		close(child->heredoc.here_docfd[0]);
 		close(child->heredoc.here_docfd[1]);
@@ -61,20 +61,8 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 
 static void	ft_exec_cmd(t_child *child, t_token *token)
 {
-	if (!child->cmd_path)
-	{
-		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf
-		if (child->cmd)
-			ft_free_double(child->cmd);
-		if (child->all_path)	
-			ft_free_double(child->all_path);
-		exit(EXIT_SUCCESS);
-	}
-	else
-	{
 		execve(child->cmd_path, child->cmd, child->init->envp);
 		ft_child_error(token, child, ERR_EXECVE);
-	}
 }
 
 static void	ft_exec_child(t_child *child, t_token *token)
@@ -97,13 +85,11 @@ static void	ft_exec_child(t_child *child, t_token *token)
 			exit(EXIT_SUCCESS);
 		else
 		{
-			if (child->cmd && child->all_path)
-				child->cmd_path = find_cmd_path(child->cmd, child->all_path);
-			ft_exec_cmd(child, token);
+			if (child->cmd_path)
+				ft_exec_cmd(child, token);
 		}
 	}
-	else
-		exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
 void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
@@ -111,11 +97,23 @@ void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 	c->cmd = ft_find_cmd(tmp);
 	if (c->is_builtin > 0 && c->is_builtin < 5 && c->cmd_nbr == 1)
 		ft_which_builtins(c, tmp);
+	else if (c->cmd && c->all_path)
+	{
+		c->cmd_path = find_cmd_path(c->cmd, c->all_path);
+		if (!c->cmd_path)
+			ft_cmd_error(c);
+		else
+			c->exit_code = 0;
+	}
 	pid[c->i] = fork();
 	if (pid[c->i] < 0)
-		ft_error(1);
+	{
+		write(2, "pid error\n", 10);
+		ft_free_double(c->cmd);
+		exit(EXIT_FAILURE);
+	}
 	else if (pid[c->i] == 0)
 		ft_exec_child(c, tmp);
-	if (c->cmd != NULL)
-		ft_free_double(c->cmd);
+	free(c->cmd_path);
+	ft_free_double(c->cmd);
 }

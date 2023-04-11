@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 10:27:41 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:11:55 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char **ft_remove(t_child *child, int n)
     return (unset);
 }
 
-void	ft_unset(t_child *child)
+int ft_unset(t_child *child)
 {
 	int i;
 	int k;
@@ -81,8 +81,8 @@ void	ft_unset(t_child *child)
 					child->init->envp = unset;
                     if (!child->init->envp)
                     {
-                        fprintf(stderr, "TEST\n");
-                        return ;
+                        write(2, "child unset error\n", 18);
+                        return (1);
                     }
 					break ;
 				}
@@ -91,4 +91,5 @@ void	ft_unset(t_child *child)
 			i++;
 		}
 	}
+    return (0);
  }

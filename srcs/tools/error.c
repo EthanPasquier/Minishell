@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 15:49:39 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:06:27 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	*ft_free_double(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
+	if (str[i])
+	{
+		while (str[i])
+			free(str[i++]);
+		free(str);
+	}
 	str = NULL;
 	return (NULL);
 }
@@ -50,12 +53,14 @@ void	ft_free_exec(char **cmd, char *cmd_path)
 	cmd_path = NULL;
 }
 
-void	ft_error(int flag)
+void	ft_cmd_error(t_child *child)
 {
-	if (flag == 1)
-		printf("wtf\n");
-	printf("ERROR\n");
-	exit(EXIT_SUCCESS);
+	write(2, "minishell: ", 11);
+	write(2, child->cmd[0], ft_strlen(child->cmd[0]));
+	write(2, ": command not found\n", 20);
+	ft_free_double(child->cmd);
+	ft_free_double(child->all_path);
+	child->exit_code = 127;
 }
 
 void	ft_end_list(t_token *token)
@@ -64,21 +69,3 @@ void	ft_end_list(t_token *token)
 	printf("Error in filling the token list.");
 	exit(EXIT_FAILURE);
 }
-
-// void	ft_end_list_env(t_env *env)
-// {
-// 	t_env	*tmp;
-
-// 	if (env)
-// 	{
-// 		while (env)
-// 		{
-// 			tmp = env->next;
-// 			free(env->envp); // free le strdup dans new_node
-// 			free(env);
-// 			env = tmp;
-// 		}
-// 	}
-// 	printf("Error in filling the env list.");
-// 	exit(EXIT_SUCCESS);
-// }

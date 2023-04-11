@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 22:37:31 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:38:25 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ void	ft_command(t_token *token, t_child *child)
 	pid = (pid_t *)malloc(sizeof(pid_t) * (child->pipe_nbr + 1));
 	if (!pid)
 	{
-		fprintf(stderr, "PID ERROR\n");
-		exit(EXIT_FAILURE);
+		write(2, "pid malloc error\n", 17);
+		child->exit_code = 69;
+		return ;
 	}
 	child->fd_array = ft_set_pipe(child);
 	ft_exec_command(token, child, pid);
@@ -102,10 +103,6 @@ void	ft_executor(t_token *token, t_child *child)
 	child->all_path = find_path(child);
 	child->cmd_path = NULL;
 	child->i = 0;
-	// for (int i = 0; child->all_path[i]; i++)
-	// 	printf("%s\n", child->all_path[i]);
-	// exit(EXIT_SUCCESS);
 	ft_command(token, child);
-	if (child->all_path)
-		ft_free_double(child->all_path);
+	ft_free_double(child->all_path);
 }

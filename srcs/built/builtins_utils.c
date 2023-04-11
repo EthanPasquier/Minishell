@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:58:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:15:46 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,19 @@ int	ft_is_builtins(t_token *token)
 void	ft_which_builtins(t_child *child, t_token *token)
 {
 	(void)token;
+	
+	int error;
+
+	error = 0;
 	if (child->is_builtin == 1)
-		ft_unset(child);
+		error = ft_unset(child);
 	else if (child->is_builtin == 2)
-		ft_export(child);
+		error = ft_export(child);
 	else if (child->is_builtin == 3)
-		ft_cd(child);
+		error = ft_cd(child);
 	else if (child->is_builtin == 4)
 		ft_exit(child);
+	child->exit_code = error;
 }
 
 void	ft_which_builtins_child(t_child *child)

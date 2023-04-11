@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 10:57:22 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:03:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ int	*ft_set_pipe(t_child *child)
 	fd_index = 0;
 	fd_array = malloc(sizeof(int *) * (child->pipe_nbr) * 2);
 	if (!fd_array)
-		ft_error(1); // à Changer
+	{
+		write(2, "malloc error fd_array", 21);
+		return (NULL);
+	}
 	while (index_cmd < child->pipe_nbr)
 	{
 		if (pipe(pipe_fd) == -1)
-			ft_error(1);
+			write(2, "pipe error in set_pipe\n", 23);
 		fd_array[fd_index] = pipe_fd[1];
 		fd_array[fd_index + 1] = pipe_fd[0];
 		fd_index += 2;

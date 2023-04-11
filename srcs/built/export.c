@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:40:25 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 15:40:49 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:14:22 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**ft_add(int line, int export_nbr, t_child *child)
 	return (export);
 }
 
-void	ft_export(t_child *child)
+int	ft_export(t_child *child)
 {
 	int		export_nbr;
 	int		line;
@@ -85,4 +85,5 @@ void	ft_export(t_child *child)
 		ft_free_double(child->init->envp);
 		child->init->envp = export;
 	}
+	return (0);
 }
