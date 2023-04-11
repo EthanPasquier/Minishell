@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:06:27 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 07:38:53 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_free_double(char **str)
 	int	i;
 
 	i = 0;
-	if (str[i])
+	if (str)
 	{
 		while (str[i])
 			free(str[i++]);
@@ -58,8 +58,6 @@ void	ft_cmd_error(t_child *child)
 	write(2, "minishell: ", 11);
 	write(2, child->cmd[0], ft_strlen(child->cmd[0]));
 	write(2, ": command not found\n", 20);
-	ft_free_double(child->cmd);
-	ft_free_double(child->all_path);
 	child->exit_code = 127;
 }
 

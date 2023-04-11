@@ -6,9 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:42:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:56:16 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/minishell.h"
 
 #include "../../include/minishell.h"
 
@@ -67,7 +69,9 @@ int	ft_error_redirection(char *str)
 {
 	char	c;
 
+	// int		temoins;
 	c = str[0];
+	// temoins = 0;
 	if (ft_wake_word(str[1]) == 1)
 		return (ft_error_syntax("pipes"));
 	else if (str[1] == 32)
@@ -88,6 +92,8 @@ int	ft_syntax(char *str)
 	int	temoins;
 	int	tmp;
 
+	// char	c;
+	// c = 29;
 	i = 0;
 	tmp = 0;
 	temoins = 0;
@@ -169,6 +175,7 @@ int	ft_ordreguillemet(char *str)
 			j--;
 			if (tmp != c)
 			{
+				// printf("tmp = %c\nc = %c\n", tmp, c);
 				ft_error_syntax("erreur de guillemets");
 				return (1);
 			}

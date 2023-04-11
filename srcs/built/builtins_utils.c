@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:15:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:46:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_which_builtins(t_child *child, t_token *token)
 void	ft_which_builtins_child(t_child *child)
 {
 	if (child->is_builtin == 5)
-		ft_pwd(child);
+		ft_pwd();
 	else if (child->is_builtin == 6)
 		ft_env(child);
 	// else if (child->is_builtin == 7)

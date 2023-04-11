@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 17:59:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:55:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,18 +139,30 @@ char	*ft_find_var(char *str, char *vars, t_child *child)
 	char	*new;
 
 	i = 0;
+	new = NULL;
 	while (child->init->envp[i])
 	{
 		if (ft_strncmp(vars, child->init->envp[i], ft_strlen(vars)) == 0)
 		{
-			// printf("selection = %s\n", vars);
 			vars = ft_rmword(child->init->envp[i], vars);
 			new = ft_redifine(vars, str, '$');
+			printf("selection = %s\n", new);
 			free(str);
 			free(vars);
 			return (new);
 		}
 		i++;
+	}
+	if (!new)
+	{
+		if (vars[0] == '?' && vars[1] == '=' && vars[2] == 0)
+		{
+			vars = ft_itoa(child->exit_code);
+			new = ft_redifine(vars, str, '$');
+			free(str);
+			free(vars);
+			return (new);
+		}
 	}
 	return (str);
 }
@@ -179,17 +191,20 @@ char	*ft_take_var(char *str, int position)
 	// printf("position = %s\n", str);
 	while (str[i] != 0)
 	{
-		if (ft_isalpha(str[i]) == 0)
+		if (ft_isalpha(str[i]) == 0 && str[i] != '?')
 		{
 			// printf("str[i] = %c\n", str[i]);
 			break ;
 		}
 		i++;
 	}
-	if (ft_isalpha(str[i]) == 0)
+	if (ft_isalpha(str[i]) == 0 && str[i] != '?')
 		i--;
 	// printf("i = %d\n", i);
 	nb = i - position + 2;
+	// printf("rtailel = %d\n", nb);
+	// printf("i = %d\n", i);
+	// printf("position = %d\n", position);
 	// printf("nb = %d\n", nb);
 	// var = malloc((sizeof(char) * nb) + 2);
 	var = ft_calloc(sizeof(char), nb + 1);

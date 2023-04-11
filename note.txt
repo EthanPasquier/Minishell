@@ -64,16 +64,18 @@ Doit prendre les paths de commandes comme /bin/ls
 *** BUILTIN ***
 echo salut > file1 123 = doit mettre salut 123 dans file1
 
+** UNSET **
+oldpwd n'est pas trouver avec env mais avec getcwd.
+
 
 TO DO LIST
 Norminette/Leaks
-fonction d'erreur
+fonction d'erreur // Fait en majorite sur l'executeur
 echo Builtins
-faire des fonctions d'erreur (bien free et exit en cas d'erreur)
 Finalise Builtins
-sortie erreur executeur
+sortie erreur executeur // Fait, a tester avec parser
 export n'a aucun error handling.
-cd ne change pas le pwd
+cd ne change pas le pwd // working
 avoir un beau prompt (facultatif)
 ls -rlr (Parser, charactere 29 en trop)
 

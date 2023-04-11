@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:14:44 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:45:59 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_child
 {
 	int				great_mark;
 	int				less_mark;
-	char			**envp;
 	char			**cmd;
 	char			**all_path;
 	char			*cmd_path;
@@ -112,6 +111,7 @@ void				ft_process_child(t_child *c, t_token *tmp, int *pid);
 void				ft_child_error(t_token *token, t_child *c, int flag);
 
 /* REDIRECTION && HERE_DOC */
+void				ft_less_n_great(t_child *child, t_token *tmp);
 void				ft_great_child(t_child *child, t_token *token, int great);
 void				ft_less_child(t_child *child, t_token *token, int less);
 void				ft_pipe_child(t_child *child, t_token *token);
@@ -140,7 +140,7 @@ void				ft_which_builtins_child(t_child *child);
 
 int				ft_env(t_child *child);
 int				ft_cd(t_child *child);
-int				ft_pwd(t_child *child);
+int				ft_pwd(void);
 int				ft_unset(t_child *child);
 int				ft_export(t_child *child);
 void			ft_exit(t_child *child);

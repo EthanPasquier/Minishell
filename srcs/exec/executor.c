@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 19:38:25 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 07:35:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char **ft_find_cmd(t_token *token)
 	if (tmp->type == CMD)
 	{
 		cmd = ft_split(tmp->str, ' ');
-		// printf("%s\n", cmd[0]);
 		if (cmd)
 			return (cmd);
 	}

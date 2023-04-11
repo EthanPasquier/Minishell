@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+         #
+#    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/10 17:14:14 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/11 09:22:16 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ LIBRLINE = readline-8.2
 LIBRD	=	include/readline/libreadline.a include/readline/libhistory.a
 
 CC		= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
 
 LIBS	= $(LIBFT) -lcurses $(LIBRD)
 

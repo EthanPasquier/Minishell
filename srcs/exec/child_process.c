@@ -6,36 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:07:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:31:29 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	ft_less_n_great(t_child *child, t_token *tmp)
-{
-	t_token	*tmp2;
-	int		great;
-	int		less;
-
-	tmp2 = tmp;
-	great = 0;
-	less = 0;
-	while (tmp2 && tmp2->type != PIPE)
-	{
-		if (tmp2->type == GREAT || tmp2->type == GREAT_GREAT)
-		{
-			great++;
-			ft_great_child(child, tmp2, great);
-		}
-		else if (tmp2->type == LESS)
-		{
-			less++;
-			ft_less_child(child, tmp2, less);
-		}
-		tmp2 = tmp2->next;
-	}
-}
 
 static void	ft_redirection(t_token *tmp, t_child *child)
 {
@@ -77,12 +52,12 @@ static void	ft_exec_child(t_child *child, t_token *token)
 	free(child->fd_array);
 	if (ft_is_cmd(token) == 1)
 	{
+		if (child->is_builtin > 0 && child->is_builtin < 5)
+			exit(EXIT_SUCCESS);
 		while (tmp->type != CMD)
 			tmp = tmp->next;
 		if (child->is_builtin > 4)
 			ft_which_builtins_child(child);
-		else if (child->is_builtin > 0 && child->is_builtin < 5)
-			exit(EXIT_SUCCESS);
 		else
 		{
 			if (child->cmd_path)
@@ -95,8 +70,11 @@ static void	ft_exec_child(t_child *child, t_token *token)
 void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 {
 	c->cmd = ft_find_cmd(tmp);
-	if (c->is_builtin > 0 && c->is_builtin < 5 && c->cmd_nbr == 1)
-		ft_which_builtins(c, tmp);
+	if (c->is_builtin > 0 && c->is_builtin < 5)
+	{
+		if (c->cmd_nbr == 1)
+			ft_which_builtins(c, tmp);
+	}
 	else if (c->cmd && c->all_path)
 	{
 		c->cmd_path = find_cmd_path(c->cmd, c->all_path);

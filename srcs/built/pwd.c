@@ -6,21 +6,21 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:47:01 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:13:53 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:45:41 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_pwd(t_child *child)
+int	ft_pwd(void)
 {
-	char *pwd;
-	// if pwd unset does not work anymore ?
-	pwd = ft_getenv(child->init->envp, "PWD=");
-	if (pwd)
-		printf("%s\n", pwd);
+    char cwd[1024];
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
+        printf("%s\n", cwd);
 	else
-		perror("minishell: pwd: no path found");
-	free(pwd);
-	return (0);
+	{
+        perror("getcwd() error");
+		return(1);
+	}
+    return (0);
 }
