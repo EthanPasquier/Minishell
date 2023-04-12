@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 19:20:23 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:27:48 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 static void	ft_exec_cmd(t_token *token, t_token *tmp, t_child *child)
 {
 	if ((child->is_builtin > 0 && child->is_builtin < 4))
-		exit(EXIT_SUCCESS);
+		return ;
 	while (tmp->type != CMD)
 		tmp = tmp->next;
 	if (child->is_builtin > 3
 		|| (child->is_builtin == 4 && !child->cmd[1]))
-			ft_which_builtins_child(child);
+			ft_which_builtins_child(child, token);
 	else if (child->cmd_path)
 	{
 		execve(child->cmd_path, child->cmd, child->init->envp);
@@ -63,6 +63,18 @@ static void	ft_exec_child(t_child *child, t_token *token)
 	free(child->fd_array);
 	if (ft_is_cmd(token) == 1)
 		ft_exec_cmd(token, tmp, child);
+	// if all of this is not free, creating 2k still reachable.
+	ft_free_double(child->init->envp);
+	if (child->all_path)
+		ft_free_double(child->all_path);
+	if (child->cmd)
+		ft_free_double(child->cmd);
+	if (child->cmd_path)
+		free(child->cmd_path);
+	ft_free_list(token);
+	free(child->init->input);
+	free(child->init);
+	free(child);
 	exit(EXIT_SUCCESS);
 }
 
@@ -94,8 +106,11 @@ void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
 	if (pid[c->i] < 0)
 		return ;
 	else if (pid[c->i] == 0)
+	{
+		free(pid);
 		ft_exec_child(c, tmp);
+	}
 	ft_free_double(c->cmd);
-	if (c->is_builtin < 0)
+	if (c->cmd_path)
 		free(c->cmd_path);
 }

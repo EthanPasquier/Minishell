@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/11 13:25:43 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/12 09:21:01 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_DIR		= srcs/
 
 BUILT = pwd env exit echo unset cd export builtins_utils
 
-EXEC = 	child_process executor redirections child_pipe exec_utils child_error here_doc
+EXEC = 	child_process executor redirections child_pipe exec_utils child_error heredoc heredoc_utils
 
 MAIN = Minishell
 
@@ -41,7 +41,7 @@ LIBRLINE = readline-8.2
 LIBRD	=	include/readline/libreadline.a include/readline/libhistory.a
 
 CC		= gcc
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror
 
 LIBS	= $(LIBFT) -lcurses $(LIBRD)
 

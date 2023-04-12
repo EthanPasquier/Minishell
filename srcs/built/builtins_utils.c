@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 17:40:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:16:25 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_is_builtins(t_token *token)
 		tmp = tmp->next;
 	while ((tmp && tmp->type != CMD) && (tmp && tmp->type != PIPE))
 		tmp = tmp->next;
-	if (tmp && tmp->type == CMD)
+	if (tmp && tmp->str && tmp->type == CMD)
 	{
 		if (ft_strcmp_caps((tmp->str), "unset", 5) == 0 && len(tmp) == 5)
 			return (1);
@@ -72,7 +72,7 @@ void	ft_which_builtins(t_child *child, t_token *token)
 	child->exit_code = error;
 }
 
-void	ft_which_builtins_child(t_child *child)
+void	ft_which_builtins_child(t_child *child, t_token *token)
 {
 	if (child->is_builtin == 4)
 		ft_export(child);
@@ -82,6 +82,17 @@ void	ft_which_builtins_child(t_child *child)
 		ft_env(child);
 	// else if (child->is_builtin == 7)
 	// 	ft_echo(child);
+	ft_free_double(child->init->envp);
+	if (child->all_path)
+		ft_free_double(child->all_path);
+	if (child->cmd)
+		ft_free_double(child->cmd);
+	if (child->cmd_path)
+		free(child->cmd_path);
+	ft_free_list(token);
+	free(child->init->input);
+	free(child->init);
+	free(child);
 	exit(EXIT_SUCCESS);
 }
 

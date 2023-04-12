@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 19:07:33 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 07:31:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ char **ft_find_cmd(t_token *token)
 	char	**cmd;
 
 	tmp = token;
-	if (tmp->type == PIPE)
+	if (tmp && tmp->type == PIPE)
 		tmp = tmp->next;
 	while (tmp && tmp->type != PIPE && tmp->type != CMD)
 		tmp = tmp->next;
-	if (tmp->type == CMD)
+	if (tmp && tmp->type == CMD)
 	{
 		cmd = ft_split(tmp->str, ' ');
 		if (cmd)
@@ -79,7 +79,10 @@ void	ft_command(t_token *token, t_child *child)
 	child->fd_array = NULL;
 	pid = (pid_t *)malloc(sizeof(pid_t) * (child->pipe_nbr + 1));
 	if (!pid)
-		return ;
+	{
+		write(2, "Error malloc pid\n", 17);
+		return ;	
+	}
 	if (child->pipe_nbr > 0)
 		child->fd_array = ft_set_pipe(child);
 	ft_exec_command(token, child, pid);

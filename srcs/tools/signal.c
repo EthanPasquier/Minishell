@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 18:02:59 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 09:31:16 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 08:54:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	ft_ctrlc(int sig)
 {
-	(void)sig;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	write(1, "\n", 1);
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		printf("\n"); // print a newline character
+		rl_on_new_line(); // move to a new line in readline
+		rl_replace_line("", 0); // clear the current input line
+		rl_redisplay(); // redisplay the prompt
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 15:13:22 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:34:30 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,27 @@ char **ft_remove(t_child *child, int n)
     i = 0;
     while (child->init->envp[i])
         i++;
-    unset = (char **)calloc(sizeof(char *), i + 1);
+    unset = (char **)malloc(sizeof(char *) * i);
     if (!unset)
         return (NULL);
-    i = -1;
-    j = -1;
-    while (child->init->envp[++i])
+    i = 0;
+    j = 0;
+    while (child->init->envp[i])
     {
         if (i != n)
         {
-            unset[++j] = ft_strdup(child->init->envp[i]);
+            unset[j] = ft_strdup(child->init->envp[i]);
             if (!unset[j])
                 return (NULL);
         }
+		i++;
+		j++;
     }
-    unset[j] = NULL;
+	if (j == i)
+	{
+		printf("test\n");
+    	unset[j] = NULL;
+	}
     return (unset);
 }
 
@@ -65,12 +71,10 @@ int	ft_is_remove(t_child *child, int i)
 			&& len_equal(child->init->envp[k]) == (int)ft_strlen(child->cmd[i]))
 		{
 			unset = ft_remove(child, k);
+			ft_free_double(child->init->envp);
 			child->init->envp = unset;
 			if (!child->init->envp)
-			{
-				write(2, "child unset error\n", 18);
 				return (1);
-			}
 			break ;
 		}
 		k++;

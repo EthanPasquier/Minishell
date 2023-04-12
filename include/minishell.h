@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 16:21:38 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:16:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include "../libft/libft.h"
 # include "readline/history.h"
+# include <sys/ioctl.h>
 # include "readline/readline.h"
 # include <signal.h>
 # include <stdlib.h>
@@ -136,7 +137,7 @@ char				*ft_getenv(char **envp, char *var);
 char				**ft_copy_env(char **env);
 int					ft_is_builtins(t_token *token);
 void				ft_which_builtins(t_child *child, t_token *token);
-void				ft_which_builtins_child(t_child *child);
+void				ft_which_builtins_child(t_child *child, t_token *token);
 
 int				ft_env(t_child *child);
 int				ft_cd(t_child *child);
@@ -147,6 +148,7 @@ void			ft_exit(t_child *child);
 /*********************************************************/
 
 // Free & End function.
+void				ft_free_child_doc(t_child *child, t_token *token);
 void				*ft_free_double(char **str);
 void				ft_end_list(t_token *token);
 void				ft_free_list(t_token *token);
