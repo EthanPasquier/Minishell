@@ -6,11 +6,31 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 19:12:24 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 11:00:07 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void ft_free_child(t_token *token, t_child *c)
+{
+	if (c->all_path)
+		ft_free_double(c->all_path);
+	if (c->cmd)
+		ft_free_double(c->cmd);
+	if (c->cmd_path)
+		free(c->cmd_path);
+	if (c->pipe_nbr > 0)
+		ft_close_fd(c->fd_array, c->pipe_nbr);
+	if (c->fd_array)
+		free(c->fd_array);
+	ft_free_double(c->init->envp);
+	ft_free_list(token);
+	free(c->init->input);
+	free(c->init);
+	free(c);
+	exit(EXIT_SUCCESS);
+}
 
 void	ft_failed_command(void)
 {
@@ -25,6 +45,7 @@ void	ft_fd_error(t_token *token, t_child *c, int flag)
 		fprintf(stderr, "%s: No such file or directory\n", token->next->str);
 		if (c->pipe_nbr > 0)
 			ft_close_fd(c->fd_array, c->cmd_nbr);
+		ft_free_child(token, c);
 		exit(EXIT_SUCCESS);
 	}
 	else if (flag == ERR_DUP2)
@@ -32,6 +53,7 @@ void	ft_fd_error(t_token *token, t_child *c, int flag)
 		fprintf(stderr, "\u26A0 Dup2 error at: %s.\n", token->next->str);
 		if (c->pipe_nbr > 0)
 			ft_close_fd(c->fd_array, c->cmd_nbr);
+		ft_free_child(token, c);
 		exit(EXIT_SUCCESS);
 	}
 }

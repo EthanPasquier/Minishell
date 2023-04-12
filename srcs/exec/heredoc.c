@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 09:07:32 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 11:02:47 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_do_heredoc(t_token *token, t_token *tmp, t_child *child, int i)
 			write(child->heredoc.here_docfd[1], "\n", 1);
 		}
 	}
+
 	ft_free_child_doc(child, token);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 09:16:42 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:48:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,74 +84,72 @@ typedef struct s_child
 }					t_child;
 
 // Evert function for Parser
-t_init				ft_init(char *input);
-void				ft_parser(t_child *child);
-int					ft_count_parsing(char *str);
-int					ft_wake_word(char c);
-int					ft_syntax(char *str);
-t_token				*new_node(char *str);
-int					ft_error_syntax(char *str);
-char				*ft_guillemet(char *str, t_child *child);
-int					ft_where(char *str, char c, int position);
-char				*ft_find_var(char *str, char *vars, t_child *child);
-char				*ft_take_var(char *str, int position);
-int					ft_ordreguillemet(char *str);
-char				*ft_globvar(char *str, char c, t_child *child);
-void				ft_ctrlc(int sig);
-void				ft_title(void);
+t_init		ft_init(char *input);
+void		ft_parser(t_child *child);
+int			ft_count_parsing(char *str);
+int			ft_wake_word(char c);
+int			ft_syntax(char *str);
+t_token		*new_node(char *str);
+int			ft_error_syntax(char *str);
+char		*ft_guillemet(char *str, t_child *child);
+int			ft_where(char *str, char c, int position);
+char		*ft_find_var(char *str, char *vars, t_child *child);
+char		*ft_take_var(char *str, int position);
+int			ft_ordreguillemet(char *str);
+char		*ft_globvar(char *str, char c, t_child *child);
+void		ft_ctrlc(int sig);
+void		ft_title(void);
 
-int					ft_is_cmd(t_token *token);
+int				ft_is_cmd(t_token *token);
 
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 
 /* MAIN FUNCTION */
-void				ft_executor(t_token *token, t_child *child);
-void				ft_process_child(t_child *c, t_token *tmp, int *pid);
+void		ft_executor(t_token *token, t_child *child);
+void		ft_process_child(t_child *c, t_token *t, t_token *tmp, pid_t *p);
 
 /* CHILD ERROR FUNCTION */
-void				ft_child_error(t_token *token, t_child *c, int flag);
+void		ft_child_error(t_token *token, t_child *c, int flag);
 
 /* REDIRECTION && HERE_DOC */
-void				ft_less_n_great(t_child *child, t_token *tmp);
-void				ft_great_child(t_child *child, t_token *token, int great);
-void				ft_less_child(t_child *child, t_token *token, int less);
-void				ft_pipe_child(t_child *child, t_token *token);
+void		ft_less_n_great(t_child *child, t_token *tmp, t_token *t);
+void		ft_pipe_child(t_child *child, t_token *token);
 
-void				ft_heredoc(t_token *token, t_child *child);
-int					ft_heredoc_nbr(t_token *t);
-int					ft_is_doc_last(t_token *token);
+void		ft_heredoc(t_token *token, t_child *child);
+int			ft_heredoc_nbr(t_token *t);
+int			ft_is_doc_last(t_token *token);
 
 /* UTILS FOR EXECUTOR */
-char				**ft_find_cmd(t_token *token);
-int					*ft_set_pipe(t_child *child);
-int					cmd_counter(t_token *token);
-void				ft_wait(pid_t *pid, t_child *child);
-void				ft_close_fd(int *fd_array, int cmd_nbr);
-int					ft_mark_count(t_token *token, int type);
-char				*find_cmd_path(char **cmd, char **path);
-char				**find_path(t_child *child);
+char		**ft_find_cmd(t_token *token);
+int			*ft_set_pipe(t_child *child);
+int			cmd_counter(t_token *token);
+void		ft_wait(pid_t *pid, t_child *child);
+void		ft_close_fd(int *fd_array, int cmd_nbr);
+int			ft_mark_count(t_token *token, int type);
+char		*find_cmd_path(char **cmd, char **path);
+char		**find_path(t_child *child);
 
 /* BUILTIN */
 
-char				*ft_getenv(char **envp, char *var);
-char				**ft_copy_env(char **env);
-int					ft_is_builtins(t_token *token);
-void				ft_which_builtins(t_child *child, t_token *token);
-void				ft_which_builtins_child(t_child *child, t_token *token);
+char		*ft_getenv(char **envp, char *var);
+char		**ft_copy_env(char **env);
+int			ft_is_builtins(t_token *token);
+void		ft_which_builtins(t_child *child, t_token *token);
+void		ft_which_builtins_child(t_child *child, t_token *token);
 
-int				ft_env(t_child *child);
-int				ft_cd(t_child *child);
-int				ft_pwd(void);
-int				ft_unset(t_child *child);
-int				ft_export(t_child *child);
-void			ft_exit(t_child *child);
+int			ft_env(t_child *child);
+int			ft_cd(t_child *child);
+int			ft_pwd(void);
+int			ft_unset(t_child *child);
+int			ft_export(t_child *child);
+void		ft_exit(t_child *child);
 /*********************************************************/
-
 // Free & End function.
-void				ft_free_child_doc(t_child *child, t_token *token);
-void				*ft_free_double(char **str);
-void				ft_end_list(t_token *token);
-void				ft_free_list(t_token *token);
-void				ft_cmd_error(t_child *child);
-void				ft_free_exec(char **cmd, char *cmd_path);
+void		ft_free_child(t_token *token, t_child *c);
+void		ft_free_child_doc(t_child *child, t_token *token);
+void		*ft_free_double(char **str);
+void		ft_end_list(t_token *token);
+void		ft_free_list(t_token *token);
+void		ft_cmd_error(t_child *child);
+void		ft_free_exec(char **cmd, char *cmd_path);
 #endif

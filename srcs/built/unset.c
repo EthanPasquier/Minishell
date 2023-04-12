@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 09:34:30 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 09:55:13 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,11 @@ char **ft_remove(t_child *child, int n)
             unset[j] = ft_strdup(child->init->envp[i]);
             if (!unset[j])
                 return (NULL);
+			j++;
         }
 		i++;
-		j++;
     }
-	if (j == i)
-	{
-		printf("test\n");
-    	unset[j] = NULL;
-	}
+    unset[j] = NULL;
     return (unset);
 }
 

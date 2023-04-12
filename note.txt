@@ -18,14 +18,19 @@ echo salut > file1 123 = doit mettre salut 123 dans file1
 TO DO LIST
 Norminette/Leaks
  --- Finaliser Builtins ---
-- echo Builtins
+- dev echo
 - export n'a aucun error handling.
 - ctrlc in heredoc
 - leaks dans unset et exit
 avoir un beau prompt (facultatif)
+Minishell in Minishell
 ls -rlr (Parser, charactere 29 en trop)
 gerer signaux ctrl \
 bug terminal
 
 a la fin:
 changer le Makefile
+
+<< eof | ls | < lol > def | cat Makefile < note.txt
+
+<< eof | ls | < lol invalid free

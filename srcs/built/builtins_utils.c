@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 09:16:25 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:28:23 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,7 @@ void	ft_which_builtins_child(t_child *child, t_token *token)
 		ft_env(child);
 	// else if (child->is_builtin == 7)
 	// 	ft_echo(child);
-	ft_free_double(child->init->envp);
-	if (child->all_path)
-		ft_free_double(child->all_path);
-	if (child->cmd)
-		ft_free_double(child->cmd);
-	if (child->cmd_path)
-		free(child->cmd_path);
-	ft_free_list(token);
-	free(child->init->input);
-	free(child->init);
-	free(child);
+	ft_free_child(token, child);
 	exit(EXIT_SUCCESS);
 }
 

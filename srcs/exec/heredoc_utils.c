@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 08:06:13 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 08:17:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 11:05:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	ft_free_child_doc(t_child *child, t_token *token)
 		ft_free_double(child->all_path);
 	if (child->cmd_path)
 		free(child->cmd_path);
+	if (child->pipe_nbr > 0)
+		ft_close_fd(child->fd_array, child->pipe_nbr);
+	if (child->fd_array)
+		free(child->fd_array);
 	ft_free_list(token);
 	free(child->init->input);
 	free(child->init);
