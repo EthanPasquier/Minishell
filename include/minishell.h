@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 13:06:47 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:09:27 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_heredoc
 typedef struct s_child
 {
 	int				great_mark;
+	int				flag_cmd;
 	int				less_mark;
 	char			**cmd;
 	char			**all_path;

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 12:29:07 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:09:49 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	ft_executor(t_token *token, t_child *child)
 	child->pipe_nbr = ft_pipe_counter(token);
 	child->cmd_nbr = cmd_counter(token);
 	child->all_path = find_path(child);
+	child->flag_cmd = -1;
 	child->cmd_path = NULL;
 	child->i = 0;
 	ft_command(token, child);

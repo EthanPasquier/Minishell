@@ -3,6 +3,7 @@ NE PAS GERER
 
 *** TRUC WTF EN BASH, DOIT ETRE IDENTIQUE ? ***
 cat < Makefile > outfile abc 
+cat < Makefile note.txt
 
 ** check les Exit status ?
 ** Plusieurs possibilites de leak dans split_input
@@ -20,8 +21,12 @@ Norminette/Leaks
  --- Finaliser Builtins ---
 - dev echo
 - export n'a aucun error handling.
-- ctrlc in heredoc
+- ctrlc in heredoc + error $? when ctrl c
 - leaks exit (5 bytes)
+--- Executeur ---
+< abc def, msg erreur mauvais ordre.
+< abc def lol cat, doit fonctionner.
+
 --- Autre ---
 - avoir un beau prompt (facultatif)
 - executer minishell dans minishell

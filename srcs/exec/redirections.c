@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 11:57:33 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:16:51 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_less_child(t_child *c, t_token *tmp, int less)
 	{
 		fd = open(tmp->next->str, O_RDONLY);
 		if (fd == -1)
-			ft_child_error(tmp, c, ERR_OPEN); // create leaks
+			ft_child_error(tmp, c, ERR_OPEN);
 		if (less == c->less_mark)
 		{
 			if (dup2(fd, STDIN) == -1)
@@ -81,20 +81,31 @@ void	 ft_less_n_great(t_child *child, t_token *tmp)
 	int		less;
 
 	tmp2 = tmp;
+	// child->flag_cmd = 0;
 	great = 0;
 	less = 0;
 	while (tmp2 && tmp2->type != PIPE)
 	{
+		// if (tmp->type == CMD)
+		// 	child->flag_cmd == 1;
 		if (tmp2->type == GREAT || tmp2->type == GREAT_GREAT)
 		{
 			great++;
 			ft_great_child(child, tmp2, great);
+			// child->flag_cmd = 0;
 		}
 		else if (tmp2->type == LESS)
 		{
 			less++;
 			ft_less_child(child, tmp2, less);
+			// child->flag_cmd = 0;
 		}
 		tmp2 = tmp2->next;
 	}
 }
+
+/*
+< abc def hij cat > def | ls
+cat < def abc > lol | ls
+> def anc ls < coucou 123 cat
+*/
