@@ -24,7 +24,6 @@ Norminette/Leaks
 - ctrlc in heredoc + error $? when ctrl c
 - leaks exit (5 bytes)
 --- Executeur ---
-< abc def, msg erreur mauvais ordre.
 < abc def lol cat, doit fonctionner.
 
 --- Autre ---
