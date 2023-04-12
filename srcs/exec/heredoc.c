@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 12:06:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:47:47 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,9 @@ void	ft_heredoc_child(t_child *c, pid_t *p, t_token *tmp, pid_t *p2)
 
 void	ft_heredoc(t_token *token, t_child *child, pid_t *pid2)
 {
-	int		i;
 	t_token	*tmp;
 	pid_t	*pid;
 
-	i = 0;
 	tmp = token;
 	if (child->heredoc.here_doc_nbr > 0)
 	{

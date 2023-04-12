@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 15:09:49 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:49:09 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ void	ft_command(t_token *token, t_child *child)
 	child->fd_array = NULL;
 	pid = (pid_t *)malloc(sizeof(pid_t) * (child->pipe_nbr + 1));
 	if (!pid)
-	{
-		write(2, "Error malloc pid\n", 17);
 		return ;	
-	}
 	if (child->pipe_nbr > 0)
 		child->fd_array = ft_set_pipe(child);
 	ft_exec_command(token, child, pid);

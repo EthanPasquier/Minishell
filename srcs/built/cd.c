@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:45:52 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 17:33:17 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:22:09 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,32 @@ static char	*ft_new_cd(t_child *child)
 	return (new_cd);
 }
 
+int	ft_cd_dont_exec(t_child *child)
+{
+	int	fd;
+
+	fd = open(child->cmd[1], O_RDONLY);
+	if (fd == -1)
+	{
+		perror(child->cmd[1]);
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_cd(t_child *child)
 {
 	char *new_cd;
+	
 	char old_pwd[1024];
 	char new_pwd[1024];
 
 	if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
 		return (-1);
 	new_cd = ft_new_cd(child);
-	if (new_cd)
+	if (child->cmd_nbr > 1 && ft_cd_dont_exec(child) == 0 && child->cmd[1])
+		return (0);
+	else if (new_cd && child->cmd_nbr < 2)
 	{
 		if (chdir(new_cd) == -1)
 		{

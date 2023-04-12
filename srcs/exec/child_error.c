@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 12:45:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:06:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void ft_free_child(t_token *token, t_child *c)
 	free(c->init->input);
 	free(c->init);
 	free(c);
-	exit(EXIT_SUCCESS);
 }
 
 void	ft_failed_command(void)
@@ -46,7 +45,7 @@ void	ft_fd_error(t_token *token, t_child *c, int flag)
 	{
 		fprintf(stderr, "%s: No such file or directory\n", token->next->str);
 		ft_free_child(token, c);
-		exit(EXIT_SUCCESS);
+		exit(4);
 	}
 	else if (flag == ERR_DUP2)
 	{
