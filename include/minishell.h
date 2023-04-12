@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 10:48:38 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 13:06:47 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ int				ft_is_cmd(t_token *token);
 
 /* MAIN FUNCTION */
 void		ft_executor(t_token *token, t_child *child);
-void		ft_process_child(t_child *c, t_token *t, t_token *tmp, pid_t *p);
+void		ft_process_child(t_child *c, t_token *tmp, pid_t *p);
 
 /* CHILD ERROR FUNCTION */
 void		ft_child_error(t_token *token, t_child *c, int flag);
 
 /* REDIRECTION && HERE_DOC */
-void		ft_less_n_great(t_child *child, t_token *tmp, t_token *t);
+void		ft_less_n_great(t_child *child, t_token *tmp);
 void		ft_pipe_child(t_child *child, t_token *token);
 
-void		ft_heredoc(t_token *token, t_child *child);
+void		ft_heredoc(t_token *token, t_child *child, pid_t *pid2);
 int			ft_heredoc_nbr(t_token *t);
 int			ft_is_doc_last(t_token *token);
 
@@ -134,7 +134,7 @@ char		**find_path(t_child *child);
 char		*ft_getenv(char **envp, char *var);
 char		**ft_copy_env(char **env);
 int			ft_is_builtins(t_token *token);
-void		ft_which_builtins(t_child *child, t_token *token);
+void		ft_which_builtins(t_child *child, t_token *token, pid_t *pid);
 void		ft_which_builtins_child(t_child *child, t_token *token);
 
 int			ft_env(t_child *child);
@@ -142,7 +142,7 @@ int			ft_cd(t_child *child);
 int			ft_pwd(void);
 int			ft_unset(t_child *child);
 int			ft_export(t_child *child);
-void		ft_exit(t_child *child);
+void		ft_exit(t_child *child, t_token *token, pid_t *pid);
 /*********************************************************/
 // Free & End function.
 void		ft_free_child(t_token *token, t_child *c);

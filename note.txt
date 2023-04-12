@@ -1,7 +1,7 @@
 NE PAS GERER
 <>, |>, <|
 
-*** TRUC WTF EN BASH, DOIT ETRE IDENTIQUE ??? ***
+*** TRUC WTF EN BASH, DOIT ETRE IDENTIQUE ? ***
 cat < Makefile > outfile abc 
 
 ** check les Exit status ?
@@ -21,16 +21,13 @@ Norminette/Leaks
 - dev echo
 - export n'a aucun error handling.
 - ctrlc in heredoc
-- leaks dans unset et exit
-avoir un beau prompt (facultatif)
-Minishell in Minishell
-ls -rlr (Parser, charactere 29 en trop)
-gerer signaux ctrl \
-bug terminal
+- leaks exit (5 bytes)
+--- Autre ---
+- avoir un beau prompt (facultatif)
+- executer minishell dans minishell
+- ls -rlr (Parser, charactere 29 en trop)
+- gerer signaux ctrl \
+- bug terminal
 
 a la fin:
 changer le Makefile
-
-<< eof | ls | < lol > def | cat Makefile < note.txt
-
-<< eof | ls | < lol invalid free

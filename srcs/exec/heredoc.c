@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 11:02:47 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 12:06:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_heredoc_nbr(t_token *t)
 	return (i);
 }
 
-void	ft_do_heredoc(t_token *token, t_token *tmp, t_child *child, int i)
+void	ft_do_heredoc(t_token *tmp, t_child *child, int i)
 {
 	while (1)
 	{
@@ -46,8 +46,7 @@ void	ft_do_heredoc(t_token *token, t_token *tmp, t_child *child, int i)
 			write(child->heredoc.here_docfd[1], "\n", 1);
 		}
 	}
-
-	ft_free_child_doc(child, token);
+	ft_free_child_doc(child, tmp);
 }
 
 static void	ft_pipe_doc(t_child *child)
@@ -62,7 +61,7 @@ static void	ft_pipe_doc(t_child *child)
 	}
 }
 
-void	ft_heredoc_child(t_child *c, pid_t *p, t_token *t, t_token *tmp)
+void	ft_heredoc_child(t_child *c, pid_t *p, t_token *tmp, pid_t *p2)
 {
 	int	i;
 
@@ -76,8 +75,9 @@ void	ft_heredoc_child(t_child *c, pid_t *p, t_token *t, t_token *tmp)
 			return ;
 		if (p[i] == 0)
 		{
+			free(p2);
 			free(p);
-			ft_do_heredoc(t, tmp, c, i);
+			ft_do_heredoc(tmp, c, i);
 		}
 		waitpid(p[i], NULL, 0);
 		tmp = tmp->next;
@@ -86,7 +86,7 @@ void	ft_heredoc_child(t_child *c, pid_t *p, t_token *t, t_token *tmp)
 
 }
 
-void	ft_heredoc(t_token *token, t_child *child)
+void	ft_heredoc(t_token *token, t_child *child, pid_t *pid2)
 {
 	int		i;
 	t_token	*tmp;
@@ -100,7 +100,7 @@ void	ft_heredoc(t_token *token, t_child *child)
 		pid = malloc(sizeof(int) * child->heredoc.here_doc_nbr);
 		if (!pid)
 			return ;
-		ft_heredoc_child(child, pid, token, tmp);
+		ft_heredoc_child(child, pid, tmp, pid2);
 		free(pid);
 	}
 }

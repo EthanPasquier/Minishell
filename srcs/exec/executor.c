@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 10:41:51 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 12:29:07 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 		if (c->i == 0 || tmp->type == PIPE)
 		{
 			c->is_builtin = ft_is_builtins(tmp);
-			ft_heredoc(tmp, c);
-			ft_process_child(c, t, tmp, pid);
+			ft_heredoc(tmp, c, pid);
+			ft_process_child(c, tmp, pid);
 			if (c->heredoc.flag_doc == 1)
 			{
 				close(c->heredoc.here_docfd[1]);

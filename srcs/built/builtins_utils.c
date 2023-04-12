@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 10:28:23 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 13:06:17 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ int	ft_is_builtins(t_token *token)
 	return (-1);
 }
 
-void	ft_which_builtins(t_child *child, t_token *token)
+void	ft_which_builtins(t_child *child, t_token *token, pid_t *pid)
 {
-	(void)token;
-	
 	int error;
 
 	error = 0;
@@ -66,7 +64,7 @@ void	ft_which_builtins(t_child *child, t_token *token)
 	else if (child->is_builtin == 2)
 		error = ft_cd(child);
 	else if (child->is_builtin == 3)
-		ft_exit(child);
+		ft_exit(child, token, pid);
 	else if (child->is_builtin == 4)
 		error = ft_export(child);
 	child->exit_code = error;

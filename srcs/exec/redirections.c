@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 10:38:23 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/12 11:57:33 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_mark_count(t_token *token, int type)
 	return (i);
 }
 
-void	ft_less_child(t_child *c, t_token *tmp, t_token *t, int less)
+void	ft_less_child(t_child *c, t_token *tmp, int less)
 {
 	int		fd;
 
@@ -39,7 +39,7 @@ void	ft_less_child(t_child *c, t_token *tmp, t_token *t, int less)
 	{
 		fd = open(tmp->next->str, O_RDONLY);
 		if (fd == -1)
-			ft_child_error(t, c, ERR_OPEN); // create leaks
+			ft_child_error(tmp, c, ERR_OPEN); // create leaks
 		if (less == c->less_mark)
 		{
 			if (dup2(fd, STDIN) == -1)
@@ -74,7 +74,7 @@ void	ft_great_child(t_child *child, t_token *token, int great)
 	close(fd);
 }
 
-void	 ft_less_n_great(t_child *child, t_token *tmp, t_token *t)
+void	 ft_less_n_great(t_child *child, t_token *tmp)
 {
 	t_token	*tmp2;
 	int		great;
@@ -93,7 +93,7 @@ void	 ft_less_n_great(t_child *child, t_token *tmp, t_token *t)
 		else if (tmp2->type == LESS)
 		{
 			less++;
-			ft_less_child(child, tmp2, t, less);
+			ft_less_child(child, tmp2, less);
 		}
 		tmp2 = tmp2->next;
 	}
