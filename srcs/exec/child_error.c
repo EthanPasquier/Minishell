@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 18:06:45 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:04:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void ft_free_child(t_token *token, t_child *c)
 {
+	if (c->heredoc.flag_doc == 1)
+	{
+		close(c->heredoc.here_docfd[0]);
+		close(c->heredoc.here_docfd[1]);
+	}
 	if (c->all_path)
 		ft_free_double(c->all_path);
 	if (c->cmd)

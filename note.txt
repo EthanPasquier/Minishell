@@ -21,10 +21,10 @@ Norminette/Leaks
  --- Finaliser Builtins ---
 - dev echo
 - export n'a aucun error handling.
+- export abc=def, export abc=lol (recree une ligne alors que cense reecrire dessus)
 - ctrlc in heredoc + error $? when ctrl c
-- leaks exit (5 bytes)
 --- Executeur ---
-< abc def lol cat, doit fonctionner.
+
 
 --- Autre ---
 - avoir un beau prompt (facultatif)
@@ -35,3 +35,9 @@ Norminette/Leaks
 
 a la fin:
 changer le Makefile
+
+
+export abc=def (Le seul fonctionnel)
+export abc =def
+export abc= def
+export 123=456

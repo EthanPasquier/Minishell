@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 18:11:29 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:41:31 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ static void	ft_exec_cmd(t_token *tmp, t_child *child)
 		|| (child->is_builtin == 4 && !child->cmd[1]))
 		ft_which_builtins_child(child, tmp);
 	else if (!child->cmd_path)
+	{
 		ft_cmd_error(child);
+		ft_free_child(tmp, child);
+		exit(5);
+	}
 	else if (child->cmd_path)
 	{
 		execve(child->cmd_path, child->cmd, child->init->envp);
@@ -81,7 +85,7 @@ static void	ft_builtins_or_cmd(t_child *c, t_token *tmp, pid_t *pid)
 	else if (c->cmd && c->is_builtin < 0)
 	{
 		if (c->all_path)
-			c->cmd_path = find_cmd_path(c->cmd, c->all_path);
+			c->cmd_path = find_cmd_path(c);
 	}
 }
 

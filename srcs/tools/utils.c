@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/09 22:35:43 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:54:58 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,42 +50,44 @@ char	**find_path(t_child *child)
 	return (path);
 }
 
-// void	find_path(t_data *data)
-// {
-// 	int		i;
-// 	char	*tmp;
-// 	char	*trim;
+char	*ft_mini_in_mini(t_child *child)
+{
+	char	*pwd;
+	char	*tmp;
+	char	*tmp2;
 
-// 	i = 0;
-// 	while (data->envp[i])
-// 	{
-// 		if (ft_strncmp("PATH=", data->envp[i], 5) == 0)
-// 		{
-// 			trim = ft_strtrim(data->envp[i], "PATH=");
-// 			data->path = ft_split(trim, ':');
-// 			free(trim);
-// 			i = 0;
-// 			while (data->path[i])
-// 			{
-// 				tmp = ft_strjoin(data->path[i], "/");
-// 				free(data->path[i]);
-// 				data->path[i++] = tmp;
-// 			}
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// }
+	pwd = ft_getenv(child->init->envp, "PWD=");
+	if (pwd)
+	{
+		tmp2 = ft_strtrim(child->cmd[0], ".");
+		tmp = ft_strjoin(pwd, tmp2);
+		free(tmp2);
+		free(pwd);
+		if (access(tmp, X_OK) == 0)
+			return (tmp);
+	}
+	return (NULL);
+}
 
-char	*find_cmd_path(char **cmd, char **path)
+char	*find_cmd_path(t_child *child)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
-	while (path[i])
+	if (ft_strncmp(child->cmd[0], "./", 2) == 0)
+		return (ft_mini_in_mini(child));
+	else if (ft_strncmp(child->cmd[0], "/", 1) == 0)
 	{
-		tmp = ft_strjoin(path[i], cmd[0]);
+		if (access(child->cmd[0], X_OK) == 0)
+		{
+			tmp = ft_strdup(child->cmd[0]);
+			return (tmp);
+		}
+	}
+	while (child->all_path[i])
+	{
+		tmp = ft_strjoin(child->all_path[i], child->cmd[0]);
 		if (access(tmp, X_OK | F_OK) == 0)
 			return (tmp);
 		free(tmp);

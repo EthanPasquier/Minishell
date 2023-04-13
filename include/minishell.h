@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 15:09:27 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:37:34 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int			cmd_counter(t_token *token);
 void		ft_wait(pid_t *pid, t_child *child);
 void		ft_close_fd(int *fd_array, int cmd_nbr);
 int			ft_mark_count(t_token *token, int type);
-char		*find_cmd_path(char **cmd, char **path);
+char		*find_cmd_path(t_child *child);
 char		**find_path(t_child *child);
 
 /* BUILTIN */
@@ -137,6 +137,8 @@ char		**ft_copy_env(char **env);
 int			ft_is_builtins(t_token *token);
 void		ft_which_builtins(t_child *child, t_token *token, pid_t *pid);
 void		ft_which_builtins_child(t_child *child, t_token *token);
+
+int			len_equal(char *str);
 
 int			ft_env(t_child *child);
 int			ft_cd(t_child *child);

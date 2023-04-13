@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/12 12:33:17 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/13 15:34:06 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ LIBRLINE = readline-8.2
 LIBRD	=	include/readline/libreadline.a include/readline/libhistory.a
 
 CC		= gcc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror
 
 LIBS	= $(LIBFT) -lcurses $(LIBRD)
 

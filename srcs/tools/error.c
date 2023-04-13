@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 17:52:38 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:33:12 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	ft_cmd_error(t_child *child)
 	write(2, "minishell: ", 11);
 	write(2, child->cmd[0], ft_strlen(child->cmd[0]));
 	write(2, ": command not found\n", 20);
-	exit(5);
 }
 
 void	ft_end_list(t_token *token)

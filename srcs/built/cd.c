@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:45:52 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 18:22:09 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:53:01 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,15 @@ int	ft_cd_dont_exec(t_child *child)
 {
 	int	fd;
 
-	fd = open(child->cmd[1], O_RDONLY);
-	if (fd == -1)
+	if (child->cmd[1])
 	{
-		perror(child->cmd[1]);
-		return (1);
+		fd = open(child->cmd[1], O_RDONLY);
+		if (fd == -1)
+		{
+			perror(child->cmd[1]);
+			return (1);
+		}
+		close(fd);
 	}
 	return (0);
 }
@@ -108,15 +112,28 @@ int	ft_cd(t_child *child)
 	if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
 		return (-1);
 	new_cd = ft_new_cd(child);
-	if (child->cmd_nbr > 1 && ft_cd_dont_exec(child) == 0 && child->cmd[1])
-		return (0);
+	if (child->cmd_nbr > 1)
+	{
+		if (!child->cmd[1] && new_cd)
+		{
+			free(new_cd);
+			new_cd = NULL;
+		}
+		if (ft_cd_dont_exec(child) == 0)
+			return (0);
+		return (1);
+	}
 	else if (new_cd && child->cmd_nbr < 2)
 	{
 		if (chdir(new_cd) == -1)
 		{
 			perror(new_cd);
+			if (!child->cmd[1] && new_cd)
+				free(new_cd);
 			return (1);
 		}
+		if (!child->cmd[1] && new_cd)
+			free(new_cd);
 		ft_change_oldpwd(child, old_pwd);
 		if (getcwd(new_pwd, sizeof(new_pwd)) != NULL)
 			ft_change_pwd(child, new_pwd);

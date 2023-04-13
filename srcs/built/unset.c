@@ -6,16 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 09:55:13 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:37:17 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-/* TOUT REFAIRE ET FAIRE ENVIRONNEMENT EN LINKED LIST ? */
-
-static int	len_equal(char *str)
+int	len_equal(char *str)
 {
 	int i;
 

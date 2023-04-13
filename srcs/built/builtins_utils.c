@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 13:06:17 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:42:00 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_which_builtins(t_child *child, t_token *token, pid_t *pid)
 
 void	ft_which_builtins_child(t_child *child, t_token *token)
 {
-	if (child->is_builtin == 4)
+	if (child->is_builtin == 4 && !child->cmd[1])
 		ft_export(child);
 	else if (child->is_builtin == 5)
 		ft_pwd();
