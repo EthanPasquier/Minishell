@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 08:59:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 17:00:21 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_readline(char **envp)
 	signal(SIGINT, ft_ctrlc);
 	while (1)
 	{
-		child->init->input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
+		child->init->input = readline("minishell > ");
 		if (child->init->input)
 		{
 			if (ft_strlen(child->init->input) > 0)
@@ -35,6 +35,7 @@ void	ft_readline(char **envp)
 		}
 		else
 		{
+			printf("exit\n");
 			ft_free_double(child->init->envp);
 			free(child->init);
 			free(child);

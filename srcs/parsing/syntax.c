@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/11 15:49:08 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:38:49 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,10 @@ char	*ft_suppspace(char *str)
 	}
 	if (size <= 0)
 		return (str);
-	final = ft_calloc(sizeof(char), i - size);
+	final = ft_calloc(sizeof(char), i - size + 1);
 	i = 0;
 	size = 0;
+	// printf("prefinal = %s\n", str);
 	while (str[i])
 	{
 		if (str[i] != 29)
@@ -142,6 +143,7 @@ char	*ft_suppspace(char *str)
 		}
 		i++;
 	}
+	// printf("final = %s\n", final);
 	return (final);
 }
 
@@ -205,7 +207,9 @@ char	*ft_guillemet(char *str, t_child *child)
 			new[i] = 29;
 		i++;
 	}
+	new[i] = 0;
 	str = ft_suppspace(new);
+	// printf("new = %s\n", new);
 	// free(new);
 	return (str);
 }

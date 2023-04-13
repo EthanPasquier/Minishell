@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 08:16:29 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:46:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char	*ft_redifine(char *mots, char *str, char sign)
 		a++;
 	c = a + 1;
 	while (str[c] != 32 && ft_wake_word(str[c]) == 0 && str[c] != 39
-		&& str[c] != 34 && str[c] != '$' && str[c])
+		&& str[c] != 34 && str[c] != '$' && str[c] != 45 && str[c] != 43
+		&& str[c])
 	{
 		c++;
 		b++;
@@ -146,6 +147,7 @@ char	*ft_find_var(char *str, char *vars, t_child *child)
 		{
 			vars = ft_rmword(child->init->envp[i], vars);
 			new = ft_redifine(vars, str, '$');
+			// printf("selection = %s\n", new);
 			free(str);
 			free(vars);
 			return (new);
@@ -187,24 +189,36 @@ char	*ft_take_var(char *str, int position)
 	char	*var;
 
 	i = position;
+	// printf("position = %s\n", str);
 	while (str[i] != 0)
 	{
 		if (ft_isalpha(str[i]) == 0 && str[i] != '?')
+		{
+			// printf("str[i] = %c\n", str[i]);
 			break ;
+		}
 		i++;
 	}
 	if (ft_isalpha(str[i]) == 0 && str[i] != '?')
 		i--;
+	// printf("i = %d\n", i);
 	nb = i - position + 2;
+	// printf("rtailel = %d\n", nb);
+	// printf("i = %d\n", i);
+	// printf("position = %d\n", position);
+	// printf("nb = %d\n", nb);
+	// var = malloc((sizeof(char) * nb) + 2);
 	var = ft_calloc(sizeof(char), nb + 1);
 	i = 0;
 	while (i < nb - 1)
 	{
 		var[i] = str[position];
+		// printf("var = %s\n", var);
 		i++;
 		position++;
 	}
 	var[i] = '=';
+	// printf("var = %s\n", var);
 	return (var);
 }
 
@@ -228,6 +242,7 @@ char	*ft_write_cut(char *str)
 {
 	int		i;
 	int		j;
+	int		tmp;
 	int		count;
 	char	*output;
 
@@ -240,9 +255,12 @@ char	*ft_write_cut(char *str)
 	output = ft_calloc(sizeof(char), (ft_strlen(str) + count) + 1);
 	// temoins = 0;
 	str[ft_strlen(str)] = 0;
+	tmp = 1;
 	while (str[i])
 	{
-		if (ft_wake_word(str[i]) >= 1)
+		if (str[i] == 39 || str[i] == 34)
+			tmp++;
+		if (ft_wake_word(str[i]) >= 1 && tmp % 2 != 0)
 		{
 			if (ft_wake_word(str[i]) == 2)
 				str = ft_chevronparsing(str, i + 1);
@@ -319,42 +337,167 @@ char	*ft_resize(char *str)
 	return (newstr);
 }
 
-char	*ft_commandoption(char *str, int i)
+int	ft_issimplearg(char *str, int i)
 {
-	int	tmp;
-
-	tmp = 0;
-	while (str[i])
+	if (str[i] == '-')
 	{
-		if (tmp == 0 && str[i] == '-')
-			break ;
-		if (str[i] == 39 || str[i] == 34)
+		if (str[i + 1] == 'n')
 		{
-			if (tmp == 0)
-				tmp = 1;
-			else if (tmp == 1)
-				tmp = 0;
+			if (str[i + 2] == 32 || str[i + 2] == 29)
+			{
+				if (str[i - 1] == 32 || str[i - 1] == 29)
+				{
+					return (1);
+				}
+			}
 		}
-		i++;
 	}
-	if ((int)ft_strlen(str) <= i)
+	return (0);
+}
+
+char	*ft_echoargument(char *str, int i)
+{
+	int		tmp;
+	int		j;
+	int		nb;
+	char	*new;
+
+	// int		j;
+	tmp = 0;
+	nb = 0;
+	while (i >= 0)
+	{
+		i = ft_where(str, '-', i) - 1;
+		if (i > -1 && ft_issimplearg(str, i) == 1)
+			i++;
+		else
+			break ;
+		tmp++;
+	}
+	// printf("i = %d\ntmp = %d\n", i, tmp);
+	if (i <= 0 && tmp <= 1)
 		return (str);
 	i++;
-	while (str[i] && (ft_isalpha(str[i]) == 1 || str[i] == '-' || str[i] == 29))
+	tmp = 0;
+	new = ft_strdup(str);
+	j = i;
+	while (str[i] && str[i] != 32)
 	{
-		tmp = i + 1;
-		while (str[tmp] && (ft_isalpha(str[tmp]) == 1 || str[tmp] == '-'
-				|| str[tmp] == 29))
+		if (str[i] == 'n' && str[i - 1] != '-')
 		{
-			if ((str[tmp] == str[i] && str[tmp] != 29) || str[tmp] == '-')
-				str[tmp] = 29;
+			str[i] = 29;
 			tmp++;
+		}
+		else if (str[i] != 'n' && str[i] != 29 && str[i] != 32)
+		{
+			str = ft_strdup(new);
+			break ;
 		}
 		i++;
 	}
-	if ((int)ft_strlen(str) > i)
-		return (ft_commandoption(str, i));
+	new = ft_suppspace(str);
+	i = ft_where(new, '-', j) - 1;
+	if (i > -1 && ft_issimplearg(new, i) == 0 && ft_isalpha(str[i - 1]) == 0
+		&& str[i - 1] != 32)
+	{
+		return (ft_echoargument(new, i));
+	}
+	i = 0;
+	tmp = 0;
+	while (new[i])
+	{
+		if (ft_issimplearg(new, i) == 1)
+			tmp++;
+		i++;
+	}
+	// printf("tmp == %d\n", tmp);
+	i = 0;
+	nb = tmp;
+	while (new[i] && tmp > 1)
+	{
+		if (ft_issimplearg(new, i))
+		{
+			new[i] = 29;
+			new[i + 1] = 29;
+			new[i + 2] = 29;
+			tmp--;
+		}
+		if (new[i] == 32 && tmp < nb && tmp > 1)
+			new[i] = 29;
+		i++;
+	}
+	str = ft_suppspace(new);
 	return (str);
+}
+
+char	*ft_exportsyntax(char *str)
+{
+	int	i;
+	int	tmp;
+
+	i = 0;
+	tmp = 1;
+	while (str[i])
+	{
+		if (str[i] == 39 || str[i] == 34)
+			tmp++;
+		if (str[i] == '=' && tmp % 2 != 0)
+		{
+			if (str[i - 1] == 32 && str[i - 1] != '=')
+				str[i - 1] = 29;
+			if (str[i + 1] == 32 && str[i - 1] != '=')
+				str[i + 1] = 29;
+		}
+		i++;
+	}
+	return (str);
+}
+
+char	*ft_commandoption(char *str)
+{
+	char	*new;
+	int		i;
+
+	i = 6;
+	new = ft_strnstr(str, "echo ", 6);
+	// printf("new = %s\n", new);
+	if (new != NULL)
+	{
+		while (str[i] == 32)
+			i++;
+		i--;
+		if (str[i] != '-')
+			return (str);
+		// free(new);
+		new = ft_echoargument(str, 0);
+		return (new);
+	}
+	else
+	{
+		new = ft_strnstr(str, "export ", 8);
+		if (new != NULL)
+		{
+			new = ft_exportsyntax(str);
+			return (new);
+		}
+	}
+	return (str);
+}
+
+void	ft_printv(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == 29)
+			printf("0");
+		else
+			printf("%c", str[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 void	ft_parser(t_child *child)
@@ -375,6 +518,8 @@ void	ft_parser(t_child *child)
 	free(child->init->input);
 	child->init->input = ft_write_cut(str);
 	free(str);
+	// printf("%s\n", child->init->input);
+	// ft_printv(child->init->input);
 	split = ft_split_parser(child->init->input, 29);
 	token = ft_fill_list(split);
 	ft_free_double(split);
@@ -385,7 +530,7 @@ void	ft_parser(t_child *child)
 		free(tmp->str);
 		if (ft_syntax(str) == 1 || ft_ordreguillemet(str) == 1)
 		{
-			child->exit_code = ft_error_syntax(str);
+			child->exit_code = 1;
 			return ;
 		}
 		// if ((ft_wake_word(str[0]) > 0 && !tmp->next)
@@ -397,10 +542,12 @@ void	ft_parser(t_child *child)
 		// 	// ft_free_list(token);
 		// 	return ;
 		// }
+		// ft_printv(str);
 		tmp->str = ft_guillemet(str, child);
+		// printf("str = %s\n", tmp->str);
 		str = ft_strtrim(tmp->str, " ");
 		free(tmp->str);
-		tmp->str = ft_commandoption(str, 0);
+		tmp->str = ft_commandoption(str);
 		// free(str);
 		if (ft_syntax(tmp->str) >= 2)
 		{
@@ -411,11 +558,11 @@ void	ft_parser(t_child *child)
 			ft_insertNode(tmp, result, 1);
 		}
 		// mettre le code pour le | > ici
-		// printf("%s\n", tmp->str);
 		// pour print les valeurs dans linked list et faire des tests.
 		tmp = tmp->next;
 		// i++;
 	}
+
 	ft_assign_type(token);
 	ft_executor(token, child);
 	if (token)

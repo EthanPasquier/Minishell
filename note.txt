@@ -1,17 +1,10 @@
 NE PAS GERER
 <>, |>, <|
 
-*** TRUC WTF EN BASH, DOIT ETRE IDENTIQUE ? ***
-cat < Makefile > outfile abc 
-cat < Makefile note.txt
-
-** check les Exit status ?
-** Plusieurs possibilites de leak dans split_input
 ** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
 
 Ctrl \ = seg fault
 Ctrl C dans here_doc ne marche pas
-Doit prendre les paths de commandes comme /bin/ls
 
 *** BUILTIN ***
 echo salut > file1 123 = doit mettre salut 123 dans file1
@@ -19,25 +12,14 @@ echo salut > file1 123 = doit mettre salut 123 dans file1
 TO DO LIST
 Norminette/Leaks
  --- Finaliser Builtins ---
-- dev echo
-- export n'a aucun error handling.
-- export abc=def, export abc=lol (recree une ligne alors que cense reecrire dessus)
+
 - ctrlc in heredoc + error $? when ctrl c
 --- Executeur ---
 
-
 --- Autre ---
 - avoir un beau prompt (facultatif)
-- executer minishell dans minishell
-- ls -rlr (Parser, charactere 29 en trop)
 - gerer signaux ctrl \
-- bug terminal
+ 
 
 a la fin:
 changer le Makefile
-
-
-export abc=def (Le seul fonctionnel)
-export abc =def
-export abc= def
-export 123=456

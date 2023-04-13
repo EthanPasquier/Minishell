@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 13:37:34 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:41:09 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char		*ft_find_var(char *str, char *vars, t_child *child);
 char		*ft_take_var(char *str, int position);
 int			ft_ordreguillemet(char *str);
 char		*ft_globvar(char *str, char c, t_child *child);
+char		*ft_suppspace(char *str);
 void		ft_ctrlc(int sig);
 void		ft_title(void);
 
@@ -146,6 +147,7 @@ int			ft_pwd(void);
 int			ft_unset(t_child *child);
 int			ft_export(t_child *child);
 void		ft_exit(t_child *child, t_token *token, pid_t *pid);
+void		ft_echo(t_child *child);
 /*********************************************************/
 // Free & End function.
 void		ft_free_child(t_token *token, t_child *c);

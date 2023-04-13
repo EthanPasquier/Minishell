@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:40:25 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 13:46:48 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:44:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	**ft_add(int line, int export_nbr, t_child *child)
 	while (child->cmd[j]) 
 	{
 		exist = ft_does_it_exist(i, j, export, child);
-		printf("%d\n", exist);
 		if (ft_check_if_29(child->cmd[j]) == 0
 			&& ft_digit_equal(child->cmd[j]) == 0)
 		{

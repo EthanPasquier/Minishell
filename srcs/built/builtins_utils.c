@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 11:42:00 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:00:58 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	ft_is_builtins(t_token *token)
 			return (5);
 		else if (ft_strcmp_caps((tmp->str), "env", 3) == 0 && len(tmp) == 3)
 			return (6);
-		// else if (ft_strcmp_caps((tmp->str), "echo", 4) == 0 && len(tmp) == 4)
-		// 	return (7);
+		else if (ft_strcmp_caps((tmp->str), "echo", 4) == 0 && len(tmp) == 4)
+			return (7);
 	}
 	return (-1);
 }
@@ -78,8 +78,8 @@ void	ft_which_builtins_child(t_child *child, t_token *token)
 		ft_pwd();
 	else if (child->is_builtin == 6)
 		ft_env(child);
-	// else if (child->is_builtin == 7)
-	// 	ft_echo(child);
+	else if (child->is_builtin == 7)
+		ft_echo(child);
 	ft_free_child(token, child);
 	exit(EXIT_SUCCESS);
 }
