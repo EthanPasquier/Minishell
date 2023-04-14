@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 13:37:17 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:37:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	len_equal(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != '=')
@@ -22,39 +22,39 @@ int	len_equal(char *str)
 	return (i);
 }
 
-char **ft_remove(t_child *child, int n)
+char	**ft_remove(t_child *child, int n)
 {
-    int i;
-    int j;
-    char **unset;
+	int		i;
+	int		j;
+	char	**unset;
 
-    i = 0;
-    while (child->init->envp[i])
-        i++;
-    unset = (char **)malloc(sizeof(char *) * i);
-    if (!unset)
-        return (NULL);
-    i = 0;
-    j = 0;
-    while (child->init->envp[i])
-    {
-        if (i != n)
-        {
-            unset[j] = ft_strdup(child->init->envp[i]);
-            if (!unset[j])
-                return (NULL);
-			j++;
-        }
+	i = 0;
+	while (child->init->envp[i])
 		i++;
-    }
-    unset[j] = NULL;
-    return (unset);
+	unset = (char **)malloc(sizeof(char *) * i);
+	if (!unset)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (child->init->envp[i])
+	{
+		if (i != n)
+		{
+			unset[j] = ft_strdup(child->init->envp[i]);
+			if (!unset[j])
+				return (NULL);
+			j++;
+		}
+		i++;
+	}
+	unset[j] = NULL;
+	return (unset);
 }
 
 int	ft_is_remove(t_child *child, int i)
 {
-	int k;
-	char **unset;
+	int		k;
+	char	**unset;
 
 	k = 0;
 	while (child->init->envp[k])
@@ -75,11 +75,11 @@ int	ft_is_remove(t_child *child, int i)
 	return (0);
 }
 
-int ft_unset(t_child *child)
+int	ft_unset(t_child *child)
 {
-	int i;
-	int error;
-		
+	int	i;
+	int	error;
+
 	i = 1;
 	error = -1;
 	if (child->cmd[1])
@@ -92,5 +92,5 @@ int ft_unset(t_child *child)
 			i++;
 		}
 	}
-    return (0);
- }
+	return (0);
+}

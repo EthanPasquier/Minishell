@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 15:16:51 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:32:49 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,19 @@ void	 ft_less_n_great(t_child *child, t_token *tmp)
 	int		less;
 
 	tmp2 = tmp;
-	// child->flag_cmd = 0;
 	great = 0;
 	less = 0;
 	while (tmp2 && tmp2->type != PIPE)
 	{
-		// if (tmp->type == CMD)
-		// 	child->flag_cmd == 1;
 		if (tmp2->type == GREAT || tmp2->type == GREAT_GREAT)
 		{
 			great++;
 			ft_great_child(child, tmp2, great);
-			// child->flag_cmd = 0;
 		}
 		else if (tmp2->type == LESS)
 		{
 			less++;
 			ft_less_child(child, tmp2, less);
-			// child->flag_cmd = 0;
 		}
 		tmp2 = tmp2->next;
 	}

@@ -19,6 +19,7 @@ Norminette/Leaks
 --- Autre ---
 - avoir un beau prompt (facultatif)
 - gerer signaux ctrl \
+- ctrl d bon?
  
 
 a la fin:
