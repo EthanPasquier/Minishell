@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:25:21 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:18:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,24 @@ void	ft_do_heredoc(t_token *tmp, t_child *child, int i)
 	while (1)
 	{
 		child->heredoc.str = readline(">");
-		if (ft_strncmp(child->heredoc.str, tmp->next->str,
-				ft_strlen(tmp->next->str)) == 0
-			&& ft_strlen(tmp->next->str) == ft_strlen(child->heredoc.str))
-			break ;
-		if (child->heredoc.flag_doc == 1
-			&& i == child->heredoc.here_doc_nbr - 1)
+		if (child->heredoc.str && ft_strlen(child->heredoc.str) > 0)
 		{
-			write(child->heredoc.here_docfd[1],
-				child->heredoc.str, ft_strlen(child->heredoc.str));
-			write(child->heredoc.here_docfd[1], "\n", 1);
+			if (ft_strncmp(child->heredoc.str, tmp->next->str,
+					ft_strlen(tmp->next->str)) == 0
+				&& ft_strlen(tmp->next->str) == ft_strlen(child->heredoc.str))
+				break ;
+			if (child->heredoc.flag_doc == 1
+				&& i == child->heredoc.here_doc_nbr - 1)
+			{
+				write(child->heredoc.here_docfd[1],
+					child->heredoc.str, ft_strlen(child->heredoc.str));
+				write(child->heredoc.here_docfd[1], "\n", 1);
+			}
+		}
+		else
+		{
+			fprintf(stderr, "TEST\n");
+			ft_free_child_doc(child, tmp);
 		}
 	}
 	ft_free_child_doc(child, tmp);
