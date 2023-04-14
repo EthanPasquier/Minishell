@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 11:18:57 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:20:09 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ void	ft_do_heredoc(t_token *tmp, t_child *child, int i)
 			}
 		}
 		else
-		{
-			fprintf(stderr, "TEST\n");
 			ft_free_child_doc(child, tmp);
-		}
 	}
 	ft_free_child_doc(child, tmp);
 }
