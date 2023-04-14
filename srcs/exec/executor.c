@@ -6,15 +6,15 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 17:49:09 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:24:40 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char **ft_find_cmd(t_token *token)
+char	**ft_find_cmd(t_token *token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 	char	**cmd;
 
 	tmp = token;
@@ -79,7 +79,7 @@ void	ft_command(t_token *token, t_child *child)
 	child->fd_array = NULL;
 	pid = (pid_t *)malloc(sizeof(pid_t) * (child->pipe_nbr + 1));
 	if (!pid)
-		return ;	
+		return ;
 	if (child->pipe_nbr > 0)
 		child->fd_array = ft_set_pipe(child);
 	ft_exec_command(token, child, pid);
@@ -90,7 +90,6 @@ void	ft_command(t_token *token, t_child *child)
 	if (child->fd_array != NULL)
 		free(child->fd_array);
 }
-
 
 void	ft_executor(t_token *token, t_child *child)
 {

@@ -6,11 +6,20 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 19:32:13 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:26:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	ctrld(t_child *child)
+{
+	printf("exit\n");
+	ft_free_double(child->init->envp);
+	free(child->init);
+	free(child);
+	exit(EXIT_SUCCESS);
+}
 
 static void	ft_good_input(t_child *child)
 {
@@ -18,17 +27,9 @@ static void	ft_good_input(t_child *child)
 	{
 		add_history(child->init->input);
 		ft_parser(child);
-		free(child->init->input);
+		if (child->init->input)
+			free(child->init->input);
 	}
-}
-
-static void ctrld(t_child *child)
-{
-	printf("exit\n");
-	ft_free_double(child->init->envp);
-	free(child->init);
-	free(child);
-	exit(EXIT_SUCCESS);
 }
 
 void	ft_readline(char **envp)

@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/13 15:34:06 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/14 11:09:13 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= minishell
 
 SRC_DIR		= srcs/
 
-BUILT = pwd env exit echo unset cd export builtins_utils
+BUILT = pwd env exit echo unset cd export builtins_set built_utils_1 built_utils_2
 
 EXEC = 	child_process executor redirections child_pipe exec_utils child_error heredoc heredoc_utils
 

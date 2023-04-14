@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 17:47:47 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:25:21 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	ft_do_heredoc(t_token *tmp, t_child *child, int i)
 	while (1)
 	{
 		child->heredoc.str = readline(">");
-		if (ft_strncmp(child->heredoc.str, tmp->next->str, ft_strlen(tmp->next->str)) == 0
+		if (ft_strncmp(child->heredoc.str, tmp->next->str,
+				ft_strlen(tmp->next->str)) == 0
 			&& ft_strlen(tmp->next->str) == ft_strlen(child->heredoc.str))
 			break ;
 		if (child->heredoc.flag_doc == 1
@@ -83,7 +84,6 @@ void	ft_heredoc_child(t_child *c, pid_t *p, t_token *tmp, pid_t *p2)
 		tmp = tmp->next;
 		i++;
 	}
-
 }
 
 void	ft_heredoc(t_token *token, t_child *child, pid_t *pid2)

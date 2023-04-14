@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 08:33:12 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:27:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	ft_free_list(t_token *token)
 		while (token)
 		{
 			tmp = token->next;
-			free(token->str); // free le strdup dans new_node
+			if (token->str)
+				free(token->str);
+			token->str = NULL;
 			free(token);
 			token = tmp;
 		}
@@ -63,6 +65,6 @@ void	ft_cmd_error(t_child *child)
 void	ft_end_list(t_token *token)
 {
 	ft_free_list(token);
-	printf("Error in filling the token list.");
+	write(2, "Error in filling the token list.", 32);
 	exit(EXIT_FAILURE);
 }

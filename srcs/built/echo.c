@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 17:12:37 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 16:10:02 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:22:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_print_echo(t_child *child)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (child->cmd[i])
@@ -31,7 +31,7 @@ void	ft_print_echo(t_child *child)
 // Ne pas oublier d'uncomment dans builtin_utils pour que ca marche
 void	ft_echo(t_child *child)
 {
-	int i;
+	int	i;
 
 	if (!child->cmd[1])
 		printf("\n");
@@ -42,7 +42,11 @@ void	ft_echo(t_child *child)
 		if (child->cmd[i])
 		{
 			while (child->cmd[i])
+			{
 				printf("%s", child->cmd[i++]);
+				if (child->cmd[i])
+					printf(" ");
+			}
 		}
 	}
 	else

@@ -6,13 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 09:04:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:23:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void ft_free_child(t_token *token, t_child *c)
+void	ft_free_child(t_token *token, t_child *c)
 {
 	if (c->heredoc.flag_doc == 1)
 	{

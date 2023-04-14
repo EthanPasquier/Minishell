@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 16:46:44 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:49:22 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -511,6 +511,7 @@ void	ft_parser(t_child *child)
 	str = ft_strtrim(child->init->input, " ");
 	if (ft_wake_word(str[0]) == 1 || ft_wake_word(str[ft_strlen(str) - 1]) > 0)
 	{
+		printf("TEST\n");
 		child->exit_code = ft_error_syntax(str);
 		free(str);
 		return ;
@@ -528,21 +529,13 @@ void	ft_parser(t_child *child)
 	{
 		str = ft_strtrim(tmp->str, " ");
 		free(tmp->str);
+		tmp->str = NULL;
 		if (ft_syntax(str) == 1 || ft_ordreguillemet(str) == 1)
 		{
+			ft_free_list(token);
 			child->exit_code = 1;
 			return ;
 		}
-		// if ((ft_wake_word(str[0]) > 0 && !tmp->next)
-		// 	|| (ft_wake_word(str[0]) == 1 && !tmp->prev))
-		// {
-		// 	// 	printf("next = %c\n", tmp->str[0]);
-		// 	child->exit_code = ft_error_syntax(str);
-		// 	// free(str);
-		// 	// ft_free_list(token);
-		// 	return ;
-		// }
-		// ft_printv(str);
 		tmp->str = ft_guillemet(str, child);
 		// printf("str = %s\n", tmp->str);
 		str = ft_strtrim(tmp->str, " ");

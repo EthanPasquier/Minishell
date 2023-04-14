@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 19:32:49 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:25:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_great_child(t_child *child, t_token *token, int great)
 	close(fd);
 }
 
-void	 ft_less_n_great(t_child *child, t_token *tmp)
+void	ft_less_n_great(t_child *child, t_token *tmp)
 {
 	t_token	*tmp2;
 	int		great;
@@ -98,9 +98,3 @@ void	 ft_less_n_great(t_child *child, t_token *tmp)
 		tmp2 = tmp2->next;
 	}
 }
-
-/*
-< abc def hij cat > def | ls
-cat < def abc > lol | ls
-> def anc ls < coucou 123 cat
-*/

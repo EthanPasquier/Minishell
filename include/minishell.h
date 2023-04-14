@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 20:50:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:08:23 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,21 @@ char		*find_cmd_path(t_child *child);
 char		**find_path(t_child *child);
 
 /* BUILTIN */
-
-char		*ft_getenv(char **envp, char *var);
 char		**ft_copy_env(char **env);
 int			ft_is_builtins(t_token *token);
 void		ft_which_builtins(t_child *child, t_token *token, pid_t *pid);
 void		ft_which_builtins_child(t_child *child, t_token *token);
 
+char		*ft_getenv(char **envp, char *var);
+int			ft_check_if_29(char *str);
+int			ft_digit_equal(char *str);
+int			ft_does_it_exist(int i, int j, char **export, t_child *child);
+void		sort_env_alph(char **env_copy, int count);
+void		ft_env_alph_order(char **env);
 int			len_equal(char *str);
+void		ft_change_pwd(t_child *child, char *new_cd);
+int			ft_cd_dont_exec(t_child *child);
+int			ft_export_nbr(t_child *child);
 
 int			ft_env(t_child *child);
 int			ft_cd(t_child *child);

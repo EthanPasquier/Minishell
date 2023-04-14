@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 16:58:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:28:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**find_path(t_child *child)
 			path = ft_split(trim, ':');
 			free(trim);
 			path = ft_join(path);
-			break;
+			break ;
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/12 18:09:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:24:11 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	cmd_counter(t_token *token)
 void	ft_wait(pid_t *pid, t_child *child)
 {
 	int	i;
-	int status;
+	int	status;
 
 	i = 0;
 	while (i < child->pipe_nbr + 1)

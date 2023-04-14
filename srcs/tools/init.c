@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:42:34 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 15:54:01 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:28:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,42 +37,15 @@ char	**ft_copy_env(char **env)
 	return (copy_env);
 }
 
-// t_env *ft_copy_env(char **env)
-// {
-// 	t_env	*envp;
-// 	t_env	*tmp;
-// 	int		i;
-
-// 	i = 0;
-// 	envp = new_node(env[i++]);
-// 	tmp = envp;
-// 	while (env[i])
-// 	{
-// 		tmp->next = new_node(env[i++]);
-// 		if (!tmp->next)
-// 			ft_end_list_env(env);
-// 		tmp = tmp->next;
-// 	}
-// 	return (envp);
-// }
-
-// t_init	ft_init(char *input)
-// {
-// 	t_init	var;
-
-// 	var.input = input;
-// 	return (var);
-// }
-
 t_token	*new_node(char *str)
 {
-	t_token *new_node;
+	t_token	*new_node;
 
 	new_node = malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
 	new_node->next = NULL;
 	new_node->type = -1;
-	new_node->str = ft_strdup(str);// !!! Free les str dans les struct ET free le ft_split.
+	new_node->str = ft_strdup(str);
 	return (new_node);
 }

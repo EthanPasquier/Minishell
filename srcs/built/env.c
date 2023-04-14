@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:45:49 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/10 20:15:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:23:03 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_env(t_child *child)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (child->init->envp[i])

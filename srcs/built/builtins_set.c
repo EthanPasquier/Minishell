@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_utils.c                                   :+:      :+:    :+:   */
+/*   builtins_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 16:00:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:19:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ static int	len(t_token *token)
 
 int	ft_is_builtins(t_token *token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = token;
-
 	if (tmp && tmp->type == PIPE)
 		tmp = tmp->next;
 	while ((tmp && tmp->type != CMD) && (tmp && tmp->type != PIPE))
@@ -56,7 +55,7 @@ int	ft_is_builtins(t_token *token)
 
 void	ft_which_builtins(t_child *child, t_token *token, pid_t *pid)
 {
-	int error;
+	int	error;
 
 	error = 0;
 	if (child->is_builtin == 1)
@@ -88,7 +87,7 @@ char	*ft_getenv(char **envp, char *var)
 {
 	char	*find;
 	int		i;
-	
+
 	i = 0;
 	while (envp[i])
 	{
