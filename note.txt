@@ -1,27 +1,12 @@
-NE PAS GERER
-<>, |>, <|
-
-** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
-
-Ctrl \ = seg fault
-Ctrl C dans here_doc ne marche pas
-
-*** BUILTIN ***
-echo salut > file1 123 = doit mettre salut 123 dans file1
-
 TO DO LIST
-Norminette/Leaks
- --- Finaliser Builtins ---
-Moins de 25 lignes exports
+
+--- Finaliser Builtins ---
 
 --- Executeur ---
-> abc on a file that does not have the permission
 
 --- Autre ---
 - avoir un beau prompt (facultatif)
-- exit code ctrl c + ctrl c in heredoc
-- ctrl d bon?
- 
+- exit code ctrl c + ctrl c in heredoc 
 
 a la fin:
 changer le Makefile

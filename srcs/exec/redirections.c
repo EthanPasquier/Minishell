@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:25:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:27:53 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_less_child(t_child *c, t_token *tmp, int less)
 	{
 		fd = open(tmp->next->str, O_RDONLY);
 		if (fd == -1)
-			ft_child_error(tmp, c, ERR_OPEN);
+			ft_child_error(tmp, c, ERR_OPEN_LESS);
 		if (less == c->less_mark)
 		{
 			if (dup2(fd, STDIN) == -1)
@@ -62,7 +62,7 @@ void	ft_great_child(t_child *child, t_token *token, int great)
 	else if (token->type == GREAT)
 		fd = open(token->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
 	if (fd == -1)
-		ft_child_error(token, child, ERR_OPEN);
+		ft_child_error(token, child, ERR_OPEN_GREAT);
 	if (great == child->great_mark)
 	{
 		if (dup2(fd, STDOUT) == -1)

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 08:06:13 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:25:41 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:38:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,34 @@ int	ft_is_doc_last(t_token *token)
 	if (type == LESS_LESS)
 		return (1);
 	return (0);
+}
+
+void	ft_pipe_doc(t_child *child)
+{
+	if (child->heredoc.flag_doc == 1)
+	{
+		if (pipe(child->heredoc.here_docfd) == -1)
+		{
+			write(2, "Pipe here doc error\n", 20);
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+int	ft_heredoc_nbr(t_token *t)
+{
+	t_token	*tmp;
+	int		i;
+
+	tmp = t;
+	i = 0;
+	if (tmp->type == PIPE)
+		tmp = tmp->next;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == LESS_LESS)
+			i++;
+		tmp = tmp->next;
+	}
+	return (i);
 }

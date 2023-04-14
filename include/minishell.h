@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 11:08:23 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 13:47:58 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include <stdio.h>
 # include "../libft/libft.h"
 # include "readline/history.h"
-# include <sys/ioctl.h>
 # include "readline/readline.h"
+# include <sys/ioctl.h>
+# include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
 # include <string.h>
@@ -33,14 +34,17 @@
 
 // Error code.
 # define ERR_EXECVE 1
-# define ERR_OPEN 2
-# define ERR_DUP2 3
-# define ERR_PID 4
+# define ERR_OPEN_LESS 2
+# define ERR_OPEN_GREAT 3
+# define ERR_DUP2 4
+# define ERR_PID 5
 
 // Standard fd
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+
+extern int g_exit_code;
 
 typedef struct s_token
 {
@@ -99,10 +103,11 @@ char		*ft_take_var(char *str, int position);
 int			ft_ordreguillemet(char *str);
 char		*ft_globvar(char *str, char c, t_child *child);
 char		*ft_suppspace(char *str);
-void		ft_ctrlc(int sig);
 void		ft_title(void);
+int			ft_is_cmd(t_token *token);
 
-int				ft_is_cmd(t_token *token);
+void		ft_ctrlc(int sig);
+void		ft_quit(int sig);
 
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 
@@ -119,6 +124,7 @@ void		ft_pipe_child(t_child *child, t_token *token);
 
 void		ft_heredoc(t_token *token, t_child *child, pid_t *pid2);
 int			ft_heredoc_nbr(t_token *t);
+void		ft_pipe_doc(t_child *child);
 int			ft_is_doc_last(t_token *token);
 
 /* UTILS FOR EXECUTOR */

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:23:52 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:39:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,31 @@ void	ft_free_child(t_token *token, t_child *c)
 	free(c);
 }
 
-void	ft_failed_command(void)
+void	ft_failed_command(t_token *token, t_child *child)
 {
-	fprintf(stderr, "\u26A0 Command failed to execute.\n");
+	write(2, "Command failed to execute", 25);
+	ft_free_child(token, child);
 	exit(EXIT_SUCCESS);
 }
 
 void	ft_fd_error(t_token *token, t_child *c, int flag)
 {
-	if (flag == ERR_OPEN)
+	if (flag == ERR_OPEN_LESS)
 	{
 		fprintf(stderr, "%s: No such file or directory\n", token->next->str);
 		ft_free_child(token, c);
 		exit(4);
 	}
+	else if (flag == ERR_OPEN_GREAT)
+	{
+		write(2, token->next->str, ft_strlen(token->next->str));
+		write(2, ": Permission denied\n", 20);
+		ft_free_child(token, c);
+		exit(4);
+	}
 	else if (flag == ERR_DUP2)
 	{
-		fprintf(stderr, "\u26A0 Dup2 error at: %s.\n", token->next->str);
+		write(2, "Dup2, error\n", 12);
 		ft_free_child(token, c);
 		exit(EXIT_SUCCESS);
 	}
@@ -63,8 +71,9 @@ void	ft_fd_error(t_token *token, t_child *c, int flag)
 void	ft_child_error(t_token *token, t_child *c, int flag)
 {
 	if (flag == ERR_EXECVE)
-		ft_failed_command();
-	else if (flag == ERR_OPEN || flag == ERR_DUP2)
+		ft_failed_command(token, c);
+	else if (flag == ERR_OPEN_LESS || flag == ERR_OPEN_GREAT
+		|| flag == ERR_DUP2)
 		ft_fd_error(token, c, flag);
 	else if (flag == ERR_PID)
 		;

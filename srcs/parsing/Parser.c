@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 09:49:22 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:04:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -507,7 +507,10 @@ void	ft_parser(t_child *child)
 	char *str;
 	int result;
 	t_token *tmp;
-
+	
+	// Donne le exit code si ctrl c a ete fait.
+	if (g_exit_code != 0)
+		child->exit_code = g_exit_code;
 	str = ft_strtrim(child->init->input, " ");
 	if (ft_wake_word(str[0]) == 1 || ft_wake_word(str[ft_strlen(str) - 1]) > 0)
 	{
