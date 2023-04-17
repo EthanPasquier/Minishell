@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 12:19:43 by jalevesq          #+#    #+#             */
-/*   Updated: 2022/11/04 07:01:01 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 08:43:11 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,11 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned	int, char));
 
-# include <unistd.h>
-# include <stdlib.h>
-
 char	*get_next_line(int fd);
-size_t	ft_GNLstrlen(char *str);
+size_t	ft_gnlstrlen(char *str);
 int		ft_is_newline(char *str);
-char	*ft_freeGNL(char *str1, char *str2);
+char	*ft_freegnl(char *str1, char *str2);
 char	*ft_strjoin_gnl(char *stash, char *buffer, size_t size);
-
 
 char	**ft_split_parser(char const *s, char c);
 

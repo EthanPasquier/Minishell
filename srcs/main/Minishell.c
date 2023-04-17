@@ -6,13 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 14:04:54 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 08:38:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int g_exit_code;
+int	g_exit_code;
 
 static void	ctrld(t_child *child)
 {
@@ -46,7 +46,6 @@ void	ft_readline(char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		// remet le tjr le exit code ctrl c a 0.
 		g_exit_code = 0;
 		child->init->input = readline("minishell > ");
 		if (child->init->input)

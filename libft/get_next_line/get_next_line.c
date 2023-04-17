@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:09:02 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/01/23 12:12:28 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 08:42:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ static char	*ft_read_and_stash(int fd, char *stash)
 
 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
-		return (ft_freeGNL(stash, 0));
+		return (ft_freegnl(stash, 0));
 	buf[0] = '\0';
 	read_bytes = 1;
-	stash_len = ft_GNLstrlen(stash);
+	stash_len = ft_gnlstrlen(stash);
 	while (!ft_is_newline(buf) && read_bytes != 0)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return (ft_freeGNL(stash, buf));
+			return (ft_freegnl(stash, buf));
 		buf[read_bytes] = '\0';
 		stash_len += read_bytes;
 		stash = ft_strjoin_gnl(stash, buf, stash_len);
 		if (!stash)
-			return (ft_freeGNL(buf, 0));
+			return (ft_freegnl(buf, 0));
 	}
 	free(buf);
 	return (stash);
@@ -74,10 +74,10 @@ static char	*ft_clean_stash(char *stash, size_t nl_index)
 	while (stash[nl_index + i])
 		i++;
 	if (!i)
-		return (ft_freeGNL(stash, 0));
+		return (ft_freegnl(stash, 0));
 	new_stash = malloc(sizeof(char) * (i + 1));
 	if (!new_stash)
-		return (ft_freeGNL(stash, 0));
+		return (ft_freegnl(stash, 0));
 	i = 0;
 	while (stash[nl_index + i])
 	{

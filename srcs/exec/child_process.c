@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 16:51:06 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 10:00:41 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_process_child(t_child *c, t_token *tmp, pid_t *p)
 		ft_exec_child(c, tmp);
 		exit(EXIT_SUCCESS);
 	}
-	if (c->is_builtin < 0 && c->cmd)
+	if (c->cmd && c->is_builtin < 0)
 		free(c->cmd_path);
 	c->cmd_path = NULL;
 	if (c->cmd)

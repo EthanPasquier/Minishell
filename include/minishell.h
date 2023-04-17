@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 13:47:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 08:39:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define STDOUT 1
 # define STDERR 2
 
-extern int g_exit_code;
+extern int	g_exit_code;
 
 typedef struct s_token
 {

@@ -6,7 +6,7 @@ TO DO LIST
 
 --- Autre ---
 - avoir un beau prompt (facultatif)
-- exit code ctrl c + ctrl c in heredoc 
+- ctrl c in heredoc still reachable
 
 a la fin:
 changer le Makefile
