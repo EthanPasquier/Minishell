@@ -6,14 +6,14 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:40:25 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 11:07:49 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:36:21 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 // Faire une struct t_export
-char	**copy_exist(t_child *child, int line, int export_nbr, int *i)
+static char	**copy_exist(t_child *child, int line, int export_nbr, int *i)
 {
 	char	**export;
 
@@ -30,7 +30,7 @@ char	**copy_exist(t_child *child, int line, int export_nbr, int *i)
 	return (export);
 }
 
-char	*ft_dup_export(char **export, t_child *c, int *i, int j)
+static char	*ft_dup_export(char **export, t_child *c, int *i, int j)
 {
 	export[*i] = ft_strdup(c->cmd[j]);
 	if (!export[*i])
@@ -39,7 +39,7 @@ char	*ft_dup_export(char **export, t_child *c, int *i, int j)
 	return (export[*i]);
 }
 
-char	**ft_add(int line, int export_nbr, t_child *child)
+static char	**ft_add(int line, int export_nbr, t_child *child)
 {
 	char	**export;
 	int		exist;
@@ -68,7 +68,7 @@ char	**ft_add(int line, int export_nbr, t_child *child)
 	return (export);
 }
 
-void	ft_env_alph_order(char **env)
+static void	ft_env_alph_order(char **env)
 {
 	int		i;
 	int		count;

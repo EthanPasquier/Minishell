@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 11:39:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:31:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	ft_free_child(t_token *token, t_child *c)
 	free(c);
 }
 
-void	ft_failed_command(t_token *token, t_child *child)
+static void	ft_failed_command(t_token *token, t_child *child)
 {
 	write(2, "Command failed to execute", 25);
 	ft_free_child(token, child);
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_fd_error(t_token *token, t_child *c, int flag)
+static void	ft_fd_error(t_token *token, t_child *c, int flag)
 {
 	if (flag == ERR_OPEN_LESS)
 	{

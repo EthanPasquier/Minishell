@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:24:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:32:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_find_cmd(t_token *token)
 	return (NULL);
 }
 
-int	ft_pipe_counter(t_token *token)
+static  int	ft_pipe_counter(t_token *token)
 {
 	t_token	*tmp;
 	int		i;
@@ -47,7 +47,7 @@ int	ft_pipe_counter(t_token *token)
 	return (i);
 }
 
-void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
+static void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 {
 	t_token	*tmp;
 
@@ -72,7 +72,7 @@ void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 	}
 }
 
-void	ft_command(t_token *token, t_child *child)
+static void	ft_command(t_token *token, t_child *child)
 {
 	pid_t	*pid;
 

@@ -6,13 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 17:12:37 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:22:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:29:29 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_print_echo(t_child *child)
+static void	ft_print_echo(t_child *child)
 {
 	int	i;
 

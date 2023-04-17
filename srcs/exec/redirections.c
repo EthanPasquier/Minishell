@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 11:27:53 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:34:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_mark_count(t_token *token, int type)
 	return (i);
 }
 
-void	ft_less_child(t_child *c, t_token *tmp, int less)
+static void	ft_less_child(t_child *c, t_token *tmp, int less)
 {
 	int		fd;
 
@@ -52,7 +52,7 @@ void	ft_less_child(t_child *c, t_token *tmp, int less)
 	}
 }
 
-void	ft_great_child(t_child *child, t_token *token, int great)
+static void	ft_great_child(t_child *child, t_token *token, int great)
 {
 	int		fd;
 

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 19:37:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:31:44 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	len_equal(char *str)
 	return (i);
 }
 
-char	**ft_remove(t_child *child, int n)
+static char	**ft_remove(t_child *child, int n)
 {
 	int		i;
 	int		j;
@@ -51,7 +51,7 @@ char	**ft_remove(t_child *child, int n)
 	return (unset);
 }
 
-int	ft_is_remove(t_child *child, int i)
+static int	ft_is_remove(t_child *child, int i)
 {
 	int		k;
 	char	**unset;

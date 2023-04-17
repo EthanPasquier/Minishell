@@ -6,13 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:23:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 14:38:33 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:33:10 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_do_heredoc(t_token *tmp, t_child *child, int i)
+static void	ft_do_heredoc(t_token *tmp, t_child *child, int i)
 {
 	while (1)
 	{
@@ -48,7 +48,7 @@ static void	ft_do_child_doc(pid_t *p, int i, t_child *c, t_token *t)
 	ft_do_heredoc(t, c, i);
 }
 
-void	ft_doc_parent_process(pid_t *p, int i, t_child *c)
+static void	ft_doc_parent_process(pid_t *p, int i, t_child *c)
 {
 	int	status;
 
@@ -59,7 +59,7 @@ void	ft_doc_parent_process(pid_t *p, int i, t_child *c)
 		c->exit_code = 0;
 }
 
-void	ft_heredoc_child(t_child *c, pid_t *p, t_token *tmp, pid_t *p2)
+static void	ft_heredoc_child(t_child *c, pid_t *p, t_token *tmp, pid_t *p2)
 {
 	int	i;
 

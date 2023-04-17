@@ -6,13 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:31:32 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 14:52:23 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:29:36 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_digit_in_msg(t_child *child)
+static void	ft_digit_in_msg(t_child *child)
 {
 	int	i;
 

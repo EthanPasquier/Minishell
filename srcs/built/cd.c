@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:45:52 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 11:05:05 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:29:15 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ static char	*ft_new_cd(t_child *child)
 	return (new_cd);
 }
 
-int	ft_do_cd(char *n_cd, char *n_pwd, char *o_pwd, t_child *child)
+static int	ft_do_cd(char *n_cd, char *o_pwd, t_child *child)
 {
+	char	new_pwd[1024];
+
 	if (chdir(n_cd) == -1)
 	{
 		write(2, "minishell: cd: ", 15);
@@ -85,8 +87,8 @@ int	ft_do_cd(char *n_cd, char *n_pwd, char *o_pwd, t_child *child)
 	if (!child->cmd[1] && n_cd)
 		free(n_cd);
 	ft_change_oldpwd(child, o_pwd);
-	if (getcwd(n_pwd, sizeof(n_pwd)) != NULL)
-		ft_change_pwd(child, n_pwd);
+	if (getcwd(new_pwd, sizeof(new_pwd)) != NULL)
+		ft_change_pwd(child, new_pwd);
 	return (0);
 }
 
@@ -94,7 +96,6 @@ int	ft_cd(t_child *child)
 {
 	char	*new_cd;
 	char	old_pwd[1024];
-	char	new_pwd[1024];
 
 	if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
 		return (-1);
@@ -112,7 +113,7 @@ int	ft_cd(t_child *child)
 	}
 	else if (new_cd && child->cmd_nbr < 2)
 	{
-		if (ft_do_cd(new_cd, new_pwd, old_pwd, child) == 0)
+		if (ft_do_cd(new_cd, old_pwd, child) == 0)
 			return (0);
 		return (1);
 	}

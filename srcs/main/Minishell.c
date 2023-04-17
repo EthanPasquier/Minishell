@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 08:38:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:33:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_good_input(t_child *child)
 	}
 }
 
-void	ft_readline(char **envp)
+static void	ft_readline(char **envp)
 {
 	t_child	*child;
 
