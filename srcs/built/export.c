@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:40:25 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 15:36:21 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 19:15:09 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,15 @@ int	ft_export(t_child *child)
 		ft_env_alph_order(child->init->envp);
 	else if (child->cmd[1])
 	{
-		while (child->init->envp[line])
-			line++;
 		export_nbr = ft_export_nbr(child);
-		export = ft_add(line, export_nbr, child);
-		ft_free_double(child->init->envp);
-		child->init->envp = export;
+		if (child->cmd_nbr == 1)
+		{
+			while (child->init->envp[line])
+				line++;
+			export = ft_add(line, export_nbr, child);
+			ft_free_double(child->init->envp);
+			child->init->envp = export;
+		}
 	}
 	return (0);
 }

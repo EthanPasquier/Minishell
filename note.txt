@@ -14,3 +14,6 @@ changer le Makefile
 Parser leak 
 double quote et signle quote
 syntax error ls |<<eof
+
+unset error
+can only be a to z and #

@@ -6,21 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 15:31:44 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 19:03:29 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	len_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != '=')
-		i++;
-	return (i);
-}
 
 static char	**ft_remove(t_child *child, int n)
 {
@@ -75,6 +65,52 @@ static int	ft_is_remove(t_child *child, int i)
 	return (0);
 }
 
+static void	ft_unset_dont_exec(t_child *child)
+{
+	int i;
+	int	j;
+
+	i = 1;
+	while (child->cmd[i])
+	{
+		j = 0;
+		while(child->cmd[i][j])
+		{
+			if (ft_isalpha(child->cmd[i][j]) == 1 || child->cmd[i][j] == '#')
+				j++;
+			else
+			{
+				write(2, "minishell: unset: syntax error near \'", 37);
+				write(2, child->cmd[i], ft_strlen(child->cmd[i]));
+				write(2, "\'\n", 2);
+				break;
+			}
+		}
+		i++;
+	}
+	
+}
+
+int	ft_check_exception(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalpha(str[i]) == 1 || str[i] == '#')
+			i++;
+		else
+		{
+			write(2, "minishell: unset: syntax error near \'", 37);
+			write(2, str, ft_strlen(str));
+			write(2, "\'\n", 2);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	ft_unset(t_child *child)
 {
 	int	i;
@@ -84,13 +120,21 @@ int	ft_unset(t_child *child)
 	error = -1;
 	if (child->cmd[1])
 	{
-		while (child->cmd[i])
+		if (child->cmd_nbr == 1)
 		{
-			error = ft_is_remove(child, i);
-			if (error == 1)
-				return (1);
-			i++;
+			while (child->cmd[i])
+			{
+				if (ft_check_exception(child->cmd[i]) == 0)
+				{
+					error = ft_is_remove(child, i);
+					if (error == 1)
+						return (1);
+				}
+				i++;
+			}
 		}
+		else
+			ft_unset_dont_exec(child);
 	}
 	return (0);
 }

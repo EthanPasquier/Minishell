@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 14:51:04 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 19:16:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ static void	ft_builtins_or_cmd(t_child *c, t_token *tmp, pid_t *pid)
 {
 	if (c->is_builtin > 0 && c->is_builtin < 5)
 	{
-		if (c->cmd_nbr == 1 || c->is_builtin == 2)
+		if (c->cmd_nbr == 1 || c->is_builtin == 2
+			|| c->is_builtin == 1 || c->is_builtin == 4)
 		{
 			if (c->is_builtin != 4 || (c->is_builtin == 4 && c->cmd[1]))
 				ft_which_builtins(c, tmp, pid);

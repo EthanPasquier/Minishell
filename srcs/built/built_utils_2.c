@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:41:01 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 15:22:30 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 19:03:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,14 @@ void	ft_change_pwd(t_child *child, char *new_cd)
 		return ;
 	free(child->init->envp[i]);
 	child->init->envp[i] = ft_strjoin("PWD=", new_cd);
+}
+
+int	len_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	return (i);
 }
