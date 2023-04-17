@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 10:07:07 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 10:08:54 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*ft_mini_in_mini(t_child *child)
 		tmp2 = ft_strtrim(child->cmd[0], ".");
 		tmp = ft_strjoin(pwd, tmp2);
 		free(tmp2);
-		printf("%s\n", tmp);
 		if (access(tmp, X_OK) == 0)
 			return (tmp);
 	}
