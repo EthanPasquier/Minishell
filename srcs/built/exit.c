@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:31:32 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:23:36 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:52:23 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,23 @@ void	ft_digit_in_msg(t_child *child)
 
 void	ft_exit(t_child *child, t_token *token, pid_t *pid)
 {
-	ft_free_double(child->init->envp);
-	ft_free_double(child->all_path);
-	ft_free_double(child->cmd);
-	free(child->init->input);
-	free(pid);
-	while (token && token->prev)
-		token = token->prev;
-	ft_free_list(token);
-	free(child->init);
-	free(child);
-	write(2, "exit\n", 5);
+	if (child->cmd_nbr == 1)
+	{
+		ft_free_double(child->init->envp);
+		ft_free_double(child->all_path);
+		free(child->init->input);
+		free(pid);
+		while (token && token->prev)
+			token = token->prev;
+		ft_free_list(token);
+		write(2, "exit\n", 5);
+	}
 	ft_digit_in_msg(child);
-	exit(EXIT_SUCCESS);
+	if (child->cmd_nbr == 1)
+	{
+		ft_free_double(child->cmd);
+		free(child->init);
+		free(child);
+		exit(EXIT_SUCCESS);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 10:00:41 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:51:04 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 
 static void	ft_exec_cmd(t_token *tmp, t_child *child)
 {
-	if ((child->is_builtin > 0 && child->is_builtin < 4))
+	if ((child->is_builtin > 0 && child->is_builtin < 3)
+		|| (child->is_builtin == 3 && !child->cmd[1]))
 		return ;
 	while (tmp->type != CMD)
 		tmp = tmp->next;
-	if (child->is_builtin > 3
-		|| (child->is_builtin == 4 && !child->cmd[1]))
+	if (child->is_builtin > 3 || (child->is_builtin == 3 && child->cmd[1]))
 		ft_which_builtins_child(child, tmp);
 	else if (!child->cmd_path)
 	{
