@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quot.c                                             :+:      :+:    :+:   */
+/*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:18:27 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/18 09:34:24 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 10:36:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_suppguillemet(char *new, int tmp, char *str)
 	char	c;
 
 	i = 0;
+	c = '\0';
 	tmp = 0;
 	while (new[i])
 	{
@@ -76,7 +77,9 @@ char	*ft_guillemet(char *str, t_child *child)
 	i = 0;
 	place = 0;
 	tmp = 0;
-	new = ft_strdup(str);
+	c = '\0';
+	if (str)
+		new = ft_strdup(str);
 	while (str[i])
 	{
 		if ((str[i] == 39 || str[i] == 34) && tmp == 0)
@@ -91,6 +94,7 @@ char	*ft_guillemet(char *str, t_child *child)
 				new = ft_globvar(new, i, child, place);
 			else if (str[i] == '$' && tmp == 0)
 				new = ft_globvar(new, ft_varcount(new, i + 1), child, i);
+			// free(str) enleve des leaks mais ajoute double free
 			str = ft_strdup(new);
 			i = ft_varcount(new, i);
 			tmp = 0;
