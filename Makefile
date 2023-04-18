@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
+#    By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/18 10:25:23 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/18 14:45:17 by epasquie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,7 @@ EXEC = 	child_process executor redirections child_pipe exec_utils \
 
 MAIN = Minishell
 
-PARSING = Parser Split_input syntax syntax_error syntax_utils echo parser_utils \
-	redifine split_parsing node parser_utils_v2 quote
+PARSING = Parser Split_input syntax syntax_error syntax_utils echo parser_utils redifine split_parsing node parser_utils_v2 quote
 
 TOOLS = utils signal error init
 

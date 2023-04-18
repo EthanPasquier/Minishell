@@ -21,3 +21,8 @@ syntax error ls |<<eof
 
 unset error
 can only be a to z and #
+
+
+"$USER" '$USER' $USER
+"$USER" "$USER"
+

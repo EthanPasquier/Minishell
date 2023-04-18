@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 09:47:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:28:08 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int			ft_syntax(char *str);
 t_token		*new_node(char *str);
 int			ft_varcount(char *new, int i);
 int			ft_error_syntax(char *str);
-char		*ft_guillemet(char *str, t_child *child);
+char		*ft_guillemet(char *str, t_child *child, int k);
 int			ft_where(char *str, char c, int position);
 char		*ft_find_var(char *str, char *vars, t_child *child, int a);
 char		*ft_take_var(char *str, int position);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 10:36:11 by jalevesq         ###   ########.fr       */
+/*   Created: 2023/04/18 15:33:54 by epasquie          #+#    #+#             */
+/*   Updated: 2023/04/18 15:51:51 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,19 @@ char	*ft_commandoption(char *str)
 	return (str);
 }
 
-void	ft_parser_suite(char *str, t_token *tmp, t_child *child, int result)
+void	ft_setupnode(t_token *tmp)
 {
+	int	result;
+
+	result = ft_syntax(tmp->str);
+	tmp->str[1] = 0;
+	ft_insertnode(tmp, result, 1);
+}
+
+void	ft_parser_suite(char *str, t_token *tmp, t_child *child)
+{
+	char	*test;
+
 	while (tmp)
 	{
 		str = ft_strtrim(tmp->str, " ");
@@ -53,18 +64,16 @@ void	ft_parser_suite(char *str, t_token *tmp, t_child *child, int result)
 			return ;
 		}
 		free(tmp->str);
-		tmp->str = ft_guillemet(str, child);
-		free(str);
+		test = ft_strdup(str);
+		tmp->str = ft_guillemet(str, child, 0);
+		if (ft_strncmp(tmp->str, test, ft_strlen(tmp->str)) == 0)
+			free(str);
+		free(test);
 		str = ft_strtrim(tmp->str, " ");
 		free(tmp->str);
 		tmp->str = ft_commandoption(str);
 		if (ft_syntax(tmp->str) >= 2)
-		{
-			result = ft_syntax(tmp->str);
-			tmp->str[1] = 0;
-			ft_insertnode(tmp, result, 1);
-		}
-		printf("%s\n", tmp->str);
+			ft_setupnode(tmp);
 		tmp = tmp->next;
 	}
 	child->exit_code = 0;
@@ -90,11 +99,11 @@ void	ft_parser(t_child *child)
 	token = ft_fill_list(split);
 	ft_free_double(split);
 	tmp = token;
-	ft_parser_suite(str, tmp, child, 0);
+	ft_parser_suite(str, tmp, child);
 	if (child->exit_code == 1)
 		return (ft_free_list(token));
 	ft_assign_type(token);
-	// ft_executor(token, child);
+	ft_executor(token, child);
 	if (token)
 		ft_free_list(token);
 }
