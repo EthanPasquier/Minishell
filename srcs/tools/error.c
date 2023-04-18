@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error                                              :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/01 09:30:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 10:27:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	*ft_free_double(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
+	if (str)
+	{
+		while (str[i])
+			free(str[i++]);
+		free(str);
+	}
 	str = NULL;
 	return (NULL);
 }
@@ -33,7 +36,9 @@ void	ft_free_list(t_token *token)
 		while (token)
 		{
 			tmp = token->next;
-			free(token->str); // free le strdup dans new_node
+			if (token->str)
+				free(token->str);
+			token->str = NULL;
 			free(token);
 			token = tmp;
 		}
@@ -50,41 +55,16 @@ void	ft_free_exec(char **cmd, char *cmd_path)
 	cmd_path = NULL;
 }
 
-void	ft_error(int flag)
+void	ft_cmd_error(t_child *child)
 {
-	if (flag == 1)
-		printf("wtf\n");
-	printf("ERROR\n");
-	exit(EXIT_SUCCESS);
+	write(2, "minishell: ", 11);
+	write(2, child->cmd[0], ft_strlen(child->cmd[0]));
+	write(2, ": command not found\n", 20);
 }
-
-// void	free_container(t_cmd *container)
-// {
-// 	ft_free_double(container->all_path);
-// 	ft_free_double(container->pipe_split);
-// 	// ft_free_double(container->cmd);
-// 	// Both already free in while loop in ft_parser
-// 	// free(container->cmd_path);
-// }
-
-// void	error_cmd_path(t_cmd *container)
-// {
-// 	printf("minishell: %s: command not found.\n", container->cmd[0]);
-// 	// ft_free_list(token);
-// 	// ft_free_double(container->cmd);
-// 	// ft_free_double(container->all_path);
-// 	// ft_free_double(container->pipe_split);
-// }
-
-// void	free_cmd(t_cmd *container)
-// {
-// 	ft_free_double(container->cmd);
-// 	free(container->cmd_path);
-// }
 
 void	ft_end_list(t_token *token)
 {
 	ft_free_list(token);
-	printf("Error in filling the list.");
+	write(2, "Error in filling the token list.", 32);
 	exit(EXIT_FAILURE);
 }

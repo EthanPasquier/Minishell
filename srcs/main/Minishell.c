@@ -6,39 +6,53 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 15:19:41 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:41:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_readline(char **envp)
-{
-	char	*input;
-	t_init	*var;
+int	g_exit_code;
 
-	var = malloc(sizeof(t_init));
-	var->envp = ft_copy_env(envp);
+static void	ctrld(t_child *child)
+{
+	printf("exit\n");
+	clear_history();
+	ft_free_double(child->init->envp);
+	free(child->init);
+	free(child);
+	exit(EXIT_SUCCESS);
+}
+
+static void	ft_good_input(t_child *child)
+{
+	if (ft_strlen(child->init->input) > 0)
+	{
+		add_history(child->init->input);
+		ft_parser(child);
+		if (child->init->input)
+			free(child->init->input);
+	}
+}
+
+static void	ft_readline(char **envp)
+{
+	t_child	*child;
+
+	child = malloc(sizeof(t_child));
+	child->init = malloc(sizeof(t_init));
+	child->init->envp = ft_copy_env(envp);
+	child->exit_code = 0;
 	signal(SIGINT, ft_ctrlc);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		input = readline("\U0001F9E0 \033[1;36mminishell > \033[0m");
-		if (input)
-		{
-			if (ft_strlen(input) > 0)
-			{
-				add_history(input);
-				var->input = input;
-				ft_parser(var);
-				free(input);
-			}
-		}
+		g_exit_code = 0;
+		child->init->input = readline("minishell > ");
+		if (child->init->input)
+			ft_good_input(child);
 		else
-		{
-			ft_free_double(var->envp);
-			free(var);
-			exit(EXIT_SUCCESS);
-		}
+			ctrld(child);
 	}
 }
 
@@ -49,10 +63,3 @@ int	main(int ac, char **av, char **envp)
 	ft_title();
 	ft_readline(envp);
 }
-
-// if (ft_strncmp(input, "exit", 4) == 0)
-// {
-// 	printf("exit\n");
-// 	free(input);
-// 	exit(EXIT_FAILURE);
-// }

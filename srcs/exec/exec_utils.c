@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_exec.c                                       :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 17:56:06 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:31:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	*ft_set_pipe(t_child *child)
 	fd_index = 0;
 	fd_array = malloc(sizeof(int *) * (child->pipe_nbr) * 2);
 	if (!fd_array)
-		ft_error(1); // à Changer
+		return (NULL);
 	while (index_cmd < child->pipe_nbr)
 	{
 		if (pipe(pipe_fd) == -1)
-			ft_error(1);
+			write(2, "pipe error in set_pipe\n", 23);
 		fd_array[fd_index] = pipe_fd[1];
 		fd_array[fd_index + 1] = pipe_fd[0];
 		fd_index += 2;
@@ -47,8 +47,10 @@ void	ft_close_fd(int *fd_array, int pipe_nbr)
 	{
 		while (index < pipe_nbr)
 		{
-			close(fd_array[i]);
-			close(fd_array[i + 1]);
+			if (fd_array[i] > 0)
+				close(fd_array[i]);
+			if (fd_array[i + 1] > 0)
+				close(fd_array[i + 1]);
 			i += 2;
 			index++;
 		}
@@ -71,14 +73,28 @@ int	cmd_counter(t_token *token)
 	return (cmd_nbr);
 }
 
-void	ft_wait(pid_t *pid, int cmd_nbr)
+void	ft_wait(pid_t *pid, t_child *child)
 {
 	int	i;
+	int	status;
 
 	i = 0;
-	while (i < cmd_nbr)
+	while (i < child->pipe_nbr + 1)
 	{
-		waitpid(pid[i], NULL, 0);
+		waitpid(pid[i], &status, 0);
+		if (child->is_builtin != 2 && g_exit_code == 0)
+		{
+			if (status / 256 == 4)
+				child->exit_code = 1;
+			else if (status / 256 == 5)
+				child->exit_code = 127;
+			else if (status == 256)
+				child->exit_code = 1;
+			else if (status == 0)
+				child->exit_code = 0;
+			else
+				child->exit_code = 1;
+		}
 		i++;
 	}
 }

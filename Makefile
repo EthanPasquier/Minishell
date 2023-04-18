@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/06 15:14:25 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/18 09:41:11 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,15 @@ NAME	= minishell
 
 SRC_DIR		= srcs/
 
-BUILT = pwd env unset builtins_utils
+BUILT = pwd env exit echo unset cd export builtins_set built_utils_1 built_utils_2
 
-EXEC = 	child_process executor redirections child_pipe exec_utils child_error here_doc
+EXEC = 	child_process executor redirections child_pipe exec_utils \
+	child_error heredoc heredoc_utils
 
 MAIN = Minishell
 
-PARSING = Parser Split_input syntax
+PARSING = Parser Split_input syntax syntax_error syntax_utils echo parser_utils \
+	redifine split_parsing node parser_utils_v2 quote
 
 TOOLS = utils signal error init
 
@@ -41,7 +43,7 @@ LIBRLINE = readline-8.2
 LIBRD	=	include/readline/libreadline.a include/readline/libhistory.a
 
 CC		= gcc
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror
 
 LIBS	= $(LIBFT) -lcurses $(LIBRD)
 

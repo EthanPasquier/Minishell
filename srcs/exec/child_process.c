@@ -6,36 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 12:37:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 19:16:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	ft_less_n_great(t_child *child, t_token *tmp)
-{
-	t_token	*tmp2;
-	int		great;
-	int		less;
-
-	tmp2 = tmp;
-	great = 0;
-	less = 0;
-	while (tmp2 && tmp2->type != PIPE)
-	{
-		if (tmp2->type == GREAT || tmp2->type == GREAT_GREAT)
-		{
-			great++;
-			ft_great_child(child, tmp2, great);
-		}
-		else if (tmp2->type == LESS)
-		{
-			less++;
-			ft_less_child(child, tmp2, less);
-		}
-		tmp2 = tmp2->next;
-	}
-}
 
 static void	ft_redirection(t_token *tmp, t_child *child)
 {
@@ -51,7 +26,7 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 		{
 			close(child->heredoc.here_docfd[0]);
 			close(child->heredoc.here_docfd[1]);
-			ft_error(1);
+			write(2, "Error dup2 here_doc\n", 22);
 		}
 		close(child->heredoc.here_docfd[0]);
 		close(child->heredoc.here_docfd[1]);
@@ -59,54 +34,79 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 	ft_pipe_child(child, tmp);
 }
 
-static void	ft_exec_cmd(t_child *child, t_token *token)
+static void	ft_exec_cmd(t_token *tmp, t_child *child)
 {
-	if (!child->cmd_path)
+	if ((child->is_builtin > 0 && child->is_builtin < 3)
+		|| (child->is_builtin == 3 && !child->cmd[1]))
+		return ;
+	while (tmp->type != CMD)
+		tmp = tmp->next;
+	if (child->is_builtin > 3 || (child->is_builtin == 3 && child->cmd[1]))
+		ft_which_builtins_child(child, tmp);
+	else if (!child->cmd_path)
 	{
-		fprintf(stderr, "\u274C Minishell: %s: command not found\n", child->cmd[0]); // changer fprintf 
-		ft_free_double(child->cmd);
-		ft_free_double(child->all_path);
-		exit(EXIT_SUCCESS);
+		ft_cmd_error(child);
+		ft_free_child(tmp, child);
+		exit(5);
 	}
-	else
+	else if (child->cmd_path)
 	{
-		execve(child->cmd_path, child->cmd, child->envp);
-		ft_child_error(token, child, ERR_EXECVE);
+		execve(child->cmd_path, child->cmd, child->init->envp);
+		ft_child_error(tmp, child, ERR_EXECVE);
 	}
 }
 
-static void	ft_exec_child(t_child *child, t_token *token)
+static void	ft_exec_child(t_child *child, t_token *tmp)
 {
-	t_token	*tmp;
+	t_token	*tmp2;
 
-	tmp = token;
-	if (tmp->type == PIPE)
-		tmp = tmp->next;
-	ft_redirection(tmp, child);
-	ft_close_fd(child->fd_array, child->pipe_nbr);
-	free(child->fd_array);
-	if (ft_is_cmd(token) == 1)
+	tmp2 = tmp;
+	if (tmp2->type == PIPE)
+		tmp2 = tmp2->next;
+	ft_redirection(tmp2, child);
+	if (child->pipe_nbr > 0)
+		ft_close_fd(child->fd_array, child->pipe_nbr);
+	if (ft_is_cmd(tmp) == 1)
+		ft_exec_cmd(tmp2, child);
+	ft_free_child(tmp2, child);
+	exit(EXIT_SUCCESS);
+}
+
+static void	ft_builtins_or_cmd(t_child *c, t_token *tmp, pid_t *pid)
+{
+	if (c->is_builtin > 0 && c->is_builtin < 5)
 	{
-		while (tmp->type != CMD)
-			tmp = tmp->next;
-		child->cmd = ft_split(tmp->str, ' ');
-		if (child->is_builtin > 0 && child->is_builtin < 8)
-			ft_which_builtins(child);
-		else
+		if (c->cmd_nbr == 1 || c->is_builtin == 2
+			|| c->is_builtin == 1 || c->is_builtin == 4)
 		{
-			child->cmd_path = find_cmd_path(child->cmd, child->all_path);
-			ft_exec_cmd(child, token);
+			if (c->is_builtin != 4 || (c->is_builtin == 4 && c->cmd[1]))
+				ft_which_builtins(c, tmp, pid);
 		}
 	}
-	else
-		exit(EXIT_SUCCESS);
+	else if (c->cmd && c->is_builtin < 0)
+	{
+		if (c->all_path || ft_strncmp(c->cmd[0], "/", 1) == 0)
+			c->cmd_path = find_cmd_path(c);
+	}
 }
 
-void	ft_process_child(t_child *c, t_token *tmp, pid_t *pid)
+void	ft_process_child(t_child *c, t_token *tmp, pid_t *p)
 {
-	pid[c->i] = fork();
-	if (pid[c->i] < 0)
-		ft_error(1);
-	else if (pid[c->i] == 0)
+	c->cmd = ft_find_cmd(tmp);
+	ft_builtins_or_cmd(c, tmp, p);
+	p[c->i] = fork();
+	if (p[c->i] < 0)
+		return ;
+	else if (p[c->i] == 0)
+	{
+		if (p)
+			free(p);
 		ft_exec_child(c, tmp);
+		exit(EXIT_SUCCESS);
+	}
+	if (c->cmd && c->is_builtin < 0)
+		free(c->cmd_path);
+	c->cmd_path = NULL;
+	if (c->cmd)
+		ft_free_double(c->cmd);
 }

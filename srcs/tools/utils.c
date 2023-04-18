@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Utils.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/06 12:12:04 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 10:08:54 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	ft_join(char **path)
+char	**ft_join(char **path)
 {
 	int		i;
 	char	*tmp;
@@ -24,31 +24,68 @@ static void	ft_join(char **path)
 		free(path[i]);
 		path[i++] = tmp;
 	}
-}
-
-char	**find_path(void)
-{
-	int		i;
-	char	*trim;
-	char	**path;
-
-	i = 0;
-	path = NULL;
-	trim = getenv("PATH");
-	path = ft_split(trim, ':');
-	ft_join(path);
 	return (path);
 }
 
-char	*find_cmd_path(char **cmd, char **path)
+char	**find_path(t_child *child)
+{
+	char	*trim;
+	char	**path;
+	int		i;
+
+	path = NULL;
+	i = 0;
+	while (child->init->envp[i])
+	{
+		if (ft_strncmp("PATH=", child->init->envp[i], 5) == 0)
+		{
+			trim = ft_strtrim(child->init->envp[i], "PATH=");
+			path = ft_split(trim, ':');
+			free(trim);
+			path = ft_join(path);
+			break ;
+		}
+		i++;
+	}
+	return (path);
+}
+
+char	*ft_mini_in_mini(t_child *child)
+{
+	char	pwd[1024];
+	char	*tmp;
+	char	*tmp2;
+
+	if (getcwd(pwd, sizeof(pwd)) != NULL)
+	{
+		tmp2 = ft_strtrim(child->cmd[0], ".");
+		tmp = ft_strjoin(pwd, tmp2);
+		free(tmp2);
+		if (access(tmp, X_OK) == 0)
+			return (tmp);
+	}
+	return (NULL);
+}
+
+char	*find_cmd_path(t_child *child)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
-	while (path[i])
+	if (ft_strncmp(child->cmd[0], "./", 2) == 0)
+		return (ft_mini_in_mini(child));
+	else if (ft_strncmp(child->cmd[0], "/", 1) == 0)
 	{
-		tmp = ft_strjoin(path[i], cmd[0]);
+		if (access(child->cmd[0], X_OK) == 0)
+		{
+			tmp = ft_strdup(child->cmd[0]);
+			return (tmp);
+		}
+	}
+	while (child->all_path[i])
+	{
+		tmp = ft_strjoin(child->all_path[i], child->cmd[0]);
 		if (access(tmp, X_OK | F_OK) == 0)
 			return (tmp);
 		free(tmp);
@@ -81,5 +118,5 @@ void	ft_title(void)
 	printf("                                  \n");
 	printf("----------------------- \033[0;34mEpa");
 	printf("squie & Jalevesq \033[0;31m----------");
-	printf("-----------------\n\n");
+	printf("-----------------\n\n\033[0m");
 }

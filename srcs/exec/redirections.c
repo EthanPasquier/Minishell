@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:22:51 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/05 17:55:20 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:34:05 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,29 @@ int	ft_mark_count(t_token *token, int type)
 	return (i);
 }
 
-void	ft_less_child(t_child *child, t_token *token, int less)
+static void	ft_less_child(t_child *c, t_token *tmp, int less)
 {
 	int		fd;
 
 	fd = -1;
-	if (token->type == LESS)
+	if (tmp->type == LESS)
 	{
-		fd = open(token->next->str, O_RDONLY);
+		fd = open(tmp->next->str, O_RDONLY);
 		if (fd == -1)
-			ft_child_error(token, child, ERR_OPEN);
-		if (less == child->less_mark)
+			ft_child_error(tmp, c, ERR_OPEN_LESS);
+		if (less == c->less_mark)
 		{
 			if (dup2(fd, STDIN) == -1)
 			{
 				close(fd);
-				ft_child_error(token, child, ERR_DUP2);
+				ft_child_error(tmp, c, ERR_DUP2);
 			}
 		}
 		close(fd);
 	}
 }
 
-void	ft_great_child(t_child *child, t_token *token, int great)
+static void	ft_great_child(t_child *child, t_token *token, int great)
 {
 	int		fd;
 
@@ -62,7 +62,7 @@ void	ft_great_child(t_child *child, t_token *token, int great)
 	else if (token->type == GREAT)
 		fd = open(token->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0640);
 	if (fd == -1)
-		ft_child_error(token, child, ERR_OPEN);
+		ft_child_error(token, child, ERR_OPEN_GREAT);
 	if (great == child->great_mark)
 	{
 		if (dup2(fd, STDOUT) == -1)
@@ -72,4 +72,29 @@ void	ft_great_child(t_child *child, t_token *token, int great)
 		}
 	}
 	close(fd);
+}
+
+void	ft_less_n_great(t_child *child, t_token *tmp)
+{
+	t_token	*tmp2;
+	int		great;
+	int		less;
+
+	tmp2 = tmp;
+	great = 0;
+	less = 0;
+	while (tmp2 && tmp2->type != PIPE)
+	{
+		if (tmp2->type == GREAT || tmp2->type == GREAT_GREAT)
+		{
+			great++;
+			ft_great_child(child, tmp2, great);
+		}
+		else if (tmp2->type == LESS)
+		{
+			less++;
+			ft_less_child(child, tmp2, less);
+		}
+		tmp2 = tmp2->next;
+	}
 }

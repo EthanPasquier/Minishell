@@ -1,64 +1,23 @@
-To do list:
-Gérer les redirections < > << >>
+TO DO LIST
 
-* Readline, text wrap quand terminal trop petit. \001 \002, bug quand "ENTER"
-* Changer la façon de init le envp.
+--- Finaliser Builtins ---
 
-***** > *****
-FONCTIONNE COMME BASH:
-ls > test.txt
-ls > coucou > test > abc > def
-ls | cat | grep Makefile | grep e | wc > coucou
-ls | cat | grep Makefile | grep e | wc > coucou > abc > def
-> note.txt ls
-> note.txt > ls > abc > def ls
-> abc ls | wc
-> abc > def > abc > def > hij ls | wc > 123 > 456 > 789
-> file > file1 > file2
-FONCTIONNE PAS:
-ls | > outfile | cat avc
+--- Executeur ---
+< Makefile note.txt
+echo abc def < note.txt lol
+Clear history
 
 
-***** < *****
-FONCTIONNE COMME BASH:
-cat < Makefile < note.txt
-< Makefile cat
+--- Autre ---
+- avoir un beau prompt (facultatif)
+- ctrl c in heredoc still reachable
 
+a la fin:
+changer le Makefile
 
-FONCTIONNE PAS:
+Parser leak 
+double quote et signle quote
+syntax error ls |<<eof
 
-***** < && > && | *****
-FONCTIONNE COMME BASH:
-> outfile cat < Makefile
-< Makefile cat > outfile
-< Makefile < note.txt < outfile cat > abc
-< Makefile cat -e | grep e | wc 
-< Makefile > abc < note.txt > def > hij < file > coucou (file does not exist et coucou pas cree)
-cat < note.txt > output
-< Makefile (Doit rien faire, ou si file existe pas dire no such file or...)
-> Outfile (doit creer outfile)
-< Makefile cat -e | grep NAME > coucou
-
-FONCTIONNE PAS:
-< Makefile cat > abc | < note.txt cat > def
-< Makefile cat | < note.txt cat
-
-NE PAS GERER
-<>, |>, <|
-
-*** TRUC WTF EN BASH, DOIT ETRE IDENTIQUE ??? ***
-< ls | cat // doit etre identique a bash ?
-cat < Makefile > outfile abc 
-(Si les deux existe pas, cree outfile mais pas abc et n'ecrit rien)
-(Si outfile existe, ne cree pas abc 'cat: abc: No such file or directory', ecrase tout dans outfile)
-
-** check les Exit status ?
-** Plusieurs possibilites de leak dans split_input
-** Check si > sur un fichier interdit d'ecrire ce que ca fait dans bash
-
-Implementer $?
-Ctrl \ = seg fault
-Ctrl C dans here_doc ne marche pas
-
-*** BUILTIN ***
-echo salut > file1 123 = doit mettre salut 123 dans file1
+unset error
+can only be a to z and #
