@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:31:32 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 15:07:30 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:53:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_exit(t_child *child, t_token *token, pid_t *pid)
 		while (token && token->prev)
 			token = token->prev;
 		ft_free_list(token);
-		clear_history();
+		rl_clear_history();
 		ft_free_double(child->cmd);
 		free(child->init);
 		free(child);

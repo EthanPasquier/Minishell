@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 14:16:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:45:23 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "readline/readline.h"
 # include <sys/ioctl.h>
 # include <unistd.h>
+# include <termios.h>
 # include <signal.h>
 # include <stdlib.h>
 # include <string.h>

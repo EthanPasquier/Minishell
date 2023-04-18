@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 14:39:52 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:51:40 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_free_child(t_token *token, t_child *c)
 		token = token->prev;
 	free(c->trash_path);
 	ft_free_list(token);
-	clear_history();
+	rl_clear_history();
 	free(c->init->input);
 	free(c->init);
 	free(c);

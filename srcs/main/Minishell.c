@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 15:15:30 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:51:22 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*find_trash_path(char **envp)
 static void	ctrld(t_child *child)
 {
 	printf("exit\n");
-	clear_history();
+	rl_clear_history();
 	ft_free_double(child->init->envp);
 	free(child->trash_path);
 	free(child->init);
@@ -76,6 +76,12 @@ static void	ft_readline(char **envp)
 	child->exit_code = 0;
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
+
+	// struct termios term;
+    // tcgetattr(STDIN_FILENO, &term);
+    // term.c_lflag &= ~(ICANON | ECHO);
+    // tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
 	while (1)
 	{
 		g_exit_code = 0;
