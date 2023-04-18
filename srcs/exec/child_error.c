@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 08:41:36 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 09:16:20 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	ft_free_child(t_token *token, t_child *c)
 	while (token && token->prev)
 		token = token->prev;
 	ft_free_list(token);
-	clear_history();
 	free(c->init->input);
 	free(c->init);
 	free(c);
+	clear_history();
 }
 
 static void	ft_failed_command(t_token *token, t_child *child)

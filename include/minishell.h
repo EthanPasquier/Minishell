@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 15:34:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 09:39:12 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,28 +86,48 @@ typedef struct s_child
 	int				j;
 	t_init			*init;
 	t_heredoc		heredoc;
-}					t_child;
+}				t_child;
+
+typedef struct s_cut
+{
+	char			*output;
+	char			*str;
+	int				i;
+	int				j;
+	int				tmp;
+}					t_cut;
 
 // Evert function for Parser
-t_init		ft_init(char *input);
-void		ft_parser(t_child *child);
-int			ft_count_parsing(char *str);
-int			ft_wake_word(char c);
-int			ft_syntax(char *str);
-t_token		*new_node(char *str);
-int			ft_error_syntax(char *str);
-char		*ft_guillemet(char *str, t_child *child);
-int			ft_where(char *str, char c, int position);
-char		*ft_find_var(char *str, char *vars, t_child *child);
-char		*ft_take_var(char *str, int position);
-int			ft_ordreguillemet(char *str);
-char		*ft_globvar(char *str, char c, t_child *child);
-char		*ft_suppspace(char *str);
-void		ft_title(void);
-int			ft_is_cmd(t_token *token);
-
-void		ft_ctrlc(int sig);
-void		ft_quit(int sig);
+t_init				ft_init(char *input);
+void				ft_parser(t_child *child);
+int					ft_count_parsing(char *str);
+int					ft_wake_word(char c);
+int					ft_syntax(char *str);
+t_token				*new_node(char *str);
+int					ft_varcount(char *new, int i);
+int					ft_error_syntax(char *str);
+char				*ft_guillemet(char *str, t_child *child);
+int					ft_where(char *str, char c, int position);
+char				*ft_find_var(char *str, char *vars, t_child *child, int a);
+char				*ft_take_var(char *str, int position);
+int					ft_ordreguillemet(char *str);
+char				*ft_globvar(char *str, int limit, t_child *child, int nb);
+void				ft_ctrlc(int sig);
+void				ft_title(void);
+void				ft_printv(char *str);
+int					ft_error_pipe(char *str, char c);
+int					ft_error_syntax(char *str);
+char				*ft_suppspace(char *str);
+int					ft_error_redirection(char *str);
+int					ft_is_cmd(t_token *token);
+char				*ft_echoargument(char *str, int i);
+int					ft_issimplearg(char *str, int i);
+char				*ft_exportsyntax(char *str);
+t_token				*ft_fill_list(char **split_input);
+void				ft_assign_type(t_token *token);
+char				*ft_redifine(char *mots, char *str, int a);
+char				**ft_write_cut(char *str);
+void				ft_insertnode(t_token *head, int character, int position);
 
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 
@@ -126,6 +146,7 @@ void		ft_heredoc(t_token *token, t_child *child, pid_t *pid2);
 int			ft_heredoc_nbr(t_token *t);
 void		ft_pipe_doc(t_child *child);
 int			ft_is_doc_last(t_token *token);
+void		ft_quit(int sig);
 
 /* UTILS FOR EXECUTOR */
 char		**ft_find_cmd(t_token *token);

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:31:32 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 15:29:36 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 09:15:50 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ static void	ft_digit_in_msg(t_child *child)
 
 void	ft_exit(t_child *child, t_token *token, pid_t *pid)
 {
+	ft_digit_in_msg(child);
 	if (child->cmd_nbr == 1)
 	{
+		write(2, "exit\n", 5);
 		ft_free_double(child->init->envp);
 		ft_free_double(child->all_path);
 		free(child->init->input);
@@ -44,11 +46,7 @@ void	ft_exit(t_child *child, t_token *token, pid_t *pid)
 		while (token && token->prev)
 			token = token->prev;
 		ft_free_list(token);
-		write(2, "exit\n", 5);
-	}
-	ft_digit_in_msg(child);
-	if (child->cmd_nbr == 1)
-	{
+		clear_history();
 		ft_free_double(child->cmd);
 		free(child->init);
 		free(child);
