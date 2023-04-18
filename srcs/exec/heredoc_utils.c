@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 08:06:13 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 15:32:44 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:41:47 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_free_child_doc(t_child *child, t_token *token)
 	while (token && token->prev)
 		token = token->prev;
 	ft_free_list(token);
+	clear_history();
 	free(child->init->input);
 	free(child->init);
 	free(child);

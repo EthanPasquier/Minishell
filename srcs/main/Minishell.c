@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 15:33:28 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:41:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	g_exit_code;
 static void	ctrld(t_child *child)
 {
 	printf("exit\n");
+	clear_history();
 	ft_free_double(child->init->envp);
 	free(child->init);
 	free(child);

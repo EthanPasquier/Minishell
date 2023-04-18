@@ -3,6 +3,10 @@ TO DO LIST
 --- Finaliser Builtins ---
 
 --- Executeur ---
+< Makefile note.txt
+echo abc def < note.txt lol
+Clear history
+
 
 --- Autre ---
 - avoir un beau prompt (facultatif)

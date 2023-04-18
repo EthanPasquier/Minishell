@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 19:03:29 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 09:03:01 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,28 @@ static int	ft_is_remove(t_child *child, int i)
 
 static void	ft_unset_dont_exec(t_child *child)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 1;
 	while (child->cmd[i])
 	{
 		j = 0;
-		while(child->cmd[i][j])
+		while (child->cmd[i][j])
 		{
-			if (ft_isalpha(child->cmd[i][j]) == 1 || child->cmd[i][j] == '#')
+			if (ft_isalpha(child->cmd[i][j]) == 1 || child->cmd[i][j] == '#'
+				|| child->cmd[i][j] == '_')
 				j++;
 			else
 			{
 				write(2, "minishell: unset: syntax error near \'", 37);
 				write(2, child->cmd[i], ft_strlen(child->cmd[i]));
 				write(2, "\'\n", 2);
-				break;
+				break ;
 			}
 		}
 		i++;
 	}
-	
 }
 
 int	ft_check_exception(char *str)
@@ -98,7 +98,7 @@ int	ft_check_exception(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalpha(str[i]) == 1 || str[i] == '#')
+		if (ft_isalpha(str[i]) == 1 || str[i] == '#' || str[i] == '_')
 			i++;
 		else
 		{
