@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 09:47:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:16:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_child
 	char			**cmd;
 	char			**all_path;
 	char			*cmd_path;
+	char			*trash_path;
 	int				pipe_nbr;
 	int				cmd_nbr;
 	int				*fd_array;

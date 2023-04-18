@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 10:36:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:39:45 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	ft_parser_suite(char *str, t_token *tmp, t_child *child, int result)
 			tmp->str[1] = 0;
 			ft_insertnode(tmp, result, 1);
 		}
-		printf("%s\n", tmp->str);
 		tmp = tmp->next;
 	}
 	child->exit_code = 0;
@@ -94,7 +93,7 @@ void	ft_parser(t_child *child)
 	if (child->exit_code == 1)
 		return (ft_free_list(token));
 	ft_assign_type(token);
-	// ft_executor(token, child);
+	ft_executor(token, child);
 	if (token)
 		ft_free_list(token);
 }

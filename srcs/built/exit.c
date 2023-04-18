@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:31:32 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 09:15:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:07:30 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_exit(t_child *child, t_token *token, pid_t *pid)
 	if (child->cmd_nbr == 1)
 	{
 		write(2, "exit\n", 5);
+		free(child->trash_path);
 		ft_free_double(child->init->envp);
 		ft_free_double(child->all_path);
 		free(child->init->input);

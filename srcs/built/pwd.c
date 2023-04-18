@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:47:01 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/13 19:38:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 13:50:49 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_pwd(void)
 		printf("%s\n", cwd);
 	else
 	{
-		perror("getcwd() error");
+		write(2, "minishell: pwd: can't find pwd\n", 31);
 		return (1);
 	}
 	return (0);

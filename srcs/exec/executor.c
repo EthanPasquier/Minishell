@@ -6,30 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 08:56:16 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:16:10 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	**ft_find_cmd(t_token *token)
-{
-	t_token	*tmp;
-	char	**cmd;
-
-	tmp = token;
-	if (tmp && tmp->type == PIPE)
-		tmp = tmp->next;
-	while (tmp && tmp->type != PIPE && tmp->type != CMD)
-		tmp = tmp->next;
-	if (tmp && tmp->type == CMD)
-	{
-		cmd = ft_split(tmp->str, ' ');
-		if (cmd)
-			return (cmd);
-	}
-	return (NULL);
-}
 
 static int	ft_pipe_counter(t_token *token)
 {
@@ -91,6 +72,19 @@ static void	ft_command(t_token *token, t_child *child)
 		free(child->fd_array);
 }
 
+void	ft_check_pwd(t_child *child)
+{
+	char	pwd[1024];
+
+	if (getcwd(pwd, sizeof(pwd)) == NULL)
+	{
+		if (chdir(child->trash_path) == -1)
+			return ;
+	}
+	else
+		return ;
+}
+
 void	ft_executor(t_token *token, t_child *child)
 {
 	child->pipe_nbr = ft_pipe_counter(token);
@@ -100,5 +94,6 @@ void	ft_executor(t_token *token, t_child *child)
 	child->cmd_path = NULL;
 	child->i = 0;
 	ft_command(token, child);
+	ft_check_pwd(child);
 	ft_free_double(child->all_path);
 }

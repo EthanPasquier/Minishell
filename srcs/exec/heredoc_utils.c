@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 08:06:13 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 09:16:39 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:16:34 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_free_child_doc(t_child *child, t_token *token)
 	while (token && token->prev)
 		token = token->prev;
 	ft_free_list(token);
+	free(child->trash_path);
 	free(child->init->input);
 	free(child->init);
 	free(child);
@@ -84,4 +85,23 @@ int	ft_heredoc_nbr(t_token *t)
 		tmp = tmp->next;
 	}
 	return (i);
+}
+
+char	**ft_find_cmd(t_token *token)
+{
+	t_token	*tmp;
+	char	**cmd;
+
+	tmp = token;
+	if (tmp && tmp->type == PIPE)
+		tmp = tmp->next;
+	while (tmp && tmp->type != PIPE && tmp->type != CMD)
+		tmp = tmp->next;
+	if (tmp && tmp->type == CMD)
+	{
+		cmd = ft_split(tmp->str, ' ');
+		if (cmd)
+			return (cmd);
+	}
+	return (NULL);
 }
