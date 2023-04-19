@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 10:08:54 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:11:37 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,18 @@ char	**find_path(t_child *child)
 
 char	*ft_mini_in_mini(t_child *child)
 {
-	char	pwd[1024];
+	char	*pwd;
 	char	*tmp;
 	char	*tmp2;
 
-	if (getcwd(pwd, sizeof(pwd)) != NULL)
+	pwd = ft_getenv(child->init->envp, "PWD=");
+	if (pwd != NULL)
 	{
 		tmp2 = ft_strtrim(child->cmd[0], ".");
 		tmp = ft_strjoin(pwd, tmp2);
 		free(tmp2);
-		if (access(tmp, X_OK) == 0)
+		free(pwd);
+		if (access(tmp, X_OK | F_OK) == 0)
 			return (tmp);
 	}
 	return (NULL);
