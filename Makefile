@@ -6,7 +6,7 @@
 #    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/18 10:25:23 by jalevesq         ###   ########.fr        #
+#    Updated: 2023/04/19 14:45:40 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ EXEC = 	child_process executor redirections child_pipe exec_utils \
 MAIN = Minishell
 
 PARSING = Parser Split_input syntax syntax_error syntax_utils echo parser_utils \
-	redifine split_parsing node parser_utils_v2 quote
+	redifine split_parsing node parser_utils_v2 quote quote_utils
 
 TOOLS = utils signal error init
 

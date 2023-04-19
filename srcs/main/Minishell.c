@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 15:51:22 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:36:29 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,6 @@ static void	ft_readline(char **envp)
 	child->exit_code = 0;
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
-
-	// struct termios term;
-    // tcgetattr(STDIN_FILENO, &term);
-    // term.c_lflag &= ~(ICANON | ECHO);
-    // tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
 	while (1)
 	{
 		g_exit_code = 0;

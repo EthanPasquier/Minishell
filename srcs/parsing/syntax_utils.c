@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:44:26 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/18 10:17:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:42:42 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ char	*ft_globvar(char *str, int limit, t_child *child, int nb)
 		a = ft_where(final, '$', a + 1);
 	}
 	free(str);
-	str = ft_strdup(final);
-	free(final);
-	return (str);
+	return (final);
 }
 
 char	*ft_exportsyntax(char *str)

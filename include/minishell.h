@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 15:45:23 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:45:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,16 @@ typedef struct s_cut
 	int				tmp;
 }					t_cut;
 
+typedef struct s_guill
+{
+	int				i;
+	char			*new;
+	int				tmp;
+	int				k;
+	int				place;
+	char			c;
+}					t_guill;
+
 // Evert function for Parser
 t_init		ft_init(char *input);
 void		ft_parser(t_child *child);
@@ -108,7 +118,7 @@ int			ft_syntax(char *str);
 t_token		*new_node(char *str);
 int			ft_varcount(char *new, int i);
 int			ft_error_syntax(char *str);
-char		*ft_guillemet(char *str, t_child *child);
+char		*ft_guillemet(char *str, t_child *child, int k);
 int			ft_where(char *str, char c, int position);
 char		*ft_find_var(char *str, char *vars, t_child *child, int a);
 char		*ft_take_var(char *str, int position);
@@ -130,6 +140,11 @@ void		ft_assign_type(t_token *token);
 char		*ft_redifine(char *mots, char *str, int a);
 char		**ft_write_cut(char *str);
 void		ft_insertnode(t_token *head, int character, int position);
+void		ft_initguill(t_guill *cut, char *str);
+void		ft_markguill(t_guill *cut, char *str);
+void		ft_globvarguill(t_guill *cut, char *str, t_child *child);
+void		ft_reaxguill(t_guill *cut, char *str);
+char		*ft_replaceguill(t_guill *cut, char *str, t_child *child);
 
 /* *** EVERY FUNCTION FOR EXECUTOR *** */
 

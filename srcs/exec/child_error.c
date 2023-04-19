@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 15:51:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:28:22 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	ft_fd_error(t_token *token, t_child *c, int flag)
 {
 	if (flag == ERR_OPEN_LESS)
 	{
-		fprintf(stderr, "%s: No such file or directory\n", token->next->str);
+		write(2, token->next->str, ft_strlen(token->next->str));
+		write(2, ": No such file or directory\n", 28);
 		ft_free_child(token, c);
 		exit(4);
 	}

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:18:27 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/18 10:36:52 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:40:39 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_ordreguillemet(char *str)
 	return (0);
 }
 
-char	*ft_suppguillemet(char *new, int tmp, char *str)
+char	*ft_suppguillemet(char *new, int tmp)
 {
 	int		i;
 	char	c;
@@ -61,46 +61,31 @@ char	*ft_suppguillemet(char *new, int tmp, char *str)
 		i++;
 	}
 	new[i] = 0;
-	str = ft_strdup(new);
-	free(new);
-	return (str);
+	return (new);
 }
 
-char	*ft_guillemet(char *str, t_child *child)
+char	*ft_guillemet(char *str, t_child *child, int k)
 {
-	int		i;
-	char	*new;
-	int		tmp;
-	int		place;
-	char	c;
+	t_guill	cut;
 
-	i = 0;
-	place = 0;
-	tmp = 0;
-	c = '\0';
-	if (str)
-		new = ft_strdup(str);
-	while (str[i])
+	ft_initguill(&cut, str);
+	while (str[cut.i])
 	{
-		if ((str[i] == 39 || str[i] == 34) && tmp == 0)
+		if ((str[cut.i] == 39 || str[cut.i] == 34) && cut.tmp == 0)
+			ft_markguill(&cut, str);
+		else if ((str[cut.i] == cut.c && cut.tmp == 1) || (str[cut.i] == '$'
+				&& cut.tmp == 0))
 		{
-			place = i;
-			c = str[i];
-			tmp = 1;
+			str = ft_replaceguill(&cut, str, child);
+			k++;
 		}
-		else if ((str[i] == c && tmp == 1) || (str[i] == '$' && tmp == 0))
-		{
-			if (c != 39 && tmp == 1)
-				new = ft_globvar(new, i, child, place);
-			else if (str[i] == '$' && tmp == 0)
-				new = ft_globvar(new, ft_varcount(new, i + 1), child, i);
-			// free(str) enleve des leaks mais ajoute double free
-			str = ft_strdup(new);
-			i = ft_varcount(new, i);
-			tmp = 0;
-		}
-		i++;
+		cut.i++;
 	}
-	str = ft_suppguillemet(new, tmp, str);
-	return (str);
+	if (k > 0)
+	{
+		free(str);
+		str = NULL;
+	}
+	cut.new = ft_suppguillemet(cut.new, cut.tmp);
+	return (cut.new);
 }
