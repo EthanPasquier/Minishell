@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:40:59 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/19 14:39:17 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:55:23 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ static char	*ft_echoargument_suite(char *str, int i)
 		}
 		else if (str[i] != 'n' && str[i] != 29 && str[i] != 32)
 		{
+			free(str);
 			str = ft_strdup(new);
 			break ;
 		}
 		i++;
 	}
+	free(new);
 	return (ft_echoargument_suite_v2(str, i));
 }
 

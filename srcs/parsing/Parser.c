@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 14:38:35 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:26:28 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,15 @@ char	*ft_commandoption(char *str)
 		if (str[i] != '-')
 			return (str);
 		new = ft_echoargument(str, 0);
+		if (ft_strncmp(new, str, ft_strlen(new)) != 0)
+			free(str);
 		return (new);
 	}
 	else
 	{
 		new = ft_strnstr(str, "export ", 8);
 		if (new != NULL)
-		{
-			new = ft_exportsyntax(str);
-			return (new);
-		}
+			return (ft_exportsyntax(str));
 	}
 	return (str);
 }

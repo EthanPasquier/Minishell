@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 14:45:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:36:03 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_guill
 
 // Evert function for Parser
 t_init		ft_init(char *input);
+int			ft_is_only_space(char *input);
 void		ft_parser(t_child *child);
 int			ft_count_parsing(char *str);
 int			ft_wake_word(char c);

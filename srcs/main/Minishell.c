@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:32:36 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 14:36:29 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:28:49 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void	ctrld(t_child *child)
 
 static void	ft_good_input(t_child *child)
 {
-	if (ft_strlen(child->init->input) > 0)
+	if (ft_strlen(child->init->input) > 0
+		&& ft_is_only_space(child->init->input))
 	{
 		add_history(child->init->input);
 		ft_parser(child);
@@ -81,7 +82,11 @@ static void	ft_readline(char **envp)
 		g_exit_code = 0;
 		child->init->input = readline("minishell > ");
 		if (child->init->input)
+		{
+			if (g_exit_code != 0)
+				child->exit_code = g_exit_code;
 			ft_good_input(child);
+		}
 		else
 			ctrld(child);
 	}

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:42:34 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:28:26 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:51:13 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,18 @@ t_token	*new_node(char *str)
 	new_node->type = -1;
 	new_node->str = ft_strdup(str);
 	return (new_node);
+}
+
+int	ft_is_only_space(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] != 32)
+			return (1);
+		i++;
+	}
+	return (0);
 }

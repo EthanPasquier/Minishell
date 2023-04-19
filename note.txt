@@ -3,21 +3,10 @@ TO DO LIST
 --- Finaliser Builtins ---
 
 --- Executeur ---
-< Makefile note.txt
-echo abc def < note.txt lol
-Clear history
-
 
 --- Autre ---
-- avoir un beau prompt (facultatif)
-- ctrl c in heredoc still reachable
 
 a la fin:
 changer le Makefile
 
 Parser leak 
-double quote et signle quote
-syntax error ls |<<eof
-
-unset error
-can only be a to z and #

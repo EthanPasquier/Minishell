@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 15:12:45 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:22:31 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	ft_failed_command(t_token *token, t_child *child)
 	write(2, child->cmd[0], ft_strlen(child->cmd[0]));
 	write(2, ": command not found\n", 20);
 	ft_free_child(token, child);
-	exit(EXIT_SUCCESS);
+	exit(5);
 }
 
 static void	ft_fd_error(t_token *token, t_child *c, int flag)
