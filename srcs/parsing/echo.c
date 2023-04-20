@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:40:59 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/19 17:48:41 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/20 08:47:39 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	*ft_resizeecho(char *str, int i, int nb)
 	j++;
 	new[j] = 'n';
 	i = nb;
+	j++;
+	new[j] = ' ';
 	j++;
 	while (i < (int)ft_strlen(str))
 	{
