@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 14:41:49 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 14:41:50 by jalevesq         ###   ########.fr       */
+/*   Created: 2023/04/18 15:34:03 by epasquie          #+#    #+#             */
+/*   Updated: 2023/04/20 13:29:17 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,3 +96,4 @@ char	**ft_write_cut(char *str)
 	free(output);
 	return (abc);
 }
+

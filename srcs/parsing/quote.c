@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:18:27 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/19 14:40:39 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:28:36 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,10 @@ int	ft_ordreguillemet(char *str)
 	return (0);
 }
 
-char	*ft_suppguillemet(char *new, int tmp)
+char	*ft_suppguillemet(char *new, int tmp, int i, char c)
 {
-	int		i;
-	char	c;
+	char	*str;
 
-	i = 0;
-	c = '\0';
 	tmp = 0;
 	while (new[i])
 	{
@@ -60,7 +57,11 @@ char	*ft_suppguillemet(char *new, int tmp)
 		}
 		i++;
 	}
-	new[i] = 0;
+	str = ft_suppspace(new);
+	if (ft_strlen(str) < ft_strlen(new))
+		free(new);
+	new = ft_strdup(str);
+	free(str);
 	return (new);
 }
 
@@ -86,6 +87,6 @@ char	*ft_guillemet(char *str, t_child *child, int k)
 		free(str);
 		str = NULL;
 	}
-	cut.new = ft_suppguillemet(cut.new, cut.tmp);
+	cut.new = ft_suppguillemet(cut.new, cut.tmp, 0, '\0');
 	return (cut.new);
 }

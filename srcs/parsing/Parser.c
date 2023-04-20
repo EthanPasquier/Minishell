@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:23:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 16:26:28 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:28:12 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ char	*ft_commandoption(char *str)
 	{
 		while (str[i] == 32)
 			i++;
-		i--;
-		if (str[i] != '-')
+		if (str[i - 1] != '-')
 			return (str);
 		new = ft_echoargument(str, 0);
-		if (ft_strncmp(new, str, ft_strlen(new)) != 0)
+		if (ft_strncmp(new, str, ft_strlen(str)) != 0)
 			free(str);
 		return (new);
 	}

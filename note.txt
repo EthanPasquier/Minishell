@@ -10,3 +10,5 @@ a la fin:
 changer le Makefile
 
 Parser leak 
+double quote et signle quote
+syntax error ls |<<eof
