@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 15:16:10 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 21:37:26 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ static int	ft_pipe_counter(t_token *token)
 	return (i);
 }
 
+/**
+ * Main function of the executor that checks the here_docs,
+ * checks if the command is a builtin and calls the function
+ * that creates the childs process. 
+ **/
 static void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 {
 	t_token	*tmp;
@@ -53,6 +58,10 @@ static void	ft_exec_command(t_token *t, t_child *c, pid_t *pid)
 	}
 }
 
+/**
+ * This function creates an array of pipes and malloc
+ * pid_t the number of child processes there will be (1 per pipe + 1). 
+**/
 static void	ft_command(t_token *token, t_child *child)
 {
 	pid_t	*pid;
@@ -85,6 +94,12 @@ void	ft_check_pwd(t_child *child)
 		return ;
 }
 
+/**
+ * The first function of the executor. It is used to initiate and call
+ * one of the main functions, ft_command. After executing the command, ft_check_pwd
+ * is called to check if the pwd is accessible. If it is not, then the pwd
+ * is changed to the .Trash or the HOME variable in env.
+**/
 void	ft_executor(t_token *token, t_child *child)
 {
 	child->pipe_nbr = ft_pipe_counter(token);

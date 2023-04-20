@@ -6,12 +6,18 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 14:32:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 21:10:25 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * Sets up input/output redirections for the child process using linked list.
+ * If needed, stdin and stdout of each command will change depending 
+ * on (the order of) the redirections <, <<, >, >> and |.
+ * The redirections are managed with the @param token linked list
+ */
 static void	ft_redirection(t_token *tmp, t_child *child)
 {
 	child->j = child->i * 2;
@@ -34,6 +40,11 @@ static void	ft_redirection(t_token *tmp, t_child *child)
 	ft_pipe_child(child, tmp);
 }
 
+/**
+ *  This function checks if the command is a builtin that needs
+ * 	to be executed if not, it check if the path to the` command exist.
+ * 	if exist, execute the command.
+**/
 static void	ft_exec_cmd(t_token *tmp, t_child *child)
 {
 	if ((child->is_builtin > 0 && child->is_builtin < 3)
@@ -56,6 +67,12 @@ static void	ft_exec_cmd(t_token *tmp, t_child *child)
 	}
 }
 
+/**
+ * This function is the heart of the child process.
+ * It calls the function that is used to change the redirections
+ * and then executes the command (if any) 
+**/
+
 static void	ft_exec_child(t_child *child, t_token *tmp)
 {
 	t_token	*tmp2;
@@ -72,6 +89,13 @@ static void	ft_exec_child(t_child *child, t_token *tmp)
 	exit(EXIT_SUCCESS);
 }
 
+
+/**
+ * This function is before the child process.
+ * It checks if it is a builtin that needs to be executed outside a
+ * child process (exit, export, unset, cd) or if it is a normal command
+ * it will find the path to it. 
+**/
 static void	ft_builtins_or_cmd(t_child *c, t_token *tmp, pid_t *pid)
 {
 	if (c->is_builtin > 0 && c->is_builtin < 5)
@@ -87,6 +111,10 @@ static void	ft_builtins_or_cmd(t_child *c, t_token *tmp, pid_t *pid)
 	}
 }
 
+/**
+ * This function takes care of calling the function to find the command, 
+ * if there is one. It prepares the child process before creating it.
+**/
 void	ft_process_child(t_child *c, t_token *tmp, pid_t *p)
 {
 	c->cmd = ft_find_cmd(tmp);

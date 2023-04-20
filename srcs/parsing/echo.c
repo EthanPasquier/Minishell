@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:40:59 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/19 15:55:23 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:40:29 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,13 @@ static char	*ft_echoargument_suite_v2(char *str, int j)
 
 static char	*ft_echoargument_suite(char *str, int i)
 {
-	int		tmp;
 	char	*new;
-	int		j;
 
-	tmp = 0;
 	new = ft_strdup(str);
-	j = i;
 	while (str[i] && str[i] != 32)
 	{
 		if (str[i] == 'n' && str[i - 1] != '-')
-		{
 			str[i] = 29;
-			tmp++;
-		}
 		else if (str[i] != 'n' && str[i] != 29 && str[i] != 32)
 		{
 			free(str);
@@ -91,10 +84,8 @@ static char	*ft_echoargument_suite(char *str, int i)
 char	*ft_echoargument(char *str, int i)
 {
 	int	tmp;
-	int	nb;
 
 	tmp = 0;
-	nb = 0;
 	while (i >= 0)
 	{
 		i = ft_where(str, '-', i) - 1;
