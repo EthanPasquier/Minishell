@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:40:59 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 10:36:04 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:07:07 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ int	ft_echoargument_suite(int i, char *str)
 			i++;
 			while (str[i] == 'n')
 				i++;
-			if (str[i] != 32 && i < (int)ft_strlen(str))
+			if (str[i] && str[i] != 32 && i < (int)ft_strlen(str))
 				return (tmp);
 			nb = i - 1;
 		}
 		else if (str[i] != 32)
 			return (nb);
-		i++;
+		if (i < (int)ft_strlen(str))
+			i++;
 	}
 	return (nb);
 }
@@ -40,9 +41,11 @@ int	ft_echoargument_suite(int i, char *str)
 char	*ft_resizeecho(char *str, int i, int nb)
 {
 	int		j;
+	int		num;
 	char	*new;
 
-	new = ft_calloc(sizeof(char), ft_strlen(str) - (nb - i) + 1);
+	num = ft_strlen(str) - (nb - i) + 3;
+	new = ft_calloc(sizeof(char), num);
 	j = 0;
 	while (j <= i + 1)
 	{
@@ -52,7 +55,7 @@ char	*ft_resizeecho(char *str, int i, int nb)
 	new[j] = 32;
 	i = nb + 1;
 	j++;
-	while (i <= (int)ft_strlen(str))
+	while (i < (int)ft_strlen(str) && j < num)
 	{
 		new[j] = str[i];
 		i++;
