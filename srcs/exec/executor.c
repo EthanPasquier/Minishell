@@ -6,31 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 09:37:56 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:58:46 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	**ft_find_cmd(t_token *token)
-{
-	t_token	*tmp;
-	char	**cmd;
-
-	tmp = token;
-	if (tmp && tmp->type == PIPE)
-		tmp = tmp->next;
-	while (tmp && tmp->type != PIPE && tmp->type != CMD)
-		tmp = tmp->next;
-	if (tmp && tmp->type == CMD)
-	{
-		cmd = ft_split(tmp->str, ' ');
-		if (cmd)
-			return (cmd);
-	}
-	return (NULL);
-}
-
 
 static int	ft_pipe_counter(t_token *token)
 {
@@ -116,9 +96,9 @@ void	ft_check_pwd(t_child *child)
 
 /**
  * The first function of the executor. It is used to initiate and call
- * one of the main functions, ft_command. After executing the command, ft_check_pwd
- * is called to check if the pwd is accessible. If it is not, then the pwd
- * is changed to the .Trash or the HOME variable in env.
+ * one of the main functions, ft_command. After executing the command,
+ * ft_check_pwd is called to check if the pwd is accessible. If it is not,
+ * then the pwd is changed to the .Trash or the HOME variable in env.
 **/
 void	ft_executor(t_token *token, t_child *child)
 {

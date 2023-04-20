@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 18:01:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 21:10:25 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:56:51 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static void	ft_exec_child(t_child *child, t_token *tmp)
 	ft_free_child(tmp2, child);
 	exit(EXIT_SUCCESS);
 }
-
 
 /**
  * This function is before the child process.
