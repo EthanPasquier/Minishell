@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:44:26 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 14:09:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:06:12 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ char	*ft_globvar(char *str, int limit, t_child *child, int nb)
 		limit += ft_strlen(mots);
 		free(mots);
 		a = ft_where(final, '$', a + 1);
-		printf("%d\n", limit);
-		printf("%d\n", a);
-		exit(EXIT_FAILURE);
 	}
 	free(str);
 	return (final);
