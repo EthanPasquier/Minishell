@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:15:48 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/18 10:46:28 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:59:28 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ char	*ft_find_var_suite(char *str, char *vars, t_child *child, int a)
 		new = ft_redifine(vars, str, a);
 		free(str);
 		free(vars);
+		return (new);
+	}
+	else
+	{
+		new = ft_redifine(" ", str, a);
+		free(str);
 		return (new);
 	}
 	return (str);
