@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 15:33:54 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 09:19:39 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:57:35 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_commandoption(char *str)
 		if (str[i - 1] != '-')
 			return (str);
 		new = ft_echoargument(str, 0);
-		if (ft_strncmp(new, str, ft_strlen(new)) != 0)
+		if (ft_strncmp(new, str, ft_strlen(str)) != 0)
 			free(str);
 		return (new);
 	}
