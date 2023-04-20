@@ -6,7 +6,7 @@
 /*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:40:59 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 08:47:39 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:29:50 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ char	*ft_resizeecho(char *str, int i, int nb)
 		j++;
 		i++;
 	}
-	new[j] = 0;
-	str = ft_strdup(new);
-	free(new);
-	return (str);
+	return (new);
 }
 
 char	*ft_echoargument(char *str, int i)
@@ -81,10 +78,11 @@ char	*ft_echoargument(char *str, int i)
 		i++;
 	}
 	nb = ft_echoargument_suite(i, str);
-	if (i >= nb)
+	printf("i = %d\nnb = %d\n", i, nb);
+	if (i >= nb - 1)
 		return (str);
 	new = ft_resizeecho(str, i, nb + 1);
 	str = ft_strdup(new);
 	free(new);
-	return (str);
+	return (new);
 }
