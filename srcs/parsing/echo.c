@@ -6,10 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:40:59 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 13:20:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:38:40 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/minishell.h"
 
 int	ft_echoargument_suite(int i, char *str)
 {
@@ -66,37 +67,13 @@ char	*ft_resizeecho(char *str, int i, int nb)
 
 char	*ft_echoargument(char *str, int i)
 {
+	int		tmp;
 	char	*new;
-	int		j;
-
-	tmp = 0;
-	new = ft_strdup(str);
-	j = i;
-	while (str[i] && str[i] != 32)
-	{
-		if (str[i] == 'n' && str[i - 1] != '-')
-		{
-			str[i] = 29;
-			tmp++;
-		}
-		else if (str[i] != 'n' && str[i] != 29 && str[i] != 32)
-		{
-			str = ft_strdup(new);
-			break ;
-		}
-		i++;
-	}
-	return (ft_echoargument_suite_v2(str, i));
-}
-
-char	*ft_echoargument(char *str, int i)
-{
-	int	tmp;
-	int	nb;
+	int		nb;
 
 	tmp = 0;
 	nb = 0;
-	while (i >= 0)
+	while (str[i])
 	{
 		if (str[i] == '-')
 			break ;

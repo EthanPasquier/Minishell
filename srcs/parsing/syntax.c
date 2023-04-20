@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 13:29:50 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:43:18 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,3 @@ char	*ft_suppspace(char *str)
 		return (str);
 	return (ft_suppspace_suite(i, size, str));
 }
-
