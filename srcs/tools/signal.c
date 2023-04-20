@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 18:02:59 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 14:35:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:52:39 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	ft_ctrlc(int sig)
 void	ft_quit(int sig)
 {
 	(void)sig;
-	rl_on_new_line();
 	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	exit(3);
 }

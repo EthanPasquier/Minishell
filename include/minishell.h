@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 15:36:03 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:50:17 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ void		ft_heredoc(t_token *token, t_child *child, pid_t *pid2);
 int			ft_heredoc_nbr(t_token *t);
 void		ft_pipe_doc(t_child *child);
 int			ft_is_doc_last(t_token *token);
+void		ft_sig_n_input(t_child *child);
+void		ft_exit_doc(t_token *token, t_child *child);
 void		ft_quit(int sig);
 
 /* UTILS FOR EXECUTOR */

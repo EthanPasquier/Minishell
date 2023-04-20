@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 16:22:31 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:36:11 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,10 @@ void	ft_child_error(t_token *token, t_child *c, int flag)
 		ft_fd_error(token, c, flag);
 	else if (flag == ERR_PID)
 		;
+}
+
+void	ft_exit_doc(t_token *token, t_child *child)
+{
+	ft_free_child_doc(child, token);
+	exit(EXIT_SUCCESS);
 }
