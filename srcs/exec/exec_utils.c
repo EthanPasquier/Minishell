@@ -6,11 +6,21 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 16:38:09 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:03:57 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	ft_too_much_pipe(int *fd_array, int pipe_nbr)
+{
+	write(2, "Minishell: pipe: environment limit.", 35);
+	write(2, " Use a better terminal or use less pipe.\n", 41);
+	if (fd_array)
+		ft_close_fd(fd_array, pipe_nbr);
+	if (fd_array)
+		free(fd_array);
+}
 
 int	*ft_set_pipe(t_child *child)
 {
@@ -27,7 +37,10 @@ int	*ft_set_pipe(t_child *child)
 	while (index_cmd < child->pipe_nbr)
 	{
 		if (pipe(pipe_fd) == -1)
-			write(2, "pipe error in set_pipe\n", 23);
+		{
+			ft_too_much_pipe(fd_array, child->pipe_nbr);
+			return (NULL);
+		}
 		fd_array[fd_index] = pipe_fd[1];
 		fd_array[fd_index + 1] = pipe_fd[0];
 		fd_index += 2;
@@ -43,7 +56,7 @@ void	ft_close_fd(int *fd_array, int pipe_nbr)
 
 	index = 0;
 	i = 0;
-	if (pipe_nbr > 0)
+	if (pipe_nbr > 0 && fd_array)
 	{
 		while (index < pipe_nbr)
 		{

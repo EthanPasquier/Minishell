@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 09:58:46 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:54:58 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ static void	ft_command(t_token *token, t_child *child)
 		return ;
 	if (child->pipe_nbr > 0)
 		child->fd_array = ft_set_pipe(child);
+	if (child->fd_array == NULL && child->pipe_nbr > 0)
+	{
+		printf("TEST\n");
+		free(pid);
+		return ;
+	}
 	ft_exec_command(token, child, pid);
 	if (child->pipe_nbr > 0)
 		ft_close_fd(child->fd_array, child->pipe_nbr);
