@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:26:15 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/14 10:27:45 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:28:43 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ void	ft_free_exec(char **cmd, char *cmd_path)
 void	ft_cmd_error(t_child *child)
 {
 	write(2, "minishell: ", 11);
-	write(2, child->cmd[0], ft_strlen(child->cmd[0]));
+	if (!child->cmd[0])
+		write(2, " ", 1);
+	else
+		write(2, child->cmd[0], ft_strlen(child->cmd[0]));
 	write(2, ": command not found\n", 20);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 15:33:54 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 16:02:35 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:24:13 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_parser_suite(char *str, t_token *tmp, t_child *child)
 		free(tmp->str);
 		test = ft_strdup(str);
 		tmp->str = ft_guillemet(str, child, 0);
-		if (ft_strncmp(tmp->str, test, ft_strlen(tmp->str)) == 0)
+		if (str && tmp->str && ft_strncmp(tmp->str, test, ft_strlen(test)) == 0)
 			free(str);
 		free(test);
 		str = ft_strtrim(tmp->str, " ");

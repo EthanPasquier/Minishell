@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 14:40:57 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 13:41:07 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:31:31 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,16 @@ void	ft_globvarguill(t_guill *cut, char *str, t_child *child)
 
 void	ft_reaxguill(t_guill *cut, char *str)
 {
-	cut->i = ft_varcount(cut->new, cut->i);
-	if (ft_where(str, 34, cut->i) >= 0 || ft_where(str, 39, cut->i) >= 0)
+	if (cut->i < (int)ft_strlen(str))
+	{
 		cut->i = ft_varcount(cut->new, cut->i);
+		if (ft_where(str, 34, cut->i) >= 0 || ft_where(str, 39, cut->i) >= 0)
+			cut->i = ft_varcount(cut->new, cut->i);
+		else
+			cut->i--;
+	}
 	else
-		cut->i--;
+		cut->i = ft_strlen(str) - 1;
 }
 
 char	*ft_replaceguill(t_guill *cut, char *str, t_child *child)

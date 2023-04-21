@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 09:55:11 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/19 15:11:37 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:23:45 by epasquie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char	*find_cmd_path(t_child *child)
 	char	*tmp;
 
 	i = 0;
+	if (!child->cmd[0])
+		return (NULL);
 	if (ft_strncmp(child->cmd[0], "./", 2) == 0)
 		return (ft_mini_in_mini(child));
 	else if (ft_strncmp(child->cmd[0], "/", 1) == 0)
