@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 15:34:03 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 13:42:20 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:35:54 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,3 @@ char	**ft_write_cut(char *str)
 	free(output);
 	return (abc);
 }
-

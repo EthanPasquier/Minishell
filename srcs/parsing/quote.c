@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:18:27 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/21 15:29:03 by epasquie         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:35:38 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_guillemet(char *str, t_child *child, int k)
 		if ((str[cut.i] == 39 || str[cut.i] == 34) && cut.tmp == 0)
 			ft_markguill(&cut, str);
 		else if ((str[cut.i] == cut.c && cut.tmp == 1) || (str[cut.i] == '$'
-					&& cut.tmp == 0))
+				&& cut.tmp == 0))
 		{
 			str = ft_replaceguill(&cut, str, child);
 			k++;
