@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 13:35:33 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:13:53 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,13 +162,13 @@ void				ft_child_error(t_token *token, t_child *c, int flag);
 void				ft_less_n_great(t_child *child, t_token *tmp);
 void				ft_pipe_child(t_child *child, t_token *token);
 
-void		ft_heredoc(t_token *token, t_child *child, pid_t *pid2);
-int			ft_heredoc_nbr(t_token *t);
-void		ft_pipe_doc(t_child *child);
-int			ft_is_doc_last(t_token *token);
-void		ft_sig_n_input(t_child *child);
-void		ft_exit_doc(t_token *token, t_child *child);
-void		ft_quit(int sig);
+void				ft_heredoc(t_token *token, t_child *child, pid_t *pid2);
+int					ft_heredoc_nbr(t_token *t);
+void				ft_pipe_doc(t_child *child);
+int					ft_is_doc_last(t_token *token);
+void				ft_sig_n_input(t_child *child);
+void				ft_exit_doc(t_token *token, t_child *child);
+void				ft_quit(int sig);
 
 /* UTILS FOR EXECUTOR */
 char				**ft_find_cmd(t_token *token);
@@ -207,6 +207,7 @@ void				ft_exit(t_child *child, t_token *token, pid_t *pid);
 void				ft_echo(t_child *child);
 /*********************************************************/
 // Free & End function.
+void				ft_too_much_pipe(int *fd_array, int pipe_nbr);
 void				ft_free_child(t_token *token, t_child *c);
 void				ft_free_child_doc(t_child *child, t_token *token);
 void				*ft_free_double(char **str);

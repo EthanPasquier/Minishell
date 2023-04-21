@@ -6,21 +6,11 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/21 17:03:57 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:11:24 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	ft_too_much_pipe(int *fd_array, int pipe_nbr)
-{
-	write(2, "Minishell: pipe: environment limit.", 35);
-	write(2, " Use a better terminal or use less pipe.\n", 41);
-	if (fd_array)
-		ft_close_fd(fd_array, pipe_nbr);
-	if (fd_array)
-		free(fd_array);
-}
 
 int	*ft_set_pipe(t_child *child)
 {

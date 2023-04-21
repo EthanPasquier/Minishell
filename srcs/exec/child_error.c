@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:51:42 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 09:36:11 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:11:35 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ void	ft_free_child(t_token *token, t_child *c)
 	free(c);
 }
 
-static void	ft_failed_command(t_token *token, t_child *child)
+void	ft_too_much_pipe(int *fd_array, int pipe_nbr)
 {
-	write(2, "minishell: ", 11);
-	write(2, child->cmd[0], ft_strlen(child->cmd[0]));
-	write(2, ": command not found\n", 20);
-	ft_free_child(token, child);
-	exit(5);
+	write(2, "Minishell: pipe: environment limit.", 35);
+	write(2, " Use a better terminal or use less pipe.\n", 41);
+	if (fd_array)
+		ft_close_fd(fd_array, pipe_nbr);
+	if (fd_array)
+		free(fd_array);
 }
 
 static void	ft_fd_error(t_token *token, t_child *c, int flag)
@@ -76,7 +77,13 @@ static void	ft_fd_error(t_token *token, t_child *c, int flag)
 void	ft_child_error(t_token *token, t_child *c, int flag)
 {
 	if (flag == ERR_EXECVE)
-		ft_failed_command(token, c);
+	{
+		write(2, "minishell: ", 11);
+		write(2, c->cmd[0], ft_strlen(c->cmd[0]));
+		write(2, ": command not found\n", 20);
+		ft_free_child(token, c);
+		exit(5);
+	}
 	else if (flag == ERR_OPEN_LESS || flag == ERR_OPEN_GREAT
 		|| flag == ERR_DUP2)
 		ft_fd_error(token, c, flag);
