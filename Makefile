@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epasquie <epasquie@student.42.fr>          +#+  +:+       +#+         #
+#    By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 09:17:42 by jalevesq          #+#    #+#              #
-#    Updated: 2023/04/21 15:33:07 by epasquie         ###   ########.fr        #
+#    Updated: 2023/04/21 17:22:15 by jalevesq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,14 +73,12 @@ $(LIBRD):
 	rm -rf $(LIBRLINE)
 
 clean:
-		rm -f $(OBJ) $(LIBFT)
-		make -C libft/ clean
-		rm -rf $(OBJ_DIR)
+	rm -f $(OBJ) $(LIBFT)
+	make -C libft/ clean
+	rm -rf $(OBJ_DIR)
+	cd include/ && rm -rf readline
 
 fclean:		clean
-		rm -f $(NAME) $(NAME_BONUS)
+	rm -f $(NAME) $(NAME_BONUS)
 
 re:		fclean all
-
-cleanlib:	
-	cd include/ && rm -rf readline
