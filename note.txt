@@ -1,3 +1,0 @@
-Exit
-Too many argument: exit code is 1
-numeric argument required: exit code is 255
