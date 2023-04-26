@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 09:03:01 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 06:22:19 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,50 +65,47 @@ static int	ft_is_remove(t_child *child, int i)
 	return (0);
 }
 
-static void	ft_unset_dont_exec(t_child *child)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (child->cmd[i])
-	{
-		j = 0;
-		while (child->cmd[i][j])
-		{
-			if (ft_isalpha(child->cmd[i][j]) == 1 || child->cmd[i][j] == '#'
-				|| child->cmd[i][j] == '_')
-				j++;
-			else
-			{
-				write(2, "minishell: unset: syntax error near \'", 37);
-				write(2, child->cmd[i], ft_strlen(child->cmd[i]));
-				write(2, "\'\n", 2);
-				break ;
-			}
-		}
-		i++;
-	}
-}
-
-int	ft_check_exception(char *str)
+int	ft_other_unset(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalpha(str[i]) == 1 || str[i] == '#' || str[i] == '_')
-			i++;
-		else
+		if (ft_isalnum(str[i]) == 0) // retourne 0 si pas lettre
 		{
-			write(2, "minishell: unset: syntax error near \'", 37);
-			write(2, str, ft_strlen(str));
-			write(2, "\'\n", 2);
-			return (1);
+			if (str[i] != '_')
+				return (1);
 		}
+		i++;
 	}
 	return (0);
+}
+
+int	ft_check_exception(char *str)
+{
+	if (ft_only_digit(str) == 0 && ft_other_unset(str) == 0)
+		return (0);
+	else
+	{
+		write(2, "minishell: unset: syntax error near \'", 37);
+		write(2, str, ft_strlen(str));
+		write(2, "\'\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
+static void	ft_unset_dont_exec(t_child *child)
+{
+	int	i;
+
+	i = 1;
+	while (child->cmd[i])
+	{		
+		ft_check_exception(child->cmd[i]);
+		i++;
+	}
 }
 
 int	ft_unset(t_child *child)

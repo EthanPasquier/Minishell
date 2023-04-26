@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/26 05:00:55 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 06:10:14 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ int					ft_does_it_exist(int i, int j, char **export,
 						t_child *child);
 void				sort_env_alph(char **env_copy, int count);
 int					len_equal(char *str);
+int					ft_only_digit(char *str);
 void				ft_change_pwd(t_child *child, char *new_cd);
 int					ft_cd_dont_exec(t_child *child);
 int					ft_export_nbr(t_child *child);

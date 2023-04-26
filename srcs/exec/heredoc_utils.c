@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 08:06:13 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 09:51:31 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 05:34:04 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,32 @@ int	ft_heredoc_nbr(t_token *t)
 
 void	ft_sig_n_input(t_child *child)
 {
+	// int	i;
+	
+	// i = 0;
 	signal(SIGINT, ft_quit);
 	child->heredoc.str = readline(">");
+	// while (child->heredoc.str[i])
+	// {
+	// 	if (child->heredoc.str[i] == '$' && child->heredoc.str[i+1]
+	// 		&& ft_strchr(" $", child->heredoc.str[i+1] != NULL))
+	// 		break;
+	// 	i++;
+	// }
+	// if (i < ft_strlen(child->heredoc.str))
+	// 	ft_env_var_heredoc(child);
+	
 }
+
+// void	ft_env_var_heredoc(t_child *child)
+// {
+// 	int		i;
+// 	int		new_char_nbr;
+// 	char	*env_var;
+// 	char	*new_str;
+
+// 	i = 0;
+// 	new_char_nbr = 0;
+	
+	
+// }

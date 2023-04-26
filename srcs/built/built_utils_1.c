@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:27:48 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/18 09:02:15 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 05:52:56 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,6 @@ int	ft_check_if_29(char *str)
 		i++;
 	}
 	return (0);
-}
-
-int	ft_digit_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_isalpha(str[i]) == 0)
-		{
-			if (str[i] != '#' || str[i] != '_')
-				return (1);
-		}
-		i++;
-	}
-	if (str[i] && str[i] == '=')
-		return (0);
-	return (1);
 }
 
 int	ft_does_it_exist(int i, int j, char **export, t_child *child)
