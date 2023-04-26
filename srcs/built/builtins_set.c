@@ -6,13 +6,13 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:49:12 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/17 19:03:38 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 04:58:25 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	len(t_token *token)
+int	len(t_token *token)
 {
 	t_token	*tmp;
 	int		i;
@@ -71,6 +71,8 @@ void	ft_which_builtins(t_child *child, t_token *token, pid_t *pid)
 
 void	ft_which_builtins_child(t_child *child, t_token *token)
 {
+	int	exit_code;
+
 	if (child->is_builtin == 3)
 		ft_exit(child, token, NULL);
 	else if (child->is_builtin == 4 && !child->cmd[1])
@@ -81,8 +83,17 @@ void	ft_which_builtins_child(t_child *child, t_token *token)
 		ft_env(child);
 	else if (child->is_builtin == 7)
 		ft_echo(child);
-	ft_free_child(token, child);
-	exit(EXIT_SUCCESS);
+	if (child->is_builtin == 3)
+	{
+		exit_code = child->exit_code;
+		ft_free_child(token, child);
+		exit(exit_code);
+	}
+	else
+	{
+		ft_free_child(token, child);
+		exit(EXIT_SUCCESS);
+	}
 }
 
 char	*ft_getenv(char **envp, char *var)

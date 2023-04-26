@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 11:40:59 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 13:38:40 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 03:37:52 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,9 @@ char	*ft_resizeecho(char *str, int i, int nb)
 
 char	*ft_echoargument(char *str, int i)
 {
-	int		tmp;
 	char	*new;
 	int		nb;
 
-	tmp = 0;
 	nb = 0;
 	while (str[i])
 	{

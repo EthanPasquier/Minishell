@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 14:31:24 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/21 17:13:53 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 05:00:55 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_heredoc
 
 typedef struct s_child
 {
+	int				is_exit_last_cmd;
 	int				great_mark;
 	int				flag_cmd;
 	int				less_mark;
@@ -173,6 +174,7 @@ void				ft_quit(int sig);
 /* UTILS FOR EXECUTOR */
 char				**ft_find_cmd(t_token *token);
 int					*ft_set_pipe(t_child *child);
+int					ft_is_exit_last_cmd(t_token *token);
 int					cmd_counter(t_token *token);
 void				ft_wait(pid_t *pid, t_child *child);
 void				ft_close_fd(int *fd_array, int cmd_nbr);
@@ -185,6 +187,7 @@ char				**ft_copy_env(char **env);
 int					ft_is_builtins(t_token *token);
 void				ft_which_builtins(t_child *child, t_token *token,
 						pid_t *pid);
+int					len(t_token *token);
 void				ft_which_builtins_child(t_child *child, t_token *token);
 
 char				*ft_getenv(char **envp, char *var);

@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:39:17 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/21 16:54:58 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 05:00:32 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	ft_check_pwd(t_child *child)
 **/
 void	ft_executor(t_token *token, t_child *child)
 {
+	child->is_exit_last_cmd = ft_is_exit_last_cmd(token);
 	child->pipe_nbr = ft_pipe_counter(token);
 	child->cmd_nbr = cmd_counter(token);
 	child->all_path = find_path(child);

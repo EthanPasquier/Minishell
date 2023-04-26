@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 13:14:23 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/21 17:11:24 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 04:49:41 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ void	ft_wait(pid_t *pid, t_child *child)
 	while (i < child->pipe_nbr + 1)
 	{
 		waitpid(pid[i], &status, 0);
-		if (child->is_builtin != 2 && g_exit_code == 0)
+		if (child->is_exit_last_cmd == 1 && child->cmd_nbr > 1)
+			child->exit_code = status / 256;
+		else if (child->is_builtin != 2 && g_exit_code == 0)
 		{
 			if (status / 256 == 4)
 				child->exit_code = 1;

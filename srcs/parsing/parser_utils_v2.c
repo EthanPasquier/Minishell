@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:15:48 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 16:02:14 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 03:38:36 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,6 @@ char	*ft_take_var(char *str, int position)
 
 int	ft_varcount(char *new, int i)
 {
-	int	nb;
-
-	nb = i;
 	while (new[i] && (new[i] == '?' || ft_isalpha(new[i]) == 1))
 		i++;
 	return (i);

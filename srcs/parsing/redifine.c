@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 13:53:14 by epasquie          #+#    #+#             */
-/*   Updated: 2023/04/20 13:41:45 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 03:38:09 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static char	*ft_redifine_suite_v2(char *mots, t_cut cut, char *str, char *new)
 char	*ft_redifine(char *mots, char *str, int w)
 {
 	int		a;
-	int		b;
 	t_cut	cut;
 	int		c;
 	char	*new;
@@ -74,7 +73,6 @@ char	*ft_redifine(char *mots, char *str, int w)
 	c = ft_redifine_suite(str, mots, 2, w);
 	new = ft_calloc(sizeof(char), c + 1);
 	a = ft_redifine_suite(str, mots, 3, w);
-	b = 0;
 	cut.i = 0;
 	cut.j = w;
 	while (cut.i < a)
