@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 12:34:28 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/26 06:22:19 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/26 06:26:08 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_other_unset(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) == 0) // retourne 0 si pas lettre
+		if (ft_isalnum(str[i]) == 0)
 		{
 			if (str[i] != '_')
 				return (1);
