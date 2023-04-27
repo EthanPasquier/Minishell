@@ -44,7 +44,20 @@ Le projet Minishell de l'école 42 consiste en la création d'un programme de sh
    <img width="521" alt="Screen Shot 2023-04-27 at 9 49 12 AM" src="https://user-images.githubusercontent.com/114168621/234900101-f6df125b-47be-466b-9cd4-ff4ffff4f187.png">
 4. Utiliser le shell en tapant des commandes standard ou en utilisant les fonctionnalités spécifiques.
 
-
+### Fonctionnement
+Le programme se décompose en plusieurs fichiers source :
+```
+.
+├── include
+├── libft
+├── srcs
+│   ├── built
+│   ├── exec
+│   ├── main
+│   ├── parsing
+│   └── tools
+└── Makefile
+```
 
 # MiniShell - Parsing
 
@@ -80,3 +93,5 @@ Dans ce fichier README, nous expliquerons la partie Parsing du projet MiniShell 
 
 13. On envoie notre liste chaînée avec nos commandes et la liste chaînée des types dans l'exécuteur qui s'occupera du reste.
 
+## Conclusion
+Minishell est un projet intéressant pour se familiariser avec la programmation en C et la manipulation de processus. Il est également utile pour comprendre le fonctionnement d'un shell et les fonctionnalités de base telles que l'environnement système, les redirections et les pipes.
