@@ -79,6 +79,6 @@ clean:
 	cd include/ && rm -rf readline
 
 fclean:		clean
-	rm -f $(NAME) $(NAME_BONUS)
+	rm -f $(NAME)
 
 re:		fclean all
