@@ -1,5 +1,5 @@
 # Minishell
-Le dépôt actuel comprend le fichier README de l'exécuteur. Si vous souhaitez obtenir des informations sur le parsing, je vous recommande de consulter le compte GitHub de mon coéquipier, accessible via ce lien : https://github.com/Jalevesq/Minishell
+Le dépôt actuel comprend le fichier README du Parsing. Si vous souhaitez obtenir des informations sur l'executeur, je vous recommande de consulter le compte GitHub de mon coéquipier, accessible via ce lien : https://github.com/Jalevesq/Minishell
 
 ## Introduction
 Le projet Minishell de l'école 42 consiste en la création d'un programme de shell simplifié en langage C. L'objectif de ce projet est de comprendre le fonctionnement d'un shell et de mettre en pratique les connaissances en manipulation de processus et en gestion de fichiers (fd).
