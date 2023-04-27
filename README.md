@@ -60,6 +60,8 @@ Le programme se décompose en plusieurs fichiers source :
 └── Makefile
 ```
 
+Pour comprendre l'executeur : https://github.com/Jalevesq/Minishell
+
 # MiniShell - Parsing
 
 Dans ce fichier README, nous expliquerons la partie Parsing du projet MiniShell de l'école 42.
