@@ -1,3 +1,51 @@
+# Minishell
+Le repo actuel contient un README en français, mais une version française est disponible sur le repo original, situé sur le compte GitHub de mon coéquipier : https://github.com/Jalevesq/minishell.
+## Introduction
+Le projet Minishell de l'école 42 consiste en la création d'un programme de shell simplifié en langage C. L'objectif de ce projet est de comprendre le fonctionnement d'un shell et de mettre en pratique les connaissances en manipulation de processus et en gestion de fichiers (fd).
+## Répartition des tâches
+- Parsing : réalisé par moi-même
+- Exécuteur & Builtins: réalisé par Jalevesq
+## Fonctionnalités
+- Lecture des commandes de l'utilisateur. (Main)
+- Gestion des erreurs de saisie d'utilisateur. (Parsing)
+- Lancement des exécutables (en utilisant les chemins relatifs et absolus ainsi que la variable d'environnement PATH). (Exécuteur)
+- Gestion de l'historique des commandes. (Main)
+- Gestion des variables d'environnement (substitution de la variable d'environnement $ par sa valeur). (Parsing)
+- Implémentation des builtins (Exécuteur) :
+  - echo avec l'option -n.
+  - cd uniquement avec un chemin relatif ou absolu.
+  - pwd sans aucune option.
+  - export sans aucune option.
+  - unset sans aucune option.
+  - env sans aucune option ni argument.
+  - exit sans aucune option.
+- Gestion des redirections (<, >, >>, <<). (Exécuteur)
+- Gestion des pipes (|). (Exécuteur)
+- Gestion des signaux (ctrl-C, ctrl-D, ctrl-\\). (Main)
+- Support des single quotes (') qui empêchent l'interprétation des méta-caractères dans la séquence entre guillemets. (Parsing)
+- Support des double quotes (") qui empêchent l'interprétation des méta-caractères dans la séquence entre guillemets sauf pour le signe dollar $. (Parsing)
+- Support de la substitution de $? par le statut de sortie de la dernière commande exécutée au premier plan. (Parsing)
+## Utilisation
+1. Cloner le dépôt :
+   ```
+   git clone https://github.com/EthanPasquier/minishell.git
+   ```
+2. Compiler le programme (le Makefile télécharge automatiquement la librairie Readline nécessaire pour le bon fonctionnement du programme) :
+   ```
+   make
+   ```
+   *Note : Veuillez noter que le téléchargement et la compilation de la librairie Readline peuvent prendre un certain temps, en fonction de votre connexion internet et des performances de votre ordinateur. Si vous rencontrez des problèmes lors du téléchargement ou de la compilation, vous pouvez réessayer en exécutant à nouveau la commande make ou make re.
+
+   <img width="328" alt="Screen Shot 2023-04-27 at 10 52 15 AM" src="https://user-images.githubusercontent.com/114168621/234901152-61c95411-dca4-450a-ab9f-57d0561c6970.png">
+3. Lancer le shell :
+   ```
+   ./minishell
+   ```
+   <img width="521" alt="Screen Shot 2023-04-27 at 9 49 12 AM" src="https://user-images.githubusercontent.com/114168621/234900101-f6df125b-47be-466b-9cd4-ff4ffff4f187.png">
+4. Utiliser le shell en tapant des commandes standard ou en utilisant les fonctionnalités spécifiques.
+
+
+
 # MiniShell - Parsing
 
 Dans ce fichier README, nous expliquerons la partie Parsing du projet MiniShell de l'école 42.
