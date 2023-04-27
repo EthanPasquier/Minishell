@@ -4,7 +4,7 @@ Le dépôt actuel comprend le fichier README du Parsing. Si vous souhaitez obten
 ## Introduction
 Le projet Minishell de l'école 42 consiste en la création d'un programme de shell simplifié en langage C. L'objectif de ce projet est de comprendre le fonctionnement d'un shell et de mettre en pratique les connaissances en manipulation de processus et en gestion de fichiers (fd).
 ## Répartition des tâches
-- Parsing : réalisé par [Epasquie](https://github.com/EthanPasquier)
+- Parsing : réalisé par [EthanPasquier](https://github.com/EthanPasquier)
 - Exécuteur & Builtins: réalisé par [Jalevesq](https://github.com/Jalevesq)
 ## Fonctionnalités
 - Lecture des commandes de l'utilisateur. (Main)
