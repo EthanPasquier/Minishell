@@ -1,5 +1,6 @@
 # Minishell
 Le repo actuel contient un README en français, mais une version anglaise est disponible sur le repo original, situé sur le compte GitHub de mon coéquipier : https://github.com/Jalevesq/minishell.
+The current repo contains a README in French, but an English version is available on the original repo, located on my teammate's GitHub account: https://github.com/Jalevesq/minishell.
 ## Introduction
 Le projet Minishell de l'école 42 consiste en la création d'un programme de shell simplifié en langage C. L'objectif de ce projet est de comprendre le fonctionnement d'un shell et de mettre en pratique les connaissances en manipulation de processus et en gestion de fichiers (fd).
 ## Répartition des tâches
