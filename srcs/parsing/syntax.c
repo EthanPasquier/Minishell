@@ -6,7 +6,7 @@
 /*   By: jalevesq <jalevesq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:06:03 by jalevesq          #+#    #+#             */
-/*   Updated: 2023/04/20 13:43:18 by jalevesq         ###   ########.fr       */
+/*   Updated: 2023/04/27 09:44:55 by jalevesq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	ft_syntax(char *str)
 	temoins = 0;
 	while (str[i])
 	{
-		if (str[i] == '-' && ft_isalpha(str[i + 1]) == 0)
-			return (ft_error_syntax(str));
+		// if (str[i] == '-' && ft_isalpha(str[i + 1]) == 0)
+		// 	return (ft_error_syntax(str));
 		if (str[i] == 39)
 			tmp++;
 		if (str[i] == 34)
