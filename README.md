@@ -4,7 +4,7 @@ Le repo actuel contient un README en français, mais une version française est 
 Le projet Minishell de l'école 42 consiste en la création d'un programme de shell simplifié en langage C. L'objectif de ce projet est de comprendre le fonctionnement d'un shell et de mettre en pratique les connaissances en manipulation de processus et en gestion de fichiers (fd).
 ## Répartition des tâches
 - Parsing : réalisé par moi-même
-- Exécuteur & Builtins: réalisé par Jalevesq
+- Exécuteur & Builtins: réalisé par [Jalevesq](https://github.com/Jalevesq)
 ## Fonctionnalités
 - Lecture des commandes de l'utilisateur. (Main)
 - Gestion des erreurs de saisie d'utilisateur. (Parsing)
